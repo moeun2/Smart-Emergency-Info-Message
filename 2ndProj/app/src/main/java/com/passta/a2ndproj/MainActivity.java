@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         msgRecyclerView.setAdapter(oneDayMsgRecyclerViewAdapter);
 
     }
+
     private void setStatusBar() {
         View view = getWindow().getDecorView();
         view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -61,10 +62,15 @@ public class MainActivity extends AppCompatActivity {
 
         // 해시태크 원 가데이터
         hashtagDataList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            hashtagDataList.add(new Hashtag_VO("너의 집"));
-            hashtagDataList.add(new Hashtag_VO("엄마 집"));
-        }
+
+        hashtagDataList.add(new Hashtag_VO("우리 집",R.drawable.home));
+        hashtagDataList.add(new Hashtag_VO("학교",R.drawable.school));
+        hashtagDataList.add(new Hashtag_VO("회사",R.drawable.company));
+        hashtagDataList.add(new Hashtag_VO("(코로나)\n동선",R.drawable.coronavirus));
+        hashtagDataList.add(new Hashtag_VO("(코로나)\n발생,방역",R.drawable.prevention));
+        hashtagDataList.add(new Hashtag_VO("(코로나)\n안전수칙",R.drawable.mask_man));
+        hashtagDataList.add(new Hashtag_VO("경제,금융",R.drawable.economy));
+        hashtagDataList.add(new Hashtag_VO("재난,날씨",R.drawable.disaster));
 
         oneDayMsgDataList = new ArrayList<>();
 
@@ -72,17 +78,13 @@ public class MainActivity extends AppCompatActivity {
             msgDataList = new ArrayList<>();
             for (int i = 0; i < 3; i++) {
 
-                if (i == 0){
+                if (i == 0) {
                     msgDataList.add(new Msg_VO("오후 8시 23분", "해외 유입 확진자가 증가 추세로 해외 입국이 예정되어 있는 가족 및" +
                             " 외국인근로자가 있을 경우 반드시 완도군보건의료원로 신고 바랍니다", "[완도군청]", R.drawable.level1));
-                }
-
-                else if(i==1){
+                } else if (i == 1) {
                     msgDataList.add(new Msg_VO("오후 8시 23분", "해외 유입 확진자가 증가 추세로 해외 입국이 예정되어 있는 가족 및" +
-                            " 외국인근로자가 있을 경우 반드시 완도군보건의료원로 신고 바랍니다", "[완도군청]", R.drawable.level3));
-                }
-
-                else{
+                            " 외국인근로자가 있을 경우 반드시 완도군보건의료원로 신고 바랍니다", "[완도군청]", R.drawable.level2));
+                } else {
                     msgDataList.add(new Msg_VO("오후 8시 23분", "해외 유입 확진자가 증가 추세로 해외 입국이 예정되어 있는 가족 및" +
                             " 외국인근로자가 있을 경우 반드시 완도군보건의료원로 신고 바랍니다", "[완도군청]", R.drawable.level3));
                 }

@@ -1,9 +1,11 @@
 package com.passta.a2ndproj.main;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.passta.a2ndproj.R;
 import androidx.annotation.NonNull;
@@ -36,7 +38,8 @@ public class HashtagRecyclerViewAdapter extends RecyclerView.Adapter<HashtagRecy
 
     @Override
     public void onBindViewHolder(@NonNull HasgtagCircleViewHolder viewHolder, int position) {
-        viewHolder.name.setText("# " + arrayList.get(position).getHashtagText() );
+        viewHolder.name.setText("#" + arrayList.get(position).getHashtagText() );
+        viewHolder.circleImageView.setImageResource(arrayList.get(position).getCircleImageViewId());
     }
 
     @Override
@@ -47,10 +50,12 @@ public class HashtagRecyclerViewAdapter extends RecyclerView.Adapter<HashtagRecy
     public static class HasgtagCircleViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView name;
+        protected ImageView circleImageView;
 
         public HasgtagCircleViewHolder(@NonNull View itemView) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.name_item_hashtag_list);
+            this.circleImageView = (ImageView) itemView.findViewById(R.id.circle_item_hashtag_list);
         }
     }
 }

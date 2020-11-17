@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="75dp"
-    android:layout_height="90dp"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
 
-    <LinearLayout
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circle_item_hashtag_list"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:src="@drawable/mask_man"
         android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/background_hashtag_circle_item">
-
-
-    </LinearLayout>
-
+        />
 
     <TextView
         android:id="@+id/name_item_hashtag_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="# HOME"
-        android:textColor="@color/black"
-        android:textSize="12dp"
-        android:fontFamily="@font/nanumsquarer"
-
+        android:layout_marginLeft="3dp"
         android:layout_marginTop="7dp"
-        />
+        android:layout_marginRight="3dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/nanumsquarer"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="# HOME\nHoew"
+        android:textColor="@color/black"
 
+        android:textSize="12dp" />
 
 
 </LinearLayout>
