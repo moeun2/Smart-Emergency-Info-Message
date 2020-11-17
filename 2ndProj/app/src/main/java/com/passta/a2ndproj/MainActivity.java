@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
                 else{
                     msgDataList.add(new Msg_VO("오후 8시 23분", "해외 유입 확진자가 증가 추세로 해외 입국이 예정되어 있는 가족 및" +
-                            " 외국인근로자가 있을 경우 반드시 완도군보건의료원로 신고 바랍니다", "[완도군청]", R.drawable.level2));
+                            " 외국인근로자가 있을 경우 반드시 완도군보건의료원로 신고 바랍니다", "[완도군청]", R.drawable.level3));
                 }
 
             }
