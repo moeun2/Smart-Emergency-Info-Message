@@ -1,16 +1,34 @@
 package com.passta.a2ndproj.main;
 
+import com.passta.a2ndproj.R;
+
 public class Msg_VO {
     private String time;
     private String msgText;
     private String senderLocation;
+    private int level;
     private int circleImageViewId;
 
-    public Msg_VO(String time, String msgText, String senderLocation, int circleImageViewId) {
+    public Msg_VO(String time, String msgText, String senderLocation, int level) {
         this.time = time;
         this.msgText = msgText;
         this.senderLocation = senderLocation;
-        this.circleImageViewId = circleImageViewId;
+        this.level = level;
+
+        // level에 따른 이미지 값 다르게 주기
+        switch (level){
+            case 1 :
+                this.circleImageViewId = R.drawable.level1;
+                break;
+
+            case 2 :
+                this.circleImageViewId = R.drawable.level2;
+                break;
+
+            case 3 :
+                this.circleImageViewId = R.drawable.level3;
+                break;
+        }
     }
 
     public String getTime() {
@@ -43,5 +61,13 @@ public class Msg_VO {
 
     public void setCircleImageViewId(int circleImageViewId) {
         this.circleImageViewId = circleImageViewId;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }
