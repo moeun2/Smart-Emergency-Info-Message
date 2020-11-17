@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="75dp"
+    android:layout_height="90dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/background_hashtag_circle_item">
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/name_item_hashtag_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="# HOME"
+        android:textColor="@color/black"
+        android:textSize="12dp"
+        android:fontFamily="@font/nanumsquarer"
+
+        android:layout_marginTop="7dp"
+        />
+
+
+
+</LinearLayout>
