@@ -20,7 +20,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/nanumsquareeb"
-            android:text="스마트 재난문자"
+            android:text="Smart 재난문자"
             android:textColor="#2aa9e0"
             android:textSize="20dp" />
 
@@ -61,7 +61,6 @@
         android:background="@color/white"
         android:orientation="horizontal"
         android:overScrollMode="never"
-
         android:scrollbars="none"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
@@ -71,8 +70,9 @@
         android:layout_weight="1"
         android:gravity="top"
         app:umanoOverlay="true"
-        app:umanoPanelHeight="35dp"
-        app:umanoShadowHeight="0dp">
+        app:umanoPanelHeight="30dp"
+        app:umanoShadowHeight="0dp"
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_main_msg"
@@ -82,18 +82,17 @@
             android:orientation="vertical"
             android:overScrollMode="never"
 
-            app:reverseLayout="true"
+            android:paddingTop="30dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:paddingTop="35dp"
-            />
+            app:reverseLayout="true" />
 
         <LinearLayout
             android:id="@+id/linear_layout_in_activity_main"
             android:layout_width="match_parent"
             android:layout_height="230dp"
             android:background="@drawable/background_main_button"
+            android:elevation="30dp"
             android:orientation="vertical">
-
 
             <!--            리니어의 크기 고려! 보여줄만큼(30) 냄겨둔다-->
             <LinearLayout
@@ -116,21 +115,21 @@
                 <Button
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:text="aweqewq"/>
+                    android:text="aweqewq" />
 
 
             </LinearLayout>
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="5dp"
+                android:layout_width="70dp"
+                android:layout_height="6dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="13dp"
 
                 android:adjustViewBounds="true"
                 android:background="@color/colorTransparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/bar" />
+                android:src="@drawable/bar_blue" />
 
         </LinearLayout>
 
