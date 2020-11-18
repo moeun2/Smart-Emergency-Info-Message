@@ -196,7 +196,8 @@ public class HashtagRecyclerViewAdapter extends RecyclerView.Adapter<HashtagRecy
             }
 
 
-            mainActivity.setByDay();
+            mainActivity.sortByDay();
+            mainActivity.sortByTime();
             mainActivity.oneDayMsgRecyclerViewAdapter.notifyDataSetChanged();
         }
 

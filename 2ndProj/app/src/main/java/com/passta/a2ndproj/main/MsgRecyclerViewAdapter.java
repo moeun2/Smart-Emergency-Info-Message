@@ -37,8 +37,10 @@ public class MsgRecyclerViewAdapter extends RecyclerView.Adapter<MsgRecyclerView
     @Override
     public void onBindViewHolder(@NonNull MsgRecyclerViewAdapter.MsgViewHolder holder, int position) {
 
+        String time = returnTimeWithKorean(arrayList.get(position).getTime());
+
         holder.msgText.setText(arrayList.get(position).getMsgText());
-        holder.time.setText(arrayList.get(position).getTime());
+        holder.time.setText(time.substring(0,time.indexOf("분") + 1));
         holder.senderLocation.setText(arrayList.get(position).getSenderLocation());
         holder.circleImageView.setImageResource(arrayList.get(position).getCircleImageViewId());
     }
@@ -48,6 +50,25 @@ public class MsgRecyclerViewAdapter extends RecyclerView.Adapter<MsgRecyclerView
         return arrayList.size();
     }
 
+    public String returnTimeWithKorean(String time) {
+
+        int hour = Integer.parseInt(time.substring(0, 2));
+        int min = Integer.parseInt(time.substring(3, 5));
+        int sec = Integer.parseInt(time.substring(6, 8));
+
+        if (hour == 0)
+            return "오전 12시 " + min + "분 " + sec + "초";
+
+        if (hour == 12)
+            return "오후 12시 " + min + "분 " + sec + "초";
+
+        if (hour > 12) {
+            hour = hour - 12;
+            return "오후 " + hour + "시 " + min + "분 " + sec + "초";
+        }
+
+        return "오전 " + hour + "시 " + min + "분 " + sec + "초";
+    }
 
     public static class MsgViewHolder extends RecyclerView.ViewHolder {
 
