@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.passta.a2ndproj.R;
 import com.passta.a2ndproj.main.HashtagRecyclerViewAdapter;
+import com.passta.a2ndproj.main.HashtagUpRecyclerViewAdapter;
 import com.passta.a2ndproj.main.Hashtag_VO;
 import com.passta.a2ndproj.main.Msg_VO;
 import com.passta.a2ndproj.main.OneDayMsgRecyclerViewAdapter;
@@ -25,15 +26,18 @@ import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView hashtagRecyclerView;
+    private RecyclerView hashtagDownRecyclerView;
+    private RecyclerView hashtagUpRecyclerView;
     private RecyclerView msgRecyclerView;
-    public ArrayList<Hashtag_VO> hashtagDataList;
+    public ArrayList<Hashtag_VO> hashtagDownDataList;
+    public ArrayList<Hashtag_VO> hashtagUpDataList;
     public ArrayList<Msg_VO> msgDataList;
     public ArrayList<OneDayMsg_VO> oneDayMsgDataList;
-    public HashtagRecyclerViewAdapter hashtagRecyclerViewAdapter;
+    public HashtagRecyclerViewAdapter hashtagDownRecyclerViewAdapter;
+    public HashtagUpRecyclerViewAdapter hashtagUpRecyclerViewAdapter;
     public OneDayMsgRecyclerViewAdapter oneDayMsgRecyclerViewAdapter;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,15 +47,18 @@ public class MainActivity extends AppCompatActivity {
         //예시데이터
         setData();
 
-        hashtagRecyclerView = findViewById(R.id.recyclerview_main_hashtag);
+        hashtagDownRecyclerView = findViewById(R.id.recyclerview_down_main_hashtag);
+        hashtagUpRecyclerView = findViewById(R.id.recyclerview_up_main_hashtag);
         msgRecyclerView = findViewById(R.id.recyclerview_main_msg);
 
         oneDayMsgRecyclerViewAdapter = new OneDayMsgRecyclerViewAdapter(oneDayMsgDataList);
         msgRecyclerView.setAdapter(oneDayMsgRecyclerViewAdapter);
 
-        hashtagRecyclerViewAdapter = new HashtagRecyclerViewAdapter(this);
-        hashtagRecyclerView.setAdapter(hashtagRecyclerViewAdapter);
+        hashtagDownRecyclerViewAdapter = new HashtagRecyclerViewAdapter(this);
+        hashtagDownRecyclerView.setAdapter(hashtagDownRecyclerViewAdapter);
 
+        hashtagUpRecyclerViewAdapter = new HashtagUpRecyclerViewAdapter(this);
+        hashtagUpRecyclerView.setAdapter(hashtagUpRecyclerViewAdapter);
 
     }
 
@@ -67,18 +74,21 @@ public class MainActivity extends AppCompatActivity {
     public void setData() {
 
         // 해시태크 원 가데이터
-        hashtagDataList = new ArrayList<>();
-        hashtagDataList.add(new Hashtag_VO("우리 집", R.drawable.home, true));
-        hashtagDataList.add(new Hashtag_VO("학교", R.drawable.school, false));
-        hashtagDataList.add(new Hashtag_VO("회사", R.drawable.company, false));
-        hashtagDataList.add(new Hashtag_VO("(코로나)\n동선", R.drawable.coronavirus, true));
-        hashtagDataList.add(new Hashtag_VO("(코로나)\n발생,방역", R.drawable.prevention, false));
-        hashtagDataList.add(new Hashtag_VO("(코로나)\n안전수칙", R.drawable.mask_man, false));
-        hashtagDataList.add(new Hashtag_VO("경제,금융", R.drawable.economy, true));
-        hashtagDataList.add(new Hashtag_VO("재난,날씨", R.drawable.disaster, true));
-        hashtagDataList.add(new Hashtag_VO("관심도\n1단계", R.drawable.level1, true));
-        hashtagDataList.add(new Hashtag_VO("관심도\n2단계", R.drawable.level2, true));
-        hashtagDataList.add(new Hashtag_VO("관심도\n3단계", R.drawable.level3, true));
+        hashtagUpDataList = new ArrayList<>();
+        hashtagUpDataList.add(new Hashtag_VO("내 장소\n추가하기", R.drawable.plus2, false));
+        hashtagUpDataList.add(new Hashtag_VO("우리 집", R.drawable.home, true));
+        hashtagUpDataList.add(new Hashtag_VO("학교", R.drawable.school, false));
+        hashtagUpDataList.add(new Hashtag_VO("회사", R.drawable.company, false));
+
+        hashtagDownDataList = new ArrayList<>();
+        hashtagDownDataList.add(new Hashtag_VO("(코로나)\n동선", R.drawable.coronavirus, true));
+        hashtagDownDataList.add(new Hashtag_VO("(코로나)\n발생,방역", R.drawable.prevention, false));
+        hashtagDownDataList.add(new Hashtag_VO("(코로나)\n안전수칙", R.drawable.mask_man, false));
+        hashtagDownDataList.add(new Hashtag_VO("경제,금융", R.drawable.economy, true));
+        hashtagDownDataList.add(new Hashtag_VO("재난,날씨", R.drawable.disaster, true));
+        hashtagDownDataList.add(new Hashtag_VO("관심도\n1단계", R.drawable.level1, true));
+        hashtagDownDataList.add(new Hashtag_VO("관심도\n2단계", R.drawable.level2, true));
+        hashtagDownDataList.add(new Hashtag_VO("관심도\n3단계", R.drawable.level3, true));
 
 
         oneDayMsgDataList = new ArrayList<>();

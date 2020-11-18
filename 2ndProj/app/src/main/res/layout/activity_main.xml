@@ -55,7 +55,7 @@
         android:layout_height="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_main_hashtag"
+        android:id="@+id/recyclerview_up_main_hashtag"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@color/white"
@@ -101,21 +101,15 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@color/white"
-
-                    android:fontFamily="@font/nanumsquareb"
-                    android:text="이곳에 무언가가 들어갈 예정입니다 수고빠염 쿨하게 빠염."
-                    android:textColor="@color/black"
-                    android:textSize="17dp" />
-
-                <Button
-                    android:layout_width="100dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_down_main_hashtag"
+                    android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:text="aweqewq" />
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
             </LinearLayout>

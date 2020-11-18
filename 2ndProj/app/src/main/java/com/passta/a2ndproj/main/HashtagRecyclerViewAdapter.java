@@ -51,11 +51,11 @@ public class HashtagRecyclerViewAdapter extends RecyclerView.Adapter<HashtagRecy
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull HasgtagCircleViewHolder viewHolder, int position) {
-        viewHolder.name.setText("#" + mainActivity.hashtagDataList.get(position).getHashtagText());
-        viewHolder.circleImageView.setImageResource(mainActivity.hashtagDataList.get(position).getCircleImageViewId());// 클릭 돼 있는 경우
+        viewHolder.name.setText("#" + mainActivity.hashtagDownDataList.get(position).getHashtagText());
+        viewHolder.circleImageView.setImageResource(mainActivity.hashtagDownDataList.get(position).getCircleImageViewId());// 클릭 돼 있는 경우
 
         // 클릭 돼 있는 경우
-        if (mainActivity.hashtagDataList.get(position).isClicked()) {
+        if (mainActivity.hashtagDownDataList.get(position).isClicked()) {
             Typeface typeface = context.getResources().getFont(R.font.nanumsquareeb);
             viewHolder.name.setTextColor(Color.parseColor(context.getString(R.color.twitterBlue)));
             viewHolder.name.setTypeface(typeface);
@@ -68,7 +68,7 @@ public class HashtagRecyclerViewAdapter extends RecyclerView.Adapter<HashtagRecy
 
     @Override
     public int getItemCount() {
-        return mainActivity.hashtagDataList.size();
+        return mainActivity.hashtagDownDataList.size();
     }
 
     public static class HasgtagCircleViewHolder extends RecyclerView.ViewHolder {
@@ -90,21 +90,20 @@ public class HashtagRecyclerViewAdapter extends RecyclerView.Adapter<HashtagRecy
                 @Override
                 public void onClick(View view) {
 
-                    String hashtagText = mainActivity.hashtagDataList.get(getAdapterPosition()).getHashtagText().replaceAll("\n", "");
+                    String hashtagText = mainActivity.hashtagDownDataList.get(getAdapterPosition()).getHashtagText().replaceAll("\n", "");
 
                     // 클릭 돼 있는 경우
-                    if (mainActivity.hashtagDataList.get(getAdapterPosition()).isClicked()) {
+                    if (mainActivity.hashtagDownDataList.get(getAdapterPosition()).isClicked()) {
 
                         //꺼주기(글자색 바꾸기)
                         Typeface typeface = itemView.getContext().getResources().getFont(R.font.nanumsquarer);
                         name.setTextColor(Color.parseColor(itemView.getContext().getString(R.color.black)));
                         name.setTypeface(typeface);
-                        mainActivity.hashtagDataList.get(getAdapterPosition()).setClicked(false);
+                        mainActivity.hashtagDownDataList.get(getAdapterPosition()).setClicked(false);
 
                         if (hashtagText.equals("관심도1단계") || hashtagText.equals("관심도2단계") || hashtagText.equals("관심도3단계")) {
                             deleteInterestLevelItem(hashtagText);
                         }
-
                     }
 
 
@@ -113,7 +112,7 @@ public class HashtagRecyclerViewAdapter extends RecyclerView.Adapter<HashtagRecy
                         Typeface typeface = itemView.getContext().getResources().getFont(R.font.nanumsquareeb);
                         name.setTextColor(Color.parseColor(itemView.getContext().getString(R.color.twitterBlue)));
                         name.setTypeface(typeface);
-                        mainActivity.hashtagDataList.get(getAdapterPosition()).setClicked(true);
+                        mainActivity.hashtagDownDataList.get(getAdapterPosition()).setClicked(true);
 
                         if (hashtagText.equals("관심도1단계") || hashtagText.equals("관심도2단계") || hashtagText.equals("관심도3단계")) {
                             addInterestLevelItem(hashtagText);
@@ -194,7 +193,6 @@ public class HashtagRecyclerViewAdapter extends RecyclerView.Adapter<HashtagRecy
 
                 }
             }
-
 
             mainActivity.sortByDay();
             mainActivity.sortByTime();
