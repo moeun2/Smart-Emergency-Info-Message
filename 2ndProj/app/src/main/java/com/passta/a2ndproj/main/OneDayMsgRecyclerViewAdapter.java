@@ -1,6 +1,7 @@
 package com.passta.a2ndproj.main;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,10 @@ public class OneDayMsgRecyclerViewAdapter extends RecyclerView.Adapter<OneDayMsg
 
     @Override
     public void onBindViewHolder(@NonNull MsgDayViewHolder holder, int position) {
+
+        MsgRecyclerViewAdapter msgRecyclerViewAdapter = new MsgRecyclerViewAdapter(arrayList.get(position).getMsgArrayList());
         holder.msgDayText.setText(arrayList.get(position).getDay());
-        holder.recyclerView.setAdapter(new MsgRecyclerViewAdapter(arrayList.get(position).getArrayList()));
+        holder.recyclerView.setAdapter(msgRecyclerViewAdapter);
     }
 
     @Override

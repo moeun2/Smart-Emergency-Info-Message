@@ -17,7 +17,6 @@ public class MsgRecyclerViewAdapter extends RecyclerView.Adapter<MsgRecyclerView
     private View view;
     private Context context;
     private LayoutInflater layoutInflater;
-
     private ArrayList<Msg_VO> arrayList;
 
     public MsgRecyclerViewAdapter(ArrayList<Msg_VO> arrayList) {
