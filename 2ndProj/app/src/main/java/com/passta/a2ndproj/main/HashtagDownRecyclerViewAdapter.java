@@ -5,12 +5,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.passta.a2ndproj.MainActivity;
@@ -24,7 +22,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HashtagRecyclerViewAdapter extends RecyclerView.Adapter<HashtagRecyclerViewAdapter.HasgtagCircleViewHolder> {
+public class HashtagDownRecyclerViewAdapter extends RecyclerView.Adapter<HashtagDownRecyclerViewAdapter.HasgtagCircleViewHolder> {
 
     private View view;
     protected Context context;
@@ -32,7 +30,7 @@ public class HashtagRecyclerViewAdapter extends RecyclerView.Adapter<HashtagRecy
     private TextView name;
     private MainActivity mainActivity;
 
-    public HashtagRecyclerViewAdapter(MainActivity mainActivity) {
+    public HashtagDownRecyclerViewAdapter(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
 
@@ -164,7 +162,21 @@ public class HashtagRecyclerViewAdapter extends RecyclerView.Adapter<HashtagRecy
         public void addInterestLevelItem(String hashtagText) {
 
             int level = returnLevel(hashtagText);
+            //ArrayList<OneDayMsg_VO> newOneDayArrayList = new ArrayList<> (mainActivity.oneDayMsgDataList);
+            ArrayList<OneDayMsg_VO> newOneDayArrayList = new ArrayList<> (mainActivity.oneDayMsgDataList.size());
 
+            for(int i=0;i<mainActivity.oneDayMsgDataList.size();i++){
+                ArrayList<Msg_VO> tempList = new ArrayList<>();
+
+                for(int j=0;j<mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().size();j++){
+
+                    Msg_VO oldVo = mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().get(j);
+                    Msg_VO tempVo = new Msg_VO(oldVo.getId(),oldVo.getDay(),oldVo.getTime(),oldVo.getMsgText(),oldVo.getSenderLocation(),oldVo.getLevel());
+                    tempList.add(tempVo);
+                }
+
+                newOneDayArrayList.add(new OneDayMsg_VO(mainActivity.oneDayMsgDataList.get(i).getDay(),tempList));
+            }
 
             for (int totalDataNume = 0; totalDataNume < mainActivity.msgDataList.size(); totalDataNume++) {
 
@@ -174,11 +186,11 @@ public class HashtagRecyclerViewAdapter extends RecyclerView.Adapter<HashtagRecy
                 if (level == mainActivity.msgDataList.get(totalDataNume).getLevel()) {
 
                     //그 날짜의 oneDayMsgDataList 가 이미 있는지 부터 검사.
-                    for (int dayListNum = 0; dayListNum < mainActivity.oneDayMsgDataList.size(); dayListNum++) {
+                    for (int dayListNum = 0; dayListNum < newOneDayArrayList.size(); dayListNum++) {
 
                         // 그 day list가 이미 있다면 -> 시간에 따른 정렬 필요
-                        if ((mainActivity.msgDataList.get(totalDataNume).getDay()).equals(mainActivity.oneDayMsgDataList.get(dayListNum).getDay())) {
-                            mainActivity.oneDayMsgDataList.get(dayListNum).getMsgArrayList().add(mainActivity.msgDataList.get(totalDataNume));
+                        if ((mainActivity.msgDataList.get(totalDataNume).getDay()).equals(newOneDayArrayList.get(dayListNum).getDay())) {
+                            newOneDayArrayList.get(dayListNum).getMsgArrayList().add(mainActivity.msgDataList.get(totalDataNume));
                             hasDayList = true;
                             break;
                         }
@@ -188,15 +200,17 @@ public class HashtagRecyclerViewAdapter extends RecyclerView.Adapter<HashtagRecy
                     if (!hasDayList) {
                         ArrayList<Msg_VO> newList = new ArrayList<>();
                         newList.add(mainActivity.msgDataList.get(totalDataNume));
-                        mainActivity.oneDayMsgDataList.add(new OneDayMsg_VO(mainActivity.msgDataList.get(totalDataNume).getDay(), newList));
+                        newOneDayArrayList.add(new OneDayMsg_VO(mainActivity.msgDataList.get(totalDataNume).getDay(), newList));
                     }
-
                 }
             }
 
-            mainActivity.sortByDay();
-            mainActivity.sortByTime();
-            mainActivity.oneDayMsgRecyclerViewAdapter.notifyDataSetChanged();
+            newOneDayArrayList = mainActivity.sortByDay(newOneDayArrayList);
+            newOneDayArrayList = mainActivity.sortByTime(newOneDayArrayList);
+
+            mainActivity.oneDayMsgRecyclerViewAdapter.updateAdapater(newOneDayArrayList);
+
+
         }
 
         public int returnLevel(String hashtagText) {

@@ -3,6 +3,7 @@ package com.passta.a2ndproj.main;
 import com.passta.a2ndproj.R;
 
 public class Msg_VO {
+    private int id;
     private String day;
     private String time;
     private String msgText;
@@ -10,7 +11,8 @@ public class Msg_VO {
     private int level;
     private int circleImageViewId;
 
-    public Msg_VO(String day,String time, String msgText, String senderLocation, int level) {
+    public Msg_VO(int id,String day,String time, String msgText, String senderLocation, int level) {
+        this.id = id;
         this.day = day;
         this.time = time;
         this.msgText = msgText;
@@ -31,6 +33,14 @@ public class Msg_VO {
                 this.circleImageViewId = R.drawable.level3;
                 break;
         }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDay() {
