@@ -2,6 +2,8 @@ package com.passta.a2ndproj.main;
 
 import com.passta.a2ndproj.R;
 
+import java.util.ArrayList;
+
 public class Msg_VO {
     private int id;
     private String day;
@@ -10,14 +12,18 @@ public class Msg_VO {
     private String senderLocation;
     private int level;
     private int circleImageViewId;
+    //1. 동선 2. 발생방역 3. 안전수칙 4.재난상황 5. 경제금융
+    private MsgCategoryPoint_VO msgCategoryPoint;
 
-    public Msg_VO(int id,String day,String time, String msgText, String senderLocation, int level) {
+    public Msg_VO(int id,String day,String time, String msgText, String senderLocation, int level,MsgCategoryPoint_VO msgCategoryPoint) {
         this.id = id;
         this.day = day;
         this.time = time;
         this.msgText = msgText;
         this.senderLocation = senderLocation;
         this.level = level;
+        this.msgCategoryPoint = new MsgCategoryPoint_VO(msgCategoryPoint.getCoronaRoute(),msgCategoryPoint.getCoronaUpbreak(),msgCategoryPoint.getCoronaSafetyRule(),
+                msgCategoryPoint.getDisaster(),msgCategoryPoint.getEconomy());
 
         // level에 따른 이미지 값 다르게 주기
         switch (level){
@@ -33,6 +39,14 @@ public class Msg_VO {
                 this.circleImageViewId = R.drawable.level3;
                 break;
         }
+    }
+
+    public MsgCategoryPoint_VO getMsgCategoryPoint() {
+        return msgCategoryPoint;
+    }
+
+    public void setMsgCategoryPoint(MsgCategoryPoint_VO msgCategoryPoint) {
+        this.msgCategoryPoint = msgCategoryPoint;
     }
 
     public int getId() {

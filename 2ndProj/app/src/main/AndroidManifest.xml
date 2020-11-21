@@ -15,10 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".start.dialogue.Dialogue_select_location"
-            android:theme="@style/PopUpTheme"/>
-        <activity android:name=".start.dialogue.Dialogue_select_location_2"
-            android:theme="@style/PopUpTheme"/>
+        <activity
+            android:name=".start.dialogue.Dialogue_select_location"
+            android:theme="@style/PopUpTheme" />
+        <activity
+            android:name=".start.dialogue.Dialogue_select_location_2"
+            android:theme="@style/PopUpTheme" />
         <activity
             android:name=".start.dialogue.Dialogue_add_location"
             android:theme="@style/PopUpTheme" />
@@ -30,9 +32,18 @@
         <activity android:name=".start.activity.AccountGetDataActivity" />
 
 
-        <activity android:name=".MainActivity" />
+<!--        <activity android:name=".MainActivity" />-->
 
-        <activity android:name=".start.activity.Page1Activity">
+<!--                <activity android:name=".start.activity.Page1Activity">-->
+
+<!--                    <intent-filter>-->
+<!--                        <action android:name="android.intent.action.MAIN" />-->
+
+<!--                        <category android:name="android.intent.category.LAUNCHER" />-->
+<!--                    </intent-filter>-->
+<!--                </activity>-->
+
+        <activity android:name=".MainActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
