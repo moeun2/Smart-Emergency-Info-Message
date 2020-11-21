@@ -45,6 +45,8 @@ dependencies {
 
     //slidinguppannel
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    //circle image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -75,8 +77,5 @@ dependencies {
 
     //lottie
     implementation 'com.airbnb.android:lottie:3.5.0'
-
-
-
 
 }

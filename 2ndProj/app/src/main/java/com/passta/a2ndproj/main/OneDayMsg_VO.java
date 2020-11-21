@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class OneDayMsg_VO {
     private String day;
-    private ArrayList<Msg_VO> arrayList;
+    private ArrayList<Msg_VO> msgArrayList;
 
     public OneDayMsg_VO(String day, ArrayList<Msg_VO> arrayList) {
         this.day = day;
-        this.arrayList = arrayList;
+        this.msgArrayList = arrayList;
     }
 
     public String getDay() {
@@ -18,12 +18,12 @@ public class OneDayMsg_VO {
     public void setDay(String day) {
         this.day = day;
     }
-
-    public ArrayList<Msg_VO> getArrayList() {
-        return arrayList;
+    public ArrayList<Msg_VO> getMsgArrayList() {
+        return msgArrayList;
     }
 
-    public void setArrayList(ArrayList<Msg_VO> arrayList) {
-        this.arrayList = arrayList;
+    public void setMsgArrayList(ArrayList<Msg_VO> msgArrayList) {
+        this.msgArrayList = msgArrayList;
+
     }
 }

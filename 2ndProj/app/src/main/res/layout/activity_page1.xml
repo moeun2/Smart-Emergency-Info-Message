@@ -45,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/nanumsquareb"
+
         android:text="나에게 더 필요한 문자를 분석해서 똑똑하게"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
