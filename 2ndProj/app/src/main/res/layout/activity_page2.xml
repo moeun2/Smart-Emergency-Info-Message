@@ -7,67 +7,81 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
 
-    android:orientation="vertical"
-    android:padding="@dimen/activity_horizontal_margin">
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="수신지역 설정"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.044" />
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/page2_explanation"
+        android:id="@+id/linear_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/background_main_button"
+        android:backgroundTint="@color/twitterLowBlue"
         android:orientation="vertical"
+        android:paddingTop="30dp"
+        android:paddingBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="재난문자 수신을 원하는 지역을 선택해주세요!" />
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumsquareeb"
+            android:gravity="center_horizontal"
+            android:text="수신지역 설정"
+
+            android:textColor="@color/white"
+            android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textView10"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="부모님, 할머니, 친구 등의 재난상황을 알 수 있어요!" />
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/nanumsquarer"
+            android:gravity="center_horizontal"
+            android:text="재난문자 수신을 원하는 지역을 선택해주세요!"
+            android:textColor="@color/colorGray" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/nanumsquarer"
+            android:gravity="center_horizontal"
+            android:text="부모님, 할머니, 친구 등의 재난상황을 알 수 있어요!"
+            android:textColor="@color/colorGray" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/nanumsquarer"
             android:gravity="center"
-            android:text="반드시 하나 이상의 위치를 설정해주세요!" />
-
+            android:text="반드시 하나 이상의 위치를 설정해주세요!"
+            android:textColor="@color/colorGray" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/stroke_rectangle"
+        android:layout_height="300dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/rectangle"
+        android:backgroundTint="@color/colorGray"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/page2_explanation"
-        app:layout_constraintVertical_bias="0.110000014">
+        app:layout_constraintTop_toBottomOf="@+id/linear_header"
+        app:layout_constraintVertical_bias="0.19">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
@@ -83,7 +97,7 @@
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:background="@drawable/buttonshape"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/twitterLowBlue"
         android:gravity="center"
         android:text="추가"
         android:textAlignment="center"
@@ -95,23 +109,51 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.094" />
 
-    <TextView
-        android:id="@+id/next"
-        android:layout_width="90dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:background="@drawable/buttonshape"
-        android:backgroundTint="@color/colorPrimary"
-        android:gravity="center"
-        android:text="NEXT"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_main_button_rotate180"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.981" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/back"
+            android:layout_width="90dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/buttonshape"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            android:text="BACK"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="10dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/next"
+            android:layout_width="90dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/buttonshape"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            android:text="NEXT"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

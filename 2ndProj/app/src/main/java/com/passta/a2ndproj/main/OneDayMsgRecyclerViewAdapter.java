@@ -2,11 +2,11 @@ package com.passta.a2ndproj.main;
 
 import android.content.Context;
 import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.passta.a2ndproj.MainActivity;
 import com.passta.a2ndproj.R;
 

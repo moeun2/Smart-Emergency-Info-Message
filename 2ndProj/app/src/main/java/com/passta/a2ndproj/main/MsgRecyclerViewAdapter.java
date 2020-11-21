@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.passta.a2ndproj.R;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -104,6 +105,7 @@ public class MsgRecyclerViewAdapter extends RecyclerView.Adapter<MsgRecyclerView
         public MsgViewHolder(@NonNull View itemView) {
             super(itemView);
             this.linearLayout = (LinearLayout) itemView.findViewById(R.id.layout_item_msg_list);
+
             this.msgText = (TextView) itemView.findViewById(R.id.msg_item_msg_list);
             this.senderLocation = (TextView) itemView.findViewById(R.id.sender_locattion_item_msg_list);
             this.time = (TextView) itemView.findViewById(R.id.time_item_msg_list);
@@ -126,4 +128,5 @@ public class MsgRecyclerViewAdapter extends RecyclerView.Adapter<MsgRecyclerView
         arrayList.addAll(newArrayList);
         diffResult.dispatchUpdatesTo(MsgRecyclerViewAdapter.this);
     }
+
 }

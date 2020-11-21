@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.passta.a2ndproj.main.HashtagDownRecyclerViewAdapter;
@@ -16,7 +15,6 @@ import com.passta.a2ndproj.main.Hashtag_VO;
 import com.passta.a2ndproj.main.Msg_VO;
 import com.passta.a2ndproj.main.OneDayMsgRecyclerViewAdapter;
 import com.passta.a2ndproj.main.OneDayMsg_VO;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
         //예시데이터
         setData();
-
         hashtagDownRecyclerView = findViewById(R.id.recyclerview_down_main_hashtag);
         hashtagUpRecyclerView = findViewById(R.id.recyclerview_up_main_hashtag);
         msgRecyclerView = findViewById(R.id.recyclerview_main_msg);
@@ -66,9 +63,7 @@ public class MainActivity extends AppCompatActivity {
         View view = getWindow().getDecorView();
         view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));//색 지정
-
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setData() {
@@ -190,6 +185,5 @@ public class MainActivity extends AppCompatActivity {
 
         return oneDayMsgDataList;
     }
-
 
 }

@@ -16,7 +16,14 @@
         <!-- 상태바 아이콘 색 바꾸기-->
         <item name="android:windowLightStatusBar">true</item>
 
+        <item name="android:textViewStyle">@style/NanumsquarebTextViewStyle</item>
+
     </style>
+
+    <style name="NanumsquarebTextViewStyle" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/nanumsquareb</item>
+    </style>
+
     <style name="PopUpTheme" parent="Theme.AppCompat.DayNight.Dialog">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

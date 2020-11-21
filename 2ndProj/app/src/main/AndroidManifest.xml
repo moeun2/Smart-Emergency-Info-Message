@@ -14,40 +14,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".start.Dialogue_select_location"
+
+        <activity android:name=".start.dialogue.Dialogue_select_location"
             android:theme="@style/PopUpTheme"/>
-        <activity android:name=".start.Dialogue_select_location_2"
+        <activity android:name=".start.dialogue.Dialogue_select_location_2"
             android:theme="@style/PopUpTheme"/>
         <activity
-            android:name=".start.Dialogue_add_location"
+            android:name=".start.dialogue.Dialogue_add_location"
             android:theme="@style/PopUpTheme" />
-        <activity android:name=".start.Page4Activity" />
-        <activity android:name=".start.Page3Activity" />
-        <activity android:name=".start.Page2Activity" />
-<!--        <activity android:name=".MainActivity" />
+        <activity android:name=".network.NetworkActivity" />
+        <activity android:name=".start.activity.Page4Activity" />
+        <activity android:name=".start.activity.Page2Activity" />
+        <activity android:name=".start.activity.Page3Activity" />
+        <activity android:name=".start.activity.AccountPasswordActivity" />
+        <activity android:name=".start.activity.AccountGetDataActivity" />
 
- &lt;!&ndash; <activity android:name=".start.Page1Activity"> &ndash;&gt;-->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
 
-<!--        <activity android:name=".start.Page1Activity">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        <activity android:name=".MainActivity" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-        <activity android:name=".MainActivity">
+        <activity android:name=".start.activity.Page1Activity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
     </application>
 

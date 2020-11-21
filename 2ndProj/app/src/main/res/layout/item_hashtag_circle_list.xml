@@ -18,7 +18,7 @@
         android:id="@+id/name_item_hashtag_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
+   android:layout_marginLeft="3dp"
         android:layout_marginTop="7dp"
         android:layout_marginRight="3dp"
         android:ellipsize="end"

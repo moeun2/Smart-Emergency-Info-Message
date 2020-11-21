@@ -82,7 +82,6 @@ public class Msg_VO {
     public void setCircleImageViewId(int circleImageViewId) {
         this.circleImageViewId = circleImageViewId;
     }
-
     public int getLevel() {
         return level;
     }
@@ -90,4 +89,5 @@ public class Msg_VO {
     public void setLevel(int level) {
         this.level = level;
     }
+
 }

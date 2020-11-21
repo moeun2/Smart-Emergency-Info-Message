@@ -1,49 +1,47 @@
-package com.passta.a2ndproj.start;
+package com.passta.a2ndproj.start.dialogue;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.passta.a2ndproj.R;
+import com.passta.a2ndproj.utility.RecyclerViewDecoration;
+import com.passta.a2ndproj.start.adapter.Adapter_location;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class Dialogue_select_location extends AppCompatActivity {
+public class Dialogue_select_location_2 extends AppCompatActivity {
 
     private ArrayList<String> mArrayList = new ArrayList<>();;
     private Adapter_location mAdapter;
     private RecyclerView mRecyclerView;
     private int numberOfColumns;
-    public static Activity activity;
+    private static final String TAG = "Dialogue_select_location_2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dialogue_select_location);
-        activity = this;
+        setContentView(R.layout.dialogue_select_location_2);
+
+        Intent intent = getIntent();
+        int position = intent.getIntExtra("position",0);
 
         InitializeView();
-        initialize_recyclerview(1);
+        initialize_recyclerview(1, position);
 
 
     }
@@ -52,7 +50,7 @@ public class Dialogue_select_location extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_main_list);
 
     }
-    public void initialize_recyclerview(int numberOfColumns)
+    public void initialize_recyclerview(int numberOfColumns, int position)
     {
         numberOfColumns = numberOfColumns;
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(this, numberOfColumns);
@@ -61,8 +59,11 @@ public class Dialogue_select_location extends AppCompatActivity {
 //        mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
 
+        String filename = "gu_"+Integer.toString(position);
+        set_list(mArrayList,filename);
 
-        set_list(mArrayList,"sido");
+
+
         mAdapter = new Adapter_location(mArrayList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new RecyclerViewDecoration(50)); // 높이 맞추기
@@ -75,12 +76,17 @@ public class Dialogue_select_location extends AppCompatActivity {
                 String str = mArrayList.get(position).toString();
 
                 Toast.makeText(getApplicationContext(), "position : " + position + "/ String : " + str, Toast.LENGTH_LONG).show();
-//                set_list(mArrayList,"0");
+                Dialogue_select_location dsl = (Dialogue_select_location)Dialogue_select_location.activity;
 
 
-                Intent intent = new Intent(getBaseContext(),Dialogue_select_location_2.class);
+                Log.d("모은", "addOnItemTouchListener");
+                Intent intent = new Intent(getApplicationContext(),Dialogue_select_location.class);
                 intent.putExtra("position", position);
-                startActivity(intent);
+                intent.putExtra("location_gu", str);
+                setResult(RESULT_OK, intent);
+
+                finish();
+
             }
 
             @Override
@@ -97,9 +103,9 @@ public class Dialogue_select_location extends AppCompatActivity {
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
         private GestureDetector gestureDetector;
-        private Dialogue_select_location.ClickListener clickListener;
+        private Dialogue_select_location_2.ClickListener clickListener;
 
-        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final Dialogue_select_location.ClickListener clickListener) {
+        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final Dialogue_select_location_2.ClickListener clickListener) {
             this.clickListener = clickListener;
             gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
                 @Override
@@ -134,6 +140,7 @@ public class Dialogue_select_location extends AppCompatActivity {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         }
     }
+
     private void set_list(ArrayList<String> mArrayList,String filename)
     {
 //        mArrayList.add("서울특별시");

@@ -7,20 +7,21 @@
 
     <FrameLayout
         android:layout_width="320dp"
-        android:layout_height="370dp"
-        android:background="@color/colorPrimary"
+        android:layout_height="410dp"
+        android:background="@drawable/button_line_shape"
+        android:backgroundTint="@color/twitterLowBlue"
         android:visibility="visible">
 
 
         <LinearLayout
             android:id="@+id/main_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_width="320dp"
+            android:layout_height="380dp"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/blackline_rectangle"
+            android:background="@drawable/rectangle"
+            android:backgroundTint="@color/white"
             android:elevation="10dp"
             android:orientation="vertical"
             android:padding="5dp"
@@ -41,8 +42,8 @@
                     android:layout_height="25dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/buttonshape"
-                    android:backgroundTint="@color/colorPrimary"
+                    android:background="@drawable/button_line_shape"
+                    android:backgroundTint="@color/twitterLowBlue"
                     android:text="태그편집"
                     android:textAlignment="center"
                     android:textColor="#FDFDFD"
@@ -57,6 +58,8 @@
                     android:textColorHint="#939393">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_tag_text"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
@@ -73,9 +76,9 @@
                     android:layout_height="25dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/buttonshape"
+                    android:background="@drawable/button_line_shape"
 
-                    android:backgroundTint="@color/colorPrimary"
+                    android:backgroundTint="@color/twitterLowBlue"
                     android:text="위치설정"
                     android:textAlignment="center"
                     android:textColor="#FDFDFD"
@@ -151,8 +154,9 @@
 
                         android:layout_marginRight="16dp"
                         android:layout_weight="1"
-                        android:background="@drawable/buttonshape"
-                        android:backgroundTint="@color/colorPrimary"
+                        android:background="@drawable/button_line_shape"
+                        android:backgroundTint="@color/twitterLowBlue"
+
                         android:text="확인"
                         android:textAlignment="center"
                         android:textColor="#FDFDFD"
@@ -169,8 +173,8 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="16dp"
                         android:layout_weight="1"
-                        android:background="@drawable/buttonshape"
-                        android:backgroundTint="@color/colorPrimary"
+                        android:background="@drawable/button_line_shape"
+                        android:backgroundTint="@color/twitterLowBlue"
                         android:text="취소"
                         android:textAlignment="center"
                         android:textColor="#FDFDFD"

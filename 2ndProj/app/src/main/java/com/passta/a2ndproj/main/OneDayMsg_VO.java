@@ -18,12 +18,12 @@ public class OneDayMsg_VO {
     public void setDay(String day) {
         this.day = day;
     }
-
     public ArrayList<Msg_VO> getMsgArrayList() {
         return msgArrayList;
     }
 
     public void setMsgArrayList(ArrayList<Msg_VO> msgArrayList) {
         this.msgArrayList = msgArrayList;
+
     }
 }

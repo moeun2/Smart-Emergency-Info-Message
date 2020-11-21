@@ -45,8 +45,37 @@ dependencies {
 
     //slidinguppannel
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
-
     //circle image view
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    //Room Database
+    def room_version = "2.2.5"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
+    // optional - RxJava support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+//    // optional - Guava support for Room, including Optional and ListenableFuture
+//    implementation "androidx.room:room-guava:$room_version"
+//    // optional - Coroutines support for Room
+//    implementation "androidx.room:room-coroutines:$room_version"
+    // Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+
+    //implementation 'com.github.smarteist:autoimageslider:1.3.9'
+    implementation 'com.github.bumptech.glide:glide:4.11.0' // url 이미지 가져오기
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    //lottie
+    implementation 'com.airbnb.android:lottie:3.5.0'
 
 }

@@ -1,4 +1,4 @@
-package com.passta.a2ndproj.start;
+package com.passta.a2ndproj.start.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;

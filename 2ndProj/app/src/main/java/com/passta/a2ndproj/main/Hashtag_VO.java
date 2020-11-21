@@ -34,4 +34,5 @@ public class Hashtag_VO {
     public void setClicked(boolean clicked) {
         isClicked = clicked;
     }
+
 }

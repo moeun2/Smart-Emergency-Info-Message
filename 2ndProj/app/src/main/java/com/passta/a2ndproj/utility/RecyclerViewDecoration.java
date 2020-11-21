@@ -1,4 +1,4 @@
-package com.passta.a2ndproj.start;
+package com.passta.a2ndproj.utility;
 import android.graphics.Rect;
 import android.view.View;
 
