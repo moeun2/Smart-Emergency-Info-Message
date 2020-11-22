@@ -28,10 +28,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumsquareeb"
             android:gravity="center_horizontal"
-            android:text="검색어필터"
+            android:text="재난문자 카테고리 필터 설정"
 
             android:textColor="@color/white"
-            android:textSize="30sp" />
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/textView10"
@@ -81,7 +81,8 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="8dp"
-                android:layout_marginRight="3dp" android:fontFamily="@font/nanumsquareeb"
+                android:layout_marginRight="3dp"
+                android:fontFamily="@font/nanumsquareeb"
                 android:text="코로나 동선  ㅤㅤㅤ :" />
 
             <!--base/indicator/track/-->

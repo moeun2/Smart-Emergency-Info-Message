@@ -4,15 +4,22 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +36,8 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
 
     private TextView current_location;
     private TextView set_location;
-    private TextView confirm;
-    private TextView cancel;
+    private Button confirm;
+    private ImageView cancel;
     private TextView location;
     private EditText tag_editing;
 
@@ -43,11 +50,8 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialogue_add_location);
 
-
         InitializeView();
         SetListener();
-
-
     }
 
     @Override
@@ -58,13 +62,11 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
 
         if (resultcode == RESULT_OK) {
 
-
             String location_si = data.getStringExtra("location_si");
             String location_gu = data.getStringExtra("location_gu");
             Log.d("모은", location_si + " " + location_gu);
             location.setVisibility(View.VISIBLE);
             location.setText(location_si + " " + location_gu);
-
 
         }
     }
@@ -76,6 +78,18 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
         cancel = findViewById(R.id.cancel);
         location = findViewById(R.id.location);
         tag_editing = findViewById(R.id.edit_tag_text);
+
+        //디바이스크기에맞게 가로사이즈 지정하기위함
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size =new Point();
+        display.getSize(size);
+        Window window = this.getWindow();
+        int x = (int)(size.x * 0.9f);
+        int y = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setLayout(x,y);
+
+
+
     }
 
     public void SetListener() {
