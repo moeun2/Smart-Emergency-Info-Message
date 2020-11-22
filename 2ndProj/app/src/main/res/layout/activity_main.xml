@@ -85,21 +85,22 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:reverseLayout="true" />
 
-
         <LinearLayout
             android:id="@+id/linear_layout_in_activity_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/background_main_button"
             android:elevation="30dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <!--            리니어의 크기 고려! 보여줄만큼(30) 냄겨둔다-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:clickable="true">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview_down_main_hashtag"

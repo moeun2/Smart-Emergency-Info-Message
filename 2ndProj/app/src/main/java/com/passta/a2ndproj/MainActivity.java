@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.passta.a2ndproj.data.AppDatabase;
@@ -63,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
     public List<FilterDTO> filterList;
     public List<UserListDTO> userList;
 
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setStatusBar();
 
-        //예시데이터
-        setData();
         hashtagDownRecyclerView = findViewById(R.id.recyclerview_down_main_hashtag);
         hashtagUpRecyclerView = findViewById(R.id.recyclerview_up_main_hashtag);
         msgRecyclerView = findViewById(R.id.recyclerview_main_msg);
@@ -91,7 +89,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void start() {
+
+        //seekbar 너무 길어져서 클래스로 뺌
+        Seekbar seekbar = new Seekbar(this);
+        seekbar.setSeekbar();
+
+        //예시데이터
+        setData();
+        setMsgLevel();
 
         oneDayMsgRecyclerViewAdapter = new OneDayMsgRecyclerViewAdapter(oneDayMsgDataList, this);
         msgRecyclerView.setAdapter(oneDayMsgRecyclerViewAdapter);
@@ -102,11 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
         hashtagUpRecyclerViewAdapter = new HashtagUpRecyclerViewAdapter(this);
         hashtagUpRecyclerView.setAdapter(hashtagUpRecyclerViewAdapter);
-
-        //seekbar 너무 길어져서 클래스로 뺌
-        Seekbar seekbar = new Seekbar(this);
-        seekbar.setSeekbar();
-
     }
 
 
@@ -141,29 +143,29 @@ public class MainActivity extends AppCompatActivity {
         msgDataList = new ArrayList<>();
 
         msgDataList.add(new Msg_VO(1, "2020년 11월 6일", "21:30:23", "해외 유입 확진자가 증가 추세로 해외 입국이 예정되어 있는 가족 및" +
-                " 외국인근로자가 있을 경우 반드시 완도군보건의료원로 신고 바랍니다", "[완도군청]", 1, new MsgCategoryPoint_VO(70, 20, 10, 0, 0)));
+                " 외국인근로자가 있을 경우 반드시 완도군보건의료원로 신고 바랍니다", "[완도군청]", this, new MsgCategoryPoint_VO(70, 20, 10, 0, 0)));
         msgDataList.add(new Msg_VO(2, "2020년 11월 6일", "11:29:23", "367~369번 확진자 발생. 거주지 등 방역 완료. 코로나19 관련 안내 홈페이지" +
-                " 참고바랍니다.", "[성북군청]", 1, new MsgCategoryPoint_VO(10, 20, 70, 0, 0)));
+                " 참고바랍니다.", "[성북군청]", this, new MsgCategoryPoint_VO(10, 20, 70, 0, 0)));
         msgDataList.add(new Msg_VO(12, "2020년 11월 6일", "11:31:23", "367~369번 확진자 발생. 거주지 등 방역 완료. 코로나19 관련 안내 홈페이지" +
-                " 참고바랍니다.", "[성북군청]", 2, new MsgCategoryPoint_VO(70, 20, 10, 0, 0)));
+                " 참고바랍니다.", "[성북군청]", this, new MsgCategoryPoint_VO(70, 20, 10, 0, 0)));
         msgDataList.add(new Msg_VO(3, "2020년 11월 5일", "11:30:23", "11.8일 2명, 11.9일 4명 확진자 추가 발생." +
-                " 상세내용 추후 시홈페이지에 공개예정입니다. corona.seongnam.go.kr", "[성남시청]", 3, new MsgCategoryPoint_VO(10, 20, 70, 0, 0)));
+                " 상세내용 추후 시홈페이지에 공개예정입니다. corona.seongnam.go.kr", "[성남시청]", this, new MsgCategoryPoint_VO(10, 20, 70, 0, 0)));
         msgDataList.add(new Msg_VO(4, "2020년 11월 5일", "11:39:23", "해외 유입 확진자가 증가 추세로 해외 입국이 예정되어 있는 가족 및" +
-                " 외국인근로자가 있을 경우 반드시 완도군보건의료원로 신고 바랍니다", "[완도군청]", 2, new MsgCategoryPoint_VO(70, 20, 10, 0, 0)));
+                " 외국인근로자가 있을 경우 반드시 완도군보건의료원로 신고 바랍니다", "[완도군청]", this, new MsgCategoryPoint_VO(70, 20, 10, 0, 0)));
         msgDataList.add(new Msg_VO(5, "2020년 11월 5일", "03:39:10", "11.8일 2명, 11.9일 4명 확진자 추가 발생." +
-                " 상세내용 추후 시홈페이지에 공개예정입니다. corona.seongnam.go.kr", "[성남시청]", 3, new MsgCategoryPoint_VO(10, 70, 20, 0, 0)));
+                " 상세내용 추후 시홈페이지에 공개예정입니다. corona.seongnam.go.kr", "[성남시청]", this, new MsgCategoryPoint_VO(10, 70, 20, 0, 0)));
         msgDataList.add(new Msg_VO(6, "2020년 11월 4일", "21:30:23", "해외 유입 확진자가 증가 추세로 해외 입국이 예정되어 있는 가족 및" +
-                " 외국인근로자가 있을 경우 반드시 완도군보건의료원로 신고 바랍니다", "[완도군청]", 2, new MsgCategoryPoint_VO(10, 70, 20, 0, 0)));
+                " 외국인근로자가 있을 경우 반드시 완도군보건의료원로 신고 바랍니다", "[완도군청]", this, new MsgCategoryPoint_VO(10, 70, 20, 0, 0)));
         msgDataList.add(new Msg_VO(7, "2020년 11월 4일", "11:29:23", "해외 유입 확진자가 증가 추세로 해외 입국이 예정되어 있는 가족 및" +
-                " 외국인근로자가 있을 경우 반드시 완도군보건의료원로 신고 바랍니다", "[완도군청]", 1, new MsgCategoryPoint_VO(70, 20, 10, 0, 0)));
+                " 외국인근로자가 있을 경우 반드시 완도군보건의료원로 신고 바랍니다", "[완도군청]", this, new MsgCategoryPoint_VO(70, 20, 10, 0, 0)));
         msgDataList.add(new Msg_VO(8, "2020년 11월 3일", "03:39:10", "367~369번 확진자 발생. 거주지 등 방역 완료. 코로나19 관련 안내 홈페이지" +
-                " 참고바랍니다.", "[성북군청]", 1, new MsgCategoryPoint_VO(10, 20, 70, 0, 0)));
+                " 참고바랍니다.", "[성북군청]", this, new MsgCategoryPoint_VO(10, 20, 70, 0, 0)));
         msgDataList.add(new Msg_VO(9, "2020년 11월 3일", "03:39:10", "367~369번 확진자 발생. 거주지 등 방역 완료. 코로나19 관련 안내 홈페이지" +
-                " 참고바랍니다.", "[성북군청]", 2, new MsgCategoryPoint_VO(10, 70, 20, 0, 0)));
+                " 참고바랍니다.", "[성북군청]", this, new MsgCategoryPoint_VO(10, 70, 20, 0, 0)));
         msgDataList.add(new Msg_VO(10, "2020년 11월 3일", "21:30:23", "367~369번 확진자 발생. 거주지 등 방역 완료. 코로나19 관련 안내 홈페이지" +
-                " 참고바랍니다.", "[성북군청]", 1, new MsgCategoryPoint_VO(10, 20, 70, 0, 0)));
+                " 참고바랍니다.", "[성북군청]", this, new MsgCategoryPoint_VO(10, 20, 70, 0, 0)));
         msgDataList.add(new Msg_VO(11, "2020년 11월 3일", "03:39:10", "367~369번 확진자 발생. 거주지 등 방역 완료. 코로나19 관련 안내 홈페이지" +
-                " 참고바랍니다.", "[성북군청]", 1, new MsgCategoryPoint_VO(70, 20, 10, 0, 0)));
+                " 참고바랍니다.", "[성북군청]", this, new MsgCategoryPoint_VO(70, 20, 10, 0, 0)));
 
         //day 에 따라 분류
         for (int i = 0; i < msgDataList.size(); ) {
@@ -193,6 +195,17 @@ public class MainActivity extends AppCompatActivity {
         //날짜,시간 순으로 배열
         oneDayMsgDataList = sortByDay(oneDayMsgDataList);
         oneDayMsgDataList = sortByTime(oneDayMsgDataList);
+    }
+
+    public void setMsgLevel(){
+        for (int i = 0; i < oneDayMsgDataList.size(); i++) {
+
+            int size = oneDayMsgDataList.get(i).getMsgArrayList().size();
+
+            for (int j = 0; j < size; j++) {
+                oneDayMsgDataList.get(i).getMsgArrayList().get(j).calculateTotalMsgPointAndLevel();
+            }
+        }
     }
 
     //날짜순 정렬하는 메소드
@@ -275,6 +288,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);

@@ -56,7 +56,7 @@ public class Seekbar {
 
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
-                mainActivity.filterList.get(0).setFilter_1(5 - mainActivity.seekbar2.getProgress());
+                mainActivity.filterList.get(0).setFilter_2(5 - mainActivity.seekbar2.getProgress());
                 updateFilter();
             }
         });
@@ -73,7 +73,7 @@ public class Seekbar {
 
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
-                mainActivity.filterList.get(0).setFilter_1(5 - mainActivity.seekbar3.getProgress());
+                mainActivity.filterList.get(0).setFilter_3(5 - mainActivity.seekbar3.getProgress());
                 updateFilter();
             }
         });
@@ -90,7 +90,7 @@ public class Seekbar {
 
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
-                mainActivity.filterList.get(0).setFilter_1(5 - mainActivity.seekbar4.getProgress());
+                mainActivity.filterList.get(0).setFilter_4(5 - mainActivity.seekbar4.getProgress());
                 updateFilter();
             }
         });
@@ -107,7 +107,7 @@ public class Seekbar {
 
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
-                mainActivity.filterList.get(0).setFilter_1(5 - mainActivity.seekbar5.getProgress());
+                mainActivity.filterList.get(0).setFilter_5(5 - mainActivity.seekbar5.getProgress());
                 updateFilter();
             }
         });
@@ -117,6 +117,10 @@ public class Seekbar {
         FilterDTO temp = new FilterDTO(0,5 - mainActivity.seekbar1.getProgress(),5 - mainActivity.seekbar2.getProgress(),5 - mainActivity.seekbar3.getProgress(),
                 5 - mainActivity.seekbar4.getProgress(),5 - mainActivity.seekbar5.getProgress());
         new UpdateFilterDatabaseAsyncTask(mainActivity.db.filterDAO(),temp).execute();
+
+        mainActivity.setMsgLevel();
+        mainActivity.oneDayMsgRecyclerViewAdapter.notifyDataSetChanged();
+
     }
 
     // 데이터 AsyncvTask Update

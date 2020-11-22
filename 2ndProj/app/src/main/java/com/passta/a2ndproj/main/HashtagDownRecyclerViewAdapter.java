@@ -171,7 +171,7 @@ public class HashtagDownRecyclerViewAdapter extends RecyclerView.Adapter<Hashtag
                 for(int j=0;j<mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().size();j++){
 
                     Msg_VO oldVo = mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().get(j);
-                    Msg_VO tempVo = new Msg_VO(oldVo.getId(),oldVo.getDay(),oldVo.getTime(),oldVo.getMsgText(),oldVo.getSenderLocation(),oldVo.getLevel(),oldVo.getMsgCategoryPoint());
+                    Msg_VO tempVo = new Msg_VO(oldVo.getId(),oldVo.getDay(),oldVo.getTime(),oldVo.getMsgText(),oldVo.getSenderLocation(),mainActivity,oldVo.getMsgCategoryPoint());
                     tempList.add(tempVo);
                 }
 
