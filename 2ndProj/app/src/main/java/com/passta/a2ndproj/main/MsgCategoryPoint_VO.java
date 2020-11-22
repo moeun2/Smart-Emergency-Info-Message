@@ -8,7 +8,7 @@ public class MsgCategoryPoint_VO {
     private double disaster;
 
     public MsgCategoryPoint_VO(double coronaRoute, double coronaUpbreak, double coronaSafetyRule, double disaster, double economy) {
-        //1. 동선 2. 발생방역 3. 안전수칙 4.재난상황 5. 경제금융
+        //1. 동선 2. 발생방역 3. 안전수칙 4.재난날씨 5. 경제금융
         this.coronaRoute = coronaRoute;
         this.coronaUpbreak = coronaUpbreak;
         this.coronaSafetyRule = coronaSafetyRule;

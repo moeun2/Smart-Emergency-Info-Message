@@ -147,8 +147,6 @@ public class Page2Activity extends AppCompatActivity implements View.OnClickList
             if (list.size() == 0) {
                 Log.i("모은 데이터베이스", "null");
                 userListDAO.insert(new UserListDTO("모은", "서울특별시", "광진구"));
-
-
             }
             list = userListDAO.loadUserList();
             for (int i = 0; i < list.size(); i++) {

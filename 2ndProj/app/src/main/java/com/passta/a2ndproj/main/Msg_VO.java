@@ -5,6 +5,7 @@ import com.passta.a2ndproj.R;
 import com.passta.a2ndproj.data.FilterDTO;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Msg_VO {
     private int id;
@@ -14,8 +15,9 @@ public class Msg_VO {
     private String senderLocation;
     private int level;
     private int circleImageViewId;
-    //1. 동선 2. 발생방역 3. 안전수칙 4.재난상황 5. 경제금융
     private MsgCategoryPoint_VO msgCategoryPoint;
+    //index 0. 동선 1. 발생방역 2. 안전수칙 3.재난날씨 4. 경제금융
+    private int categroyIndex;
     private double totalMsgPoint;
     private MainActivity mainActivity;
 
@@ -29,7 +31,7 @@ public class Msg_VO {
         this.mainActivity = mainActivity;
         this.msgCategoryPoint = new MsgCategoryPoint_VO(msgCategoryPoint.getCoronaRoute(),msgCategoryPoint.getCoronaUpbreak(),msgCategoryPoint.getCoronaSafetyRule(),
                 msgCategoryPoint.getDisaster(),msgCategoryPoint.getEconomy());
-
+        setCategroy();
         calculateTotalMsgPointAndLevel();
     }
 
@@ -75,6 +77,24 @@ public class Msg_VO {
                 return 9;
         }
         return 0;
+    }
+
+    public void setCategroy(){
+        double[] cate = new double[]{msgCategoryPoint.getCoronaRoute(),msgCategoryPoint.getCoronaUpbreak(),msgCategoryPoint.getCoronaSafetyRule(),
+                msgCategoryPoint.getDisaster(),msgCategoryPoint.getEconomy()
+        };
+        int maxIndex = 0;
+        for(int i=0;i<5;i++){
+            if(cate[maxIndex]<cate[i]){
+                maxIndex = i;
+            }
+        }
+
+        this.categroyIndex = maxIndex;
+    }
+
+    public int getCategroyIndex() {
+        return categroyIndex;
     }
 
     public double getTotalMsgPoint() {

@@ -1,7 +1,10 @@
 package com.passta.a2ndproj.main;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.passta.a2ndproj.MainActivity;
 import com.passta.a2ndproj.data.FilterDAO;
@@ -37,6 +40,7 @@ public class Seekbar {
             public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
                 mainActivity.filterList.get(0).setFilter_1(5 - mainActivity.seekbar1.getProgress());
@@ -54,6 +58,7 @@ public class Seekbar {
             public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
                 mainActivity.filterList.get(0).setFilter_2(5 - mainActivity.seekbar2.getProgress());
@@ -71,6 +76,7 @@ public class Seekbar {
             public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
                 mainActivity.filterList.get(0).setFilter_3(5 - mainActivity.seekbar3.getProgress());
@@ -88,6 +94,7 @@ public class Seekbar {
             public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
                 mainActivity.filterList.get(0).setFilter_4(5 - mainActivity.seekbar4.getProgress());
@@ -105,6 +112,7 @@ public class Seekbar {
             public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
                 mainActivity.filterList.get(0).setFilter_5(5 - mainActivity.seekbar5.getProgress());
@@ -113,6 +121,7 @@ public class Seekbar {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void updateFilter(){
         FilterDTO temp = new FilterDTO(0,5 - mainActivity.seekbar1.getProgress(),5 - mainActivity.seekbar2.getProgress(),5 - mainActivity.seekbar3.getProgress(),
                 5 - mainActivity.seekbar4.getProgress(),5 - mainActivity.seekbar5.getProgress());

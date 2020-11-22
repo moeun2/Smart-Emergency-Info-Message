@@ -291,7 +291,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
                         android:fontFamily="@font/nanumsquareb"
-                        android:text="재난/상황"
+                        android:text="재난/날씨"
                         android:textColor="@color/black"
                         android:textSize="12dp" />
 
