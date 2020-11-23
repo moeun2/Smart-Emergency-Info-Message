@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -15,21 +16,28 @@ import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.passta.a2ndproj.R;
 import com.passta.a2ndproj.start.activity.Page2Activity;
+import com.passta.a2ndproj.start.adapter.AdapterImageLocation;
+import com.passta.a2ndproj.start.adapter.Adapter_location;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dialogue_add_location extends AppCompatActivity implements View.OnClickListener {
@@ -37,9 +45,12 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
     private TextView current_location;
     private TextView set_location;
     private Button confirm;
-    private ImageView cancel;
+    private Button cancel;
     private TextView location;
     private EditText tag_editing;
+    private RecyclerView imgRecyclerView;
+    private ArrayList<Integer> imgIdList;
+    private LinearLayout spaceView;
 
     private LocationManager locationManager;
     private static final String TAG = "dialogue_add_location";
@@ -61,7 +72,6 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
         Log.d("모은", "onActivityResult(add)");
 
         if (resultcode == RESULT_OK) {
-
             String location_si = data.getStringExtra("location_si");
             String location_gu = data.getStringExtra("location_gu");
             Log.d("모은", location_si + " " + location_gu);
@@ -78,17 +88,33 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
         cancel = findViewById(R.id.cancel);
         location = findViewById(R.id.location);
         tag_editing = findViewById(R.id.edit_tag_text);
+        imgRecyclerView = findViewById(R.id.recyclerview_add_location);
+        spaceView = findViewById(R.id.spaceview_add_location);
+
+        imgIdList = new ArrayList<>();
+        imgIdList.add(R.drawable.home);
+        imgIdList.add(R.drawable.school);
+        imgIdList.add(R.drawable.company);
+        imgIdList.add(R.drawable.home2);
+        imgIdList.add(R.drawable.school2);
+        imgIdList.add(R.drawable.company2);
+        imgIdList.add(R.drawable.home3);
+        imgIdList.add(R.drawable.cafe1);
+        imgIdList.add(R.drawable.foodshop);
+        imgIdList.add(R.drawable.sport1);
+
+        AdapterImageLocation adapterImageLocation = new AdapterImageLocation(imgIdList);
+        imgRecyclerView.setAdapter(adapterImageLocation);
+        imgRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(45));
 
         //디바이스크기에맞게 가로사이즈 지정하기위함
         Display display = getWindowManager().getDefaultDisplay();
-        Point size =new Point();
+        Point size = new Point();
         display.getSize(size);
         Window window = this.getWindow();
-        int x = (int)(size.x * 0.9f);
+        int x = (int) (size.x * 0.9f);
         int y = WindowManager.LayoutParams.WRAP_CONTENT;
-        window.setLayout(x,y);
-
-
+        window.setLayout(x, y);
 
     }
 
@@ -97,6 +123,23 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
         set_location.setOnClickListener(this);
         confirm.setOnClickListener(this);
         cancel.setOnClickListener(this);
+        tag_editing.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    spaceView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,(int) getResources().getDimension(R.dimen.space)));
+                }
+                else {
+                    //포커스 떠날때 키보드내리기
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(tag_editing.getWindowToken(), 0);
+
+                    if(tag_editing.getText().toString().equals("")){
+                        spaceView.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -147,8 +190,7 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
                 ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
                 return;
             }
-        }
-        else {
+        } else {
             locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 
 
@@ -195,7 +237,7 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
                 String[] lst = address_str.split(" ");
 
 
-                location.setText(lst[1] +" " + lst[2] );
+                location.setText(lst[1] + " " + lst[2]);
                 location.setVisibility(View.VISIBLE);
             }
         }
@@ -227,6 +269,24 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
             return false;
         }
         return true;
+    }
+
+    //공백 추가 클래스
+    public class VerticalSpaceItemDecoration extends RecyclerView.ItemDecoration {
+
+        private final int verticalSpaceHeight;
+
+        public VerticalSpaceItemDecoration(int verticalSpaceHeight) {
+            this.verticalSpaceHeight = verticalSpaceHeight;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            // 마지막 아이템이 아닌 경우, 공백 추가
+            if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount() - 1) {
+                outRect.right = verticalSpaceHeight;
+            }
+        }
     }
 
 }

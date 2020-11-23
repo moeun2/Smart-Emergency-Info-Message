@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#000000</color>
 
 
     <color name="white">#FFFFFF</color>
@@ -11,6 +11,7 @@
 
     <!--추가컬러-->
     <color name="colorGray">#f3f3f3</color>
+    <color name="colorGray2">#e6e6e6</color>
     <color name="twitterBlue">#2aa9e0</color>
     <color name="twitterLowBlue">#6bc7ee</color>
 

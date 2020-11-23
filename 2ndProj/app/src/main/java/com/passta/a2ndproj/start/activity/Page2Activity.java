@@ -16,6 +16,7 @@ import com.passta.a2ndproj.start.dialogue.Dialogue_add_location;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
