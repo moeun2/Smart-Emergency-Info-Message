@@ -1,9 +1,11 @@
 package com.passta.a2ndproj;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -62,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
     public List<FilterDTO> filterList;
     public List<UserListDTO> userList;
     public UserSettingDTO userSetting;
+    public String insertedLocationName;
+    public String insertedLocation_si;
+    public String insertedLocation_gu;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -110,6 +115,29 @@ public class MainActivity extends AppCompatActivity {
         hashtagUpRecyclerView.setAdapter(hashtagUpRecyclerViewAdapter);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK){
+            insertedLocationName = data.getStringExtra("tag");
+            String location = data.getStringExtra("location");
+            int imgNumber = data.getIntExtra("imgNumber",0);
+            Log.d("모은", insertedLocationName + " " + location + Integer.toString(imgNumber));
+            insertedLocation_si = location.split(" ")[0];
+            insertedLocation_gu = location.split(" ")[1];
+
+            UserListDTO lst = new UserListDTO(insertedLocationName, insertedLocation_si, insertedLocation_gu,imgNumber);
+            AppDatabase db = AppDatabase.getInstance(this);
+
+            new UserListDatabaseInsertAsyncTask(db.userListDAO(), lst).execute();
+            userList.add(lst);
+            int size = userList.size() - 1;
+            hashtagUpDataList.add(new Hashtag_VO(userList.get(size).tag, userList.get(size).img_number, true));
+            hashtagUpRecyclerViewAdapter.notifyDataSetChanged();
+        }
+
+    }
 
     private void setStatusBar() {
         View view = getWindow().getDecorView();
@@ -122,10 +150,11 @@ public class MainActivity extends AppCompatActivity {
 
         // 해시태크 원 가데이터
         hashtagUpDataList = new ArrayList<>();
+
         hashtagUpDataList.add(new Hashtag_VO("내 장소\n추가하기", R.drawable.plus2, false));
-        hashtagUpDataList.add(new Hashtag_VO("우리 집", R.drawable.home, true));
-        hashtagUpDataList.add(new Hashtag_VO("학교", R.drawable.school, false));
-        hashtagUpDataList.add(new Hashtag_VO("회사", R.drawable.company, false));
+        for(int i=0;i<userList.size();i++){
+            hashtagUpDataList.add(new Hashtag_VO(userList.get(i).tag, userList.get(i).img_number, true));
+        }
 
         hashtagDownDataList = new ArrayList<>();
         hashtagDownDataList.add(new Hashtag_VO("(코로나)\n동선", R.drawable.coronavirus, userSetting.is_clicked_corona_route_hashtag));
@@ -229,6 +258,15 @@ public class MainActivity extends AppCompatActivity {
         createOneDayMsgDataList();
     }
 
+    public Integer calculateUpHashtagClickedNumber(){
+        int result = 0;
+        for(int i=0;i<hashtagUpDataList.size();i++){
+            if(hashtagUpDataList.get(i).isClicked())
+                result++;
+        }
+        return result;
+    }
+
     //날짜순 정렬하는 메소드
     @RequiresApi(api = Build.VERSION_CODES.N)
     public ArrayList<OneDayMsg_VO> sortByDay(ArrayList<OneDayMsg_VO> oneDayMsgDataList) {
@@ -312,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
 
             userList = userListDAO.loadUserList();
             if (userList.size() == 0) {
-                userListDAO.insert(new UserListDTO("모은", "서울특별시", "광진구"));
+                userListDAO.insert(new UserListDTO("모은", "서울특별시", "광진구",R.drawable.home));
             }
 
             userList = userListDAO.loadUserList();
@@ -341,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
             userSetting = userSettingDAO.loadUserSetting();
 
             if (userSetting == null) {
-                userSettingDAO.insert(new UserSettingDTO(true, true, true, false, false, true, true, false));
+                userSettingDAO.insert(new UserSettingDTO(true, true, true, false, false, true, true, true));
             }
             userSetting = userSettingDAO.loadUserSetting();
 
@@ -353,6 +391,26 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             start();
+        }
+    }
+
+    public class UserListDatabaseInsertAsyncTask extends AsyncTask<UserListDTO, Void, Void> {
+        private UserListDAO userListDAO;
+        private UserListDTO userListDTO;
+
+        UserListDatabaseInsertAsyncTask(UserListDAO userListDAO, UserListDTO userListDTO) {
+            this.userListDAO = userListDAO;
+            this.userListDTO = userListDTO;
+        }
+
+
+        @Override
+        protected Void doInBackground(UserListDTO... userListDTOS) {
+
+            userListDAO.insert(userListDTO);
+            List<UserListDTO> lst = userListDAO.loadUserList();
+            userList = lst;
+            return null;
         }
     }
 

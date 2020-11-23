@@ -12,11 +12,15 @@ import com.passta.a2ndproj.start.adapter.Adapter_location;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -33,6 +37,7 @@ public class Dialogue_select_location extends AppCompatActivity {
     private int numberOfColumns;
     public static Activity activity;
     private static final String TAG = "Dialogue_select_location";
+    private String nowType;
 
 
     @Override
@@ -40,6 +45,9 @@ public class Dialogue_select_location extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialogue_select_location);
         activity = this;
+
+        Intent intent = getIntent();
+        nowType = intent.getStringExtra("type");
 
         InitializeView();
         initialize_recyclerview(1);
@@ -75,6 +83,19 @@ public class Dialogue_select_location extends AppCompatActivity {
     {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_main_list);
 
+        //디바이스크기에맞게 가로사이즈 지정하기위함
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        Window window = this.getWindow();
+        int x = (int) (size.x * 0.9f);
+        int y = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setLayout(x, y);
+
+        if(nowType.equals("main")){
+            getWindow().setDimAmount(0.88f);
+        }
+
     }
     public void initialize_recyclerview(int numberOfColumns)
     {
@@ -89,7 +110,7 @@ public class Dialogue_select_location extends AppCompatActivity {
         set_list(mArrayList,"sido");
         mAdapter = new Adapter_location(mArrayList);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addItemDecoration(new RecyclerViewDecoration(50)); // 높이 맞추기
+        //mRecyclerView.addItemDecoration(new RecyclerViewDecoration(50)); // 높이 맞추기
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL)); // 구분선
 
 
@@ -104,6 +125,10 @@ public class Dialogue_select_location extends AppCompatActivity {
 
                 Intent intent = new Intent(getBaseContext(),Dialogue_select_location_2.class);
                 intent.putExtra("position", position);
+                if(nowType.equals("start"))
+                    intent.putExtra("type","start");
+                else
+                    intent.putExtra("type","main");
                 startActivityForResult(intent,1003);
             }
 

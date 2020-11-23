@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.L;
 import com.passta.a2ndproj.MainActivity;
 import com.passta.a2ndproj.R;
+import com.passta.a2ndproj.start.dialogue.Dialogue_add_location;
 
 import java.util.ArrayList;
 
@@ -31,11 +34,11 @@ public class AdapterImageLocation extends RecyclerView.Adapter<AdapterImageLocat
     private View view;
     protected Context context;
     private LayoutInflater layoutInflater;
-    private ArrayList<Integer> imgIdList;
-    private Integer imgId;
+    private ArrayList<Integer> locationList;
+    public int selectedPosition = -1;
 
-    public AdapterImageLocation(ArrayList<Integer> imgIdList) {
-        this.imgIdList = imgIdList;
+    public AdapterImageLocation(ArrayList<Integer> locationList) {
+        this.locationList = locationList;
     }
 
     @NonNull
@@ -44,49 +47,42 @@ public class AdapterImageLocation extends RecyclerView.Adapter<AdapterImageLocat
         context = parent.getContext();
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = layoutInflater.inflate(R.layout.item_location_circle_list, parent, false);
-        imgId = 0;
 
         return new AdapterImageLocationViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AdapterImageLocationViewHolder holder, int position) {
-        holder.circleImageView.setImageResource(imgIdList.get(position));
-        imgId = imgIdList.get(position);
 
-        holder.checkImageViwe.setOnClickListener(new View.OnClickListener() {
+        //리사이클러뷰 업데이트에도 바뀌지않게하기위해
+        holder.checkBox.setOnCheckedChangeListener(null);
+
+        holder.circleImageView.setImageResource(locationList.get(position));
+        holder.checkBox.setChecked(selectedPosition == position);
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                selectedPosition = holder.getAdapterPosition();
+                notifyDataSetChanged();
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
-        return imgIdList.size();
+        return locationList.size();
     }
 
-    public class AdapterImageLocationViewHolder extends RecyclerView.ViewHolder{
+    public class AdapterImageLocationViewHolder extends RecyclerView.ViewHolder {
 
         private CircleImageView circleImageView;
-        private ImageView checkImageViwe;
+        private CheckBox checkBox;
+
         public AdapterImageLocationViewHolder(@NonNull View itemView) {
             super(itemView);
             this.circleImageView = (CircleImageView) itemView.findViewById(R.id.img_location_item_hashtag_list);
-            this.checkImageViwe = (ImageView) itemView.findViewById(R.id.check_img__location_iem);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    checkImageViwe.setVisibility(View.VISIBLE);
-
-                }
-            });
+            this.checkBox = (CheckBox) itemView.findViewById(R.id.checkbox_location_item_hashtag_list);
         }
-
-
-
     }
 }

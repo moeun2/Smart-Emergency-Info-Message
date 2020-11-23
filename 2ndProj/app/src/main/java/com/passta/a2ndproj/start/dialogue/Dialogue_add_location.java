@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.passta.a2ndproj.MainActivity;
 import com.passta.a2ndproj.R;
 import com.passta.a2ndproj.start.activity.Page2Activity;
 import com.passta.a2ndproj.start.adapter.AdapterImageLocation;
@@ -49,17 +50,21 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
     private TextView location;
     private EditText tag_editing;
     private RecyclerView imgRecyclerView;
-    private ArrayList<Integer> imgIdList;
+    private ArrayList<Integer> locationList;
     private LinearLayout spaceView;
+    private AdapterImageLocation adapterImageLocation;
 
     private LocationManager locationManager;
     private static final String TAG = "dialogue_add_location";
+    private String nowType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialogue_add_location);
+        Intent intent = getIntent();
+        nowType = intent.getStringExtra("type");
 
         InitializeView();
         SetListener();
@@ -91,19 +96,19 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
         imgRecyclerView = findViewById(R.id.recyclerview_add_location);
         spaceView = findViewById(R.id.spaceview_add_location);
 
-        imgIdList = new ArrayList<>();
-        imgIdList.add(R.drawable.home);
-        imgIdList.add(R.drawable.school);
-        imgIdList.add(R.drawable.company);
-        imgIdList.add(R.drawable.home2);
-        imgIdList.add(R.drawable.school2);
-        imgIdList.add(R.drawable.company2);
-        imgIdList.add(R.drawable.home3);
-        imgIdList.add(R.drawable.cafe1);
-        imgIdList.add(R.drawable.foodshop);
-        imgIdList.add(R.drawable.sport1);
+        locationList = new ArrayList<>();
+        locationList.add(R.drawable.home);
+        locationList.add(R.drawable.school);
+        locationList.add(R.drawable.company);
+        locationList.add(R.drawable.home2);
+        locationList.add(R.drawable.school2);
+        locationList.add(R.drawable.company2);
+        locationList.add(R.drawable.home3);
+        locationList.add(R.drawable.cafe1);
+        locationList.add(R.drawable.foodshop);
+        locationList.add(R.drawable.sport1);
 
-        AdapterImageLocation adapterImageLocation = new AdapterImageLocation(imgIdList);
+        adapterImageLocation = new AdapterImageLocation(locationList);
         imgRecyclerView.setAdapter(adapterImageLocation);
         imgRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(45));
 
@@ -116,6 +121,10 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
         int y = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setLayout(x, y);
 
+        if(nowType.equals("main")){
+            getWindow().setDimAmount(0.88f);
+        }
+
     }
 
     public void SetListener() {
@@ -126,16 +135,15 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
         tag_editing.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(b){
-                    spaceView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,(int) getResources().getDimension(R.dimen.space)));
-                }
-                else {
+                if (b) {
+                    spaceView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.space)));
+                } else {
                     //포커스 떠날때 키보드내리기
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(tag_editing.getWindowToken(), 0);
 
-                    if(tag_editing.getText().toString().equals("")){
-                        spaceView.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+                    if (tag_editing.getText().toString().equals("")) {
+                        spaceView.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
                     }
                 }
             }
@@ -153,6 +161,10 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
                 break;
             case R.id.set_location:
                 Intent intent = new Intent(getBaseContext(), Dialogue_select_location.class);
+                if(nowType.equals("start"))
+                    intent.putExtra("type","start");
+                else
+                    intent.putExtra("type","main");
                 startActivityForResult(intent, 1003);
                 break;
             case R.id.confirm:
@@ -162,12 +174,24 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
                     Toast.makeText(this, "태그 편집이 필요합니다", Toast.LENGTH_SHORT).show();
                 } else if (location.getText() == null) {
                     Toast.makeText(this, "지역선택이 필요합니다", Toast.LENGTH_SHORT).show();
+                } else if (adapterImageLocation.selectedPosition == -1) {
+                    Toast.makeText(this, "이미지 선택이 필요합니다", Toast.LENGTH_SHORT).show();
                 } else if (tag_editing.getText().toString() != null && location.getText() != null) {
-                    intent = new Intent(getApplicationContext(), Page2Activity.class);
-                    intent.putExtra("tag", tag_editing.getText().toString());
-                    intent.putExtra("location", location.getText().toString());
-                    setResult(RESULT_OK, intent);
-                    finish();
+                    if (nowType.equals("start")) {
+                        intent = new Intent(getApplicationContext(), Page2Activity.class);
+                        intent.putExtra("tag", tag_editing.getText().toString());
+                        intent.putExtra("location", location.getText().toString());
+                        intent.putExtra("imgNumber", locationList.get(adapterImageLocation.selectedPosition));
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    } else if(nowType.equals("main")){
+                        intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("tag", tag_editing.getText().toString());
+                        intent.putExtra("location", location.getText().toString());
+                        intent.putExtra("imgNumber", locationList.get(adapterImageLocation.selectedPosition));
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
                 }
 
                 break;

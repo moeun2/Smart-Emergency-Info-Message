@@ -63,11 +63,12 @@ public class Page2Activity extends AppCompatActivity implements View.OnClickList
 
             tag = data.getStringExtra("tag");
             String location = data.getStringExtra("location");
-            Log.d("모은", tag + " " + location);
+            int imgNumber = data.getIntExtra("imgNumber",0);
+            Log.d("모은", tag + " " + location + Integer.toString(imgNumber));
             location_si = location.split(" ")[0];
             location_gu = location.split(" ")[1];
 
-            UserListDTO lst = new UserListDTO(tag, location_si, location_gu);
+            UserListDTO lst = new UserListDTO(tag, location_si, location_gu,imgNumber);
             AppDatabase db = AppDatabase.getInstance(this);
             new DatabaseInsertAsyncTask(db.userListDAO(), lst).execute();
             list.add(lst);
@@ -127,6 +128,7 @@ public class Page2Activity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.add_location:
                 intent = new Intent(getApplicationContext(), Dialogue_add_location.class);
+                intent.putExtra("type","start");
                 startActivityForResult(intent, 1003);
                 break;
         }
@@ -147,7 +149,7 @@ public class Page2Activity extends AppCompatActivity implements View.OnClickList
             list = userListDAO.loadUserList();
             if (list.size() == 0) {
                 Log.i("모은 데이터베이스", "null");
-                userListDAO.insert(new UserListDTO("모은", "서울특별시", "광진구"));
+                userListDAO.insert(new UserListDTO("모은", "서울특별시", "광진구",R.drawable.cafe1));
             }
             list = userListDAO.loadUserList();
             for (int i = 0; i < list.size(); i++) {

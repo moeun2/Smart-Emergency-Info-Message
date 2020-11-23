@@ -17,4 +17,7 @@ public interface UserListDAO {
     @Query("SELECT * FROM UserList")
     List<UserListDTO> loadUserList();
 
+    @Query("DELETE FROM UserList WHERE tag = :tag")
+    void delete(String tag);
+
 }

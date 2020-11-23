@@ -11,11 +11,15 @@ import com.passta.a2ndproj.start.adapter.Adapter_location;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -31,6 +35,7 @@ public class Dialogue_select_location_2 extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private int numberOfColumns;
     private static final String TAG = "Dialogue_select_location_2";
+    private String nowType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,7 @@ public class Dialogue_select_location_2 extends AppCompatActivity {
 
         Intent intent = getIntent();
         int position = intent.getIntExtra("position",0);
+        nowType = intent.getStringExtra("type");
 
         InitializeView();
         initialize_recyclerview(1, position);
@@ -48,6 +54,19 @@ public class Dialogue_select_location_2 extends AppCompatActivity {
     public void InitializeView()
     {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_main_list);
+
+        //디바이스크기에맞게 가로사이즈 지정하기위함
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        Window window = this.getWindow();
+        int x = (int) (size.x * 0.9f);
+        int y = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setLayout(x, y);
+
+        if(nowType.equals("main")){
+            getWindow().setDimAmount(0.88f);
+        }
 
     }
     public void initialize_recyclerview(int numberOfColumns, int position)
@@ -66,7 +85,7 @@ public class Dialogue_select_location_2 extends AppCompatActivity {
 
         mAdapter = new Adapter_location(mArrayList);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addItemDecoration(new RecyclerViewDecoration(50)); // 높이 맞추기
+        //mRecyclerView.addItemDecoration(new RecyclerViewDecoration(50)); // 높이 맞추기
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL)); // 구분선
 
 

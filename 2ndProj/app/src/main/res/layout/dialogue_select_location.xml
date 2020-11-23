@@ -1,47 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="520dp"
+    android:orientation="vertical"
+    android:background="@drawable/background_dialog_add_location">
 
-    <FrameLayout
-        android:layout_width="320dp"
-        android:layout_height="410dp"
-        android:background="@drawable/button_line_shape"
-        android:backgroundTint="@color/twitterLowBlue"
-        android:visibility="visible">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
 
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="20dp"
 
-        <LinearLayout
-            android:id="@+id/main_layout"
-            android:layout_width="320dp"
-            android:layout_height="380dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorTransparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/gps" />
 
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+            android:fontFamily="@font/nanumsquareb"
+            android:paddingTop="2dp"
+            android:text="재난문자 수신지역 등록"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
 
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rectangle"
-            android:elevation="10dp"
-            android:orientation="vertical"
-            android:padding="5dp"
-            android:translationZ="10dp"
-            android:visibility="visible">
+    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_main_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbarFadeDuration="0"
-                    android:scrollbarSize="5dp"
-                    android:scrollbars="vertical" />
-            </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_main_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="5dp"
+        android:scrollbars="vertical"
+        android:overScrollMode="never"/>
 
 </LinearLayout>
+
+

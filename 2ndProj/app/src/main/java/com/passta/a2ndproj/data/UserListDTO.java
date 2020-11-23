@@ -17,10 +17,22 @@ public class UserListDTO {
     @ColumnInfo(name = "location_gu")
     public String location_gu;
 
-    public UserListDTO(@NonNull String tag, String location_si, String location_gu) {
+    @ColumnInfo(name = "img_number")
+    public Integer img_number;
+
+    public UserListDTO(@NonNull String tag, String location_si, String location_gu,Integer img_number) {
         this.tag = tag;
         this.location_si = location_si;
         this.location_gu = location_gu;
+        this.img_number = img_number;
+    }
+
+    public Integer getImg_number() {
+        return img_number;
+    }
+
+    public void setImg_number(Integer img_number) {
+        this.img_number = img_number;
     }
 
     @NonNull
