@@ -11,29 +11,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.passta.a2ndproj.R;
 import com.passta.a2ndproj.data.UserListDTO;
+import com.passta.a2ndproj.start.activity.Page2Activity;
 
 import java.util.List;
 
 public class Adapter_page2 extends RecyclerView.Adapter<Adapter_page2.ViewHolder>{
 
-    private List<UserListDTO> mList;
+//    private List<UserListDTO> mList;
+    private Page2Activity page2Activity;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         protected TextView location;
         protected TextView tag;
-
 
         public ViewHolder(View view) {
             super(view);
             this.location = (TextView) view.findViewById(R.id.location);
             this.tag =(TextView) view.findViewById(R.id.tag);
 
-
         }
     }
 
-    public Adapter_page2(List<UserListDTO> list) {
-        this.mList = list;
+    public Adapter_page2(Page2Activity page2Activity) {
+//        this.mList = list;
+        this.page2Activity = page2Activity;
     }
 
 
@@ -52,13 +53,13 @@ public class Adapter_page2 extends RecyclerView.Adapter<Adapter_page2.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull Adapter_page2.ViewHolder viewholder, int position) {
 
-        viewholder.location.setText(mList.get(position).getLocation_si() +" "+ mList.get(position).getLocation_gu());
-        viewholder.tag.setText(mList.get(position).getTag());
+        viewholder.location.setText(page2Activity.list.get(position).getLocation_si() +" "+ page2Activity.list.get(position).getLocation_gu());
+        viewholder.tag.setText(page2Activity.list.get(position).getTag());
     }
 
     @Override
     public int getItemCount() {
-        return (null != mList ? mList.size() : 0);
+        return (null != page2Activity.list ? page2Activity.list.size() : 0);
     }
 
 }

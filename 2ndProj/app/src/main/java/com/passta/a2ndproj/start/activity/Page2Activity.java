@@ -36,7 +36,7 @@ public class Page2Activity extends AppCompatActivity implements View.OnClickList
     private String location_si;
     private String location_gu;
     private Adapter_page2 mAdapter;
-    private List<UserListDTO> list;
+    public List<UserListDTO> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,6 @@ public class Page2Activity extends AppCompatActivity implements View.OnClickList
         Log.d("모은", "onActivityResult(page2)");
 
         if (resultcode == RESULT_OK) {
-
 
             tag = data.getStringExtra("tag");
             String location = data.getStringExtra("location");
@@ -112,7 +111,7 @@ public class Page2Activity extends AppCompatActivity implements View.OnClickList
         if (list == null) {
             Log.d("모은", "null이라네");
         }
-        mAdapter = new Adapter_page2(list);
+        mAdapter = new Adapter_page2(this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new RecyclerViewDecoration(10)); // 높이 맞추기
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL)); // 구분선
