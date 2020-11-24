@@ -7,8 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.passta.a2ndproj.main.HashtagDownRecyclerViewAdapter;
 import com.passta.a2ndproj.main.HashtagUpRecyclerViewAdapter;
 import com.passta.a2ndproj.main.Hashtag_VO;
@@ -40,6 +45,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setStatusBar();
 
+        //Firebase에 토큰 등록시
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this,
+                new OnSuccessListener<InstanceIdResult>() {
+                    @Override
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                        String newToken = instanceIdResult.getToken();
+                        Log.e("new Token : ",newToken);
+                        subcribeTopic("testTopic");//topic 에 등록
+                    }
+                });
+
+        //이미 등록된 경우
+        String savedToken = FirebaseInstanceId.getInstance().getId();
+        Log.e("savedToken",savedToken);
+
+
         //예시데이터
         setData();
         hashtagDownRecyclerView = findViewById(R.id.recyclerview_down_main_hashtag);
@@ -57,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
         hashtagUpRecyclerView.setAdapter(hashtagUpRecyclerViewAdapter);
 
 
+    }
+    public void subcribeTopic(String topic){
+        FirebaseMessaging.getInstance().subscribeToTopic(topic);
+        Log.e("Main ", "subcribe Topic : " + topic);
     }
 
     private void setStatusBar() {

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.passta.a2ndproj.MainActivity;
@@ -49,11 +50,15 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
 
         // 클릭 돼 있는 경우
         if (mainActivity.hashtagUpDataList.get(position).isClicked()) {
-            Typeface typeface = context.getResources().getFont(R.font.nanumsquareeb);
+//            Typeface typeface = context.getResources().getFont(R.font.nanumsquareeb);
+            Typeface typeface = ResourcesCompat.getFont(context, R.font.nanumsquareeb);
+
             viewHolder.name.setTextColor(Color.parseColor(context.getString(R.color.twitterBlue)));
             viewHolder.name.setTypeface(typeface);
         } else {
-            Typeface typeface = context.getResources().getFont(R.font.nanumsquarer);
+//            Typeface typeface = context.getResources().getFont(R.font.nanumsquarer);
+            Typeface typeface = ResourcesCompat.getFont(context, R.font.nanumsquarer);
+
             viewHolder.name.setTextColor(Color.parseColor(context.getString(R.color.black)));
             viewHolder.name.setTypeface(typeface);
         }

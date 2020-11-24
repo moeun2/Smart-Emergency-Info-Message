@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services' //firebase
 
 android {
     compileSdkVersion 30
@@ -31,6 +32,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.work:work-runtime:2.4.0'
+    implementation 'com.google.firebase:firebase-messaging:20.2.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -56,7 +59,8 @@ dependencies {
     //Room Database
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    // For Kotlin use kapt instead of annotationProcessor
     // optional - RxJava support for Room
     implementation "androidx.room:room-rxjava2:$room_version"
 //    // optional - Guava support for Room, including Optional and ListenableFuture
@@ -78,4 +82,12 @@ dependencies {
     //lottie
     implementation 'com.airbnb.android:lottie:3.5.0'
 
+    //fiebase
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:26.1.0')
+    // Add the dependency for the Firebase SDK for Google Analytics
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation 'com.google.firebase:firebase-analytics'
+    //firebase message
+    implementation 'com.google.firebase:firebase-messaging'
 }

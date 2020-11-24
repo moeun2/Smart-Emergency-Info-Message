@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1033585462019",
+    "firebase_url": "https://smart-message-4a9b0.firebaseio.com",
+    "project_id": "smart-message-4a9b0",
+    "storage_bucket": "smart-message-4a9b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033585462019:android:ce93d3e31a7c3847bef736",
+        "android_client_info": {
+          "package_name": "com.passta.a2ndproj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033585462019-ejaimt0q4qb8r5q8m8id07ltujdnrmtf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_HKu9smAJ5Vkp4g-ximiHpCSUhAoTqa4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033585462019-ejaimt0q4qb8r5q8m8id07ltujdnrmtf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
