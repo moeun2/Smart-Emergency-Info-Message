@@ -40,7 +40,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
             String tag = remoteMessage.getNotification().getBody().toString();
             tag = tag.substring(3);
-            UserListDTO lst = new UserListDTO(tag,"모은시","모은구");
+            UserListDTO lst = new UserListDTO(tag,"모은시","모은구",R.drawable.cafe1);
             AppDatabase db = AppDatabase.getInstance(this);
             new FirebaseMessagingService.DatabaseAsyncTask(db.userListDAO(),lst).execute();
 

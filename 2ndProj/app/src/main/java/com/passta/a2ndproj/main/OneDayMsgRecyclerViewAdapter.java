@@ -114,8 +114,5 @@ public class OneDayMsgRecyclerViewAdapter extends RecyclerView.Adapter<OneDayMsg
         arrayList.clear();
         arrayList.addAll(newArrayList);
         diffResult.dispatchUpdatesTo(OneDayMsgRecyclerViewAdapter.this);
-
-
-
     }
 }

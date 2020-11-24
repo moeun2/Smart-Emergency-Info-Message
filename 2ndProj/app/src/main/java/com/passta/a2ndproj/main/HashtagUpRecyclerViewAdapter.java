@@ -2,14 +2,17 @@ package com.passta.a2ndproj.main;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
@@ -17,6 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.passta.a2ndproj.MainActivity;
 import com.passta.a2ndproj.R;
+import com.passta.a2ndproj.data.UserListDAO;
+import com.passta.a2ndproj.data.UserListDTO;
+import com.passta.a2ndproj.start.dialogue.Dialogue_add_location;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -50,15 +58,11 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
 
         // 클릭 돼 있는 경우
         if (mainActivity.hashtagUpDataList.get(position).isClicked()) {
-//            Typeface typeface = context.getResources().getFont(R.font.nanumsquareeb);
             Typeface typeface = ResourcesCompat.getFont(context, R.font.nanumsquareeb);
-
             viewHolder.name.setTextColor(Color.parseColor(context.getString(R.color.twitterBlue)));
             viewHolder.name.setTypeface(typeface);
         } else {
-//            Typeface typeface = context.getResources().getFont(R.font.nanumsquarer);
             Typeface typeface = ResourcesCompat.getFont(context, R.font.nanumsquarer);
-
             viewHolder.name.setTextColor(Color.parseColor(context.getString(R.color.black)));
             viewHolder.name.setTypeface(typeface);
         }
@@ -69,13 +73,13 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
         return mainActivity.hashtagUpDataList.size();
     }
 
-    public static class HashtagUpRecyclerViewHolder extends RecyclerView.ViewHolder{
+    public class HashtagUpRecyclerViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView name;
         protected CircleImageView circleImageView;
         protected MainActivity mainActivity;
 
-        public HashtagUpRecyclerViewHolder(@NonNull View itemView,MainActivity mainActivity) {
+        public HashtagUpRecyclerViewHolder(@NonNull View itemView, MainActivity mainActivity) {
             super(itemView);
             this.mainActivity = mainActivity;
             this.name = (TextView) itemView.findViewById(R.id.name_item_hashtag_list);
@@ -89,10 +93,21 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
                 public void onClick(View view) {
 
                     String hashtagText = mainActivity.hashtagUpDataList.get(getAdapterPosition()).getHashtagText().replaceAll("\n", "");
+                    //추가하기 눌럿을경우
+                    if (getAdapterPosition() == 0) {
+                        Intent intent = new Intent(mainActivity.getApplicationContext(), Dialogue_add_location.class);
+                        intent.putExtra("type", "main");
+                        mainActivity.startActivityForResult(intent, 1003);
+                        return;
+                    }
 
                     // 클릭 돼 있는 경우
                     if (mainActivity.hashtagUpDataList.get(getAdapterPosition()).isClicked()) {
 
+                        if(mainActivity.calculateUpHashtagClickedNumber() == 1){
+                            Toast.makeText(context, "수신 지역은 반드시 한개 이상 할당 돼 있어야 합니다.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         //꺼주기(글자색 바꾸기)
                         Typeface typeface = itemView.getContext().getResources().getFont(R.font.nanumsquarer);
                         name.setTextColor(Color.parseColor(itemView.getContext().getString(R.color.black)));
@@ -109,6 +124,16 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
                         mainActivity.hashtagUpDataList.get(getAdapterPosition()).setClicked(true);
                     }
 
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+
+                    CheckDeleteLocation checkDeleteLocation = new CheckDeleteLocation(mainActivity, getAdapterPosition());
+
+                    return true;
                 }
             });
         }
