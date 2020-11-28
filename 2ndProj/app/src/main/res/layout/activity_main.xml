@@ -24,6 +24,7 @@
             android:textSize="20dp" />
 
         <ImageView
+            android:id="@+id/icon_setting"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="right"
@@ -33,9 +34,11 @@
             android:background="@color/colorTransparent"
             android:padding="5dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/setting" />
+            android:src="@drawable/setting"
+            android:contentDescription="TODO" />
 
         <ImageView
+            android:id="@+id/re"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="right"

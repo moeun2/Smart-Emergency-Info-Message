@@ -3,8 +3,11 @@ package com.passta.a2ndproj;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -13,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -33,8 +37,11 @@ import com.passta.a2ndproj.main.Msg_VO;
 import com.passta.a2ndproj.main.OneDayMsgRecyclerViewAdapter;
 import com.passta.a2ndproj.main.OneDayMsg_VO;
 import com.passta.a2ndproj.main.Seekbar;
+import com.passta.a2ndproj.notification.AlarmSettingActivity;
 import com.passta.a2ndproj.start.activity.Page2Activity;
+import com.passta.a2ndproj.start.activity.Page3Activity;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.tistory.freemmer.lib.fmnotification.FMNotification;
 import com.warkiz.widget.IndicatorSeekBar;
 import com.warkiz.widget.OnSeekChangeListener;
 import com.warkiz.widget.SeekParams;
@@ -45,7 +52,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView hashtagDownRecyclerView;
     private RecyclerView hashtagUpRecyclerView;
@@ -80,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setStatusBar();
 
+
         hashtagDownRecyclerView = findViewById(R.id.recyclerview_down_main_hashtag);
         hashtagUpRecyclerView = findViewById(R.id.recyclerview_up_main_hashtag);
         msgRecyclerView = findViewById(R.id.recyclerview_main_msg);
@@ -91,6 +99,17 @@ public class MainActivity extends AppCompatActivity {
         seekbar5 = (IndicatorSeekBar) findViewById(R.id.seekbar5_main_activity);
         filterList = new ArrayList<>();
         userList = new ArrayList<>();
+
+        ImageView setting_ = (ImageView) findViewById(R.id.icon_setting);
+        setting_.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AlarmSettingActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
 
         //Firebase에 토큰 등록시
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this,
@@ -104,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         //이미 등록된 경우
-        String savedToken = FirebaseInstanceId.getInstance().getId();
+        @SuppressLint("WrongThread") String savedToken = FirebaseInstanceId.getInstance().getId();
         Log.e("savedToken", savedToken);
 
         //db생성
@@ -112,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         new FilterDatabaseAsyncTask(db.filterDAO()).execute();
 
     }
+
     public void subcribeTopic(String topic) {
         FirebaseMessaging.getInstance().subscribeToTopic(topic);
         Log.e("Main ", "subcribe Topic : " + topic);
@@ -142,15 +162,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             insertedLocationName = data.getStringExtra("tag");
             String location = data.getStringExtra("location");
-            int imgNumber = data.getIntExtra("imgNumber",0);
+            int imgNumber = data.getIntExtra("imgNumber", 0);
             Log.d("모은", insertedLocationName + " " + location + Integer.toString(imgNumber));
             insertedLocation_si = location.split(" ")[0];
             insertedLocation_gu = location.split(" ")[1];
 
-            UserListDTO lst = new UserListDTO(insertedLocationName, insertedLocation_si, insertedLocation_gu,imgNumber);
+            UserListDTO lst = new UserListDTO(insertedLocationName, insertedLocation_si, insertedLocation_gu, imgNumber);
             AppDatabase db = AppDatabase.getInstance(this);
 
             new UserListDatabaseInsertAsyncTask(db.userListDAO(), lst).execute();
@@ -175,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         hashtagUpDataList = new ArrayList<>();
 
         hashtagUpDataList.add(new Hashtag_VO("내 장소\n추가하기", R.drawable.plus2, false));
-        for(int i=0;i<userList.size();i++){
+        for (int i = 0; i < userList.size(); i++) {
             hashtagUpDataList.add(new Hashtag_VO(userList.get(i).tag, userList.get(i).img_number, true));
         }
 
@@ -281,10 +301,10 @@ public class MainActivity extends AppCompatActivity {
         createOneDayMsgDataList();
     }
 
-    public Integer calculateUpHashtagClickedNumber(){
+    public Integer calculateUpHashtagClickedNumber() {
         int result = 0;
-        for(int i=0;i<hashtagUpDataList.size();i++){
-            if(hashtagUpDataList.get(i).isClicked())
+        for (int i = 0; i < hashtagUpDataList.size(); i++) {
+            if (hashtagUpDataList.get(i).isClicked())
                 result++;
         }
         return result;
@@ -332,6 +352,11 @@ public class MainActivity extends AppCompatActivity {
         return oneDayMsgDataList;
     }
 
+    @Override
+    public void onClick(View view) {
+
+    }
+
     // 데이터 AsyncvTask
     public class FilterDatabaseAsyncTask extends AsyncTask<FilterDTO, Void, Void> {
 
@@ -373,7 +398,7 @@ public class MainActivity extends AppCompatActivity {
 
             userList = userListDAO.loadUserList();
             if (userList.size() == 0) {
-                userListDAO.insert(new UserListDTO("모은", "서울특별시", "광진구",R.drawable.home));
+                userListDAO.insert(new UserListDTO("모은", "서울특별시", "광진구", R.drawable.home));
             }
 
             userList = userListDAO.loadUserList();

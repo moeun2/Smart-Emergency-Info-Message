@@ -74,6 +74,8 @@ public class Dialogue_select_location extends AppCompatActivity {
             intent.putExtra("location_gu", location_gu);
 //            startActivityForResult(intent,1003);
             setResult(RESULT_OK, intent);
+            Log.d("모은", "locaiotn_si : "+locaiotn_si+"locaion_gu"+ location_gu );
+
 
             this.finish();
         }
@@ -121,10 +123,12 @@ public class Dialogue_select_location extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "position : " + position + "/ String : " + str, Toast.LENGTH_LONG).show();
 //                set_list(mArrayList,"0");
+                Log.i("모은",str);
 
 
                 Intent intent = new Intent(getBaseContext(),Dialogue_select_location_2.class);
                 intent.putExtra("position", position);
+
                 if(nowType.equals("start"))
                     intent.putExtra("type","start");
                 else
@@ -183,6 +187,7 @@ public class Dialogue_select_location extends AppCompatActivity {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         }
     }
+
     private void set_list(ArrayList<String> mArrayList,String filename)
     {
 //        mArrayList.add("서울특별시");

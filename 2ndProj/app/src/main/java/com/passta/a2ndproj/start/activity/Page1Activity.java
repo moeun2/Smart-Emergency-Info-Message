@@ -30,8 +30,10 @@ public class Page1Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page1);
+
+
         setStatusBar();
-        abc();
+        //abc();
         int networkSatusNum = networkStatus.getConnectivityStatus(getApplicationContext());
         if (networkSatusNum == networkStatus.TYPE_NOT_CONNECTED)
             goToNextActivity(new NetworkActivity());
@@ -61,18 +63,22 @@ public class Page1Activity extends AppCompatActivity {
 
         serviceApi = RetrofitClient.getClient().create(ServiceApi.class);//내 서버 연결
 
-        Call<ResponseBody> selectMsg = serviceApi.selectMsg("서울특별시","광진구",10);
-        selectMsg.enqueue(new Callback<ResponseBody>() {
+        Call<ResponseBody> data = serviceApi.selectMsg("서울특별시","광진구",10);
+        data.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.d("test","ssss");
+
                 String result = null;
                 try {
+//                    assert response.body() != null;
                     result = response.body().string();
                 } catch (IOException e) {
                     e.printStackTrace();
+                } finally {
+                    Log.d("test",result);
                 }
-                Log.d("test",result);
+
             }
 
             @Override

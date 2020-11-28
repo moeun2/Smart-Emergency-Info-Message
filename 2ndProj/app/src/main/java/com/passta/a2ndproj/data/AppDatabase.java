@@ -10,11 +10,12 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
-@Database(entities = {UserListDTO.class,FilterDTO.class,UserSettingDTO.class}, version=1)
+@Database(entities = {UserListDTO.class,FilterDTO.class,UserSettingDTO.class,MsgDTO.class}, version=1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserListDAO userListDAO();
     public abstract FilterDAO filterDAO();
     public abstract UserSettingDAO userSettingDAO();
+    public abstract MsgDAO MsgDAO();
 
     private static AppDatabase mAppDatabase;
 

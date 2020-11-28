@@ -1,10 +1,15 @@
 package com.passta.a2ndproj.main;
 
+import android.os.AsyncTask;
+
 import com.passta.a2ndproj.MainActivity;
 import com.passta.a2ndproj.R;
+import com.passta.a2ndproj.data.AppDatabase;
+import com.passta.a2ndproj.data.FilterDAO;
 import com.passta.a2ndproj.data.FilterDTO;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class Msg_VO {
@@ -21,6 +26,7 @@ public class Msg_VO {
     private double totalMsgPoint;
     private MainActivity mainActivity;
 
+
     public Msg_VO(int id, String day, String time, String msgText, String senderLocation, MainActivity mainActivity, MsgCategoryPoint_VO msgCategoryPoint) {
 
         this.id = id;
@@ -33,6 +39,19 @@ public class Msg_VO {
                 msgCategoryPoint.getDisaster(),msgCategoryPoint.getEconomy());
         setCategroy();
         calculateTotalMsgPointAndLevel();
+    }
+
+    public Msg_VO(int id, String day, String time, String msgText, String senderLocation, int level, int circleImageViewId, MsgCategoryPoint_VO msgCategoryPoint, int categroyIndex, double totalMsgPoint) {
+        this.id = id;
+        this.day = day;
+        this.time = time;
+        this.msgText = msgText;
+        this.senderLocation = senderLocation;
+        this.level = level;
+        this.circleImageViewId = circleImageViewId;
+        this.msgCategoryPoint = msgCategoryPoint;
+        this.categroyIndex = categroyIndex;
+        this.totalMsgPoint = totalMsgPoint;
     }
 
     public void calculateTotalMsgPointAndLevel(){
@@ -64,6 +83,8 @@ public class Msg_VO {
                 break;
         }
     }
+
+
 
     public double returnWeight(int input){
         switch (input){

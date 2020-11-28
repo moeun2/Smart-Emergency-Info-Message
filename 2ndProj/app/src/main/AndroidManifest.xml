@@ -6,44 +6,45 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:networkSecurityConfig="@xml/network_security"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
 
-        <!--[START fcm_default_icon] -->
-        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
-            See README(https://goo.gl/l4GJaQ) for more. -->
+        <!-- [START fcm_default_icon] -->
+        <!--
+ Set custom default icon. This is used when no icon is set for incoming notification messages.
+            See README(https://goo.gl/l4GJaQ) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/background_msg_circle_item_1" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
-        <!-- [END fcm_default_icon] -->
-
-        <!--        &lt;!&ndash; [START fcm_default_channel] &ndash;&gt;-->
-        <!--        <meta-data-->
-        <!--            android:name="com.google.firebase.messaging.default_notification_channel_id"-->
-        <!--            android:value="@string/default_notification_channel_id" />-->
-        <!--        &lt;!&ndash; [END fcm_default_channel] &ndash;&gt;-->
-
-        <!--[START firebase_service] -->
-
-        <activity android:name=".start.dialogue.Dialogue_select_location"
-            android:theme="@style/PopUpTheme"/>
-        <activity android:name=".start.dialogue.Dialogue_select_location_2"
-            android:theme="@style/PopUpTheme"/>
-
-
+            android:resource="@color/colorAccent" /> <!-- [END fcm_default_icon] -->
+        <!-- &lt;!&ndash; [START fcm_default_channel] &ndash;&gt; -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.firebase.messaging.default_notification_channel_id" -->
+        <!-- android:value="@string/default_notification_channel_id" /> -->
+        <!-- &lt;!&ndash; [END fcm_default_channel] &ndash;&gt; -->
+        <!-- [START firebase_service] -->
+        <activity
+            android:name=".start.dialogue.Dialogue_select_location"
+            android:theme="@style/PopUpTheme" />
+        <activity
+            android:name=".start.dialogue.Dialogue_select_location_2"
+            android:theme="@style/PopUpTheme" />
         <activity
             android:name=".start.dialogue.Dialogue_add_location"
             android:theme="@style/PopUpTheme" />
@@ -53,13 +54,10 @@
         <activity android:name=".start.activity.Page3Activity" />
         <activity android:name=".start.activity.AccountPasswordActivity" />
         <activity android:name=".start.activity.AccountGetDataActivity" />
-
-
-        <activity android:name=".MainActivity" />
-
-
-        <activity android:name=".start.activity.Page1Activity">
-
+        <activity android:name=".notification.AlarmSettingActivity" />
+        <activity android:name=".start.activity.Page1Activity"/>
+<!--        <activity android:name=".MainActivity" />-->
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -67,24 +65,18 @@
             </intent-filter>
         </activity>
 
-
-        <service
-            android:name=".FirebaseInstanceIDService">
+        <service android:name=".notification.FirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
         <service
-            android:name=".FirebaseMessagingService"
+            android:name=".notification.FirebaseMessagingService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-
-
     </application>
 
 </manifest>

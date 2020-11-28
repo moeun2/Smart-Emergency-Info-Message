@@ -17,6 +17,7 @@ public interface FilterDAO {
     @Query("SELECT * FROM Filter")
     List<FilterDTO> loadFilterList();
 
+
     @Update
     void update(FilterDTO FilterDTO);
 }

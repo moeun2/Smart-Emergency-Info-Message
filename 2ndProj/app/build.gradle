@@ -90,5 +90,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     //firebase message
     implementation 'com.google.firebase:firebase-messaging'
+    //밑에거 지금 안씀
+    implementation 'com.github.freemmer:FMNotification:1.0.1'
+    //java.lang.IllegalArgumentException: Service not registered: com.google.android.gms.measurement.internal ERROR
+    implementation 'com.google.android.gms:play-services-basement:17.4.0'
+
+
+    //labeld switch
+    implementation 'com.github.angads25:toggle:1.1.0'
 }
 

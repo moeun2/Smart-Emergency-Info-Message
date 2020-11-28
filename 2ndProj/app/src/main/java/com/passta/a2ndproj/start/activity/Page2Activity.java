@@ -155,11 +155,18 @@ public class Page2Activity extends AppCompatActivity implements View.OnClickList
                 Log.i("모은 데이터베이스", "nullx");
                 Log.i("모은 데이터베이스", list.get(i).getTag());
 
-                initialize_recyclerview();
+
 
             }
 
+
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            initialize_recyclerview();
         }
     }
 
