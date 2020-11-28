@@ -1,7 +1,6 @@
-package com.passta.a2ndproj.main;
+package com.passta.a2ndproj.main.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.passta.a2ndproj.MainActivity;
 import com.passta.a2ndproj.R;
+import com.passta.a2ndproj.main.Callback.OneDayMsgDiffentCallback;
+import com.passta.a2ndproj.main.DataVO.OneDayMsg_VO;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import java.util.ArrayList;
 
@@ -48,7 +48,7 @@ public class OneDayMsgRecyclerViewAdapter extends RecyclerView.Adapter<OneDayMsg
         boolean hasSame = false;
         //어댑터의 사이즈가 0일경우 그냥 add
         if (msgRecyclerViewAdapterArrayList.size() == 0) {
-            msgRecyclerViewAdapterArrayList.add(new MsgRecyclerViewAdapter(arrayList.get(position).getMsgArrayList()));
+            msgRecyclerViewAdapterArrayList.add(new MsgRecyclerViewAdapter(arrayList.get(position).getMsgArrayList(),mainActivity));
             holder.recyclerView.setAdapter(msgRecyclerViewAdapterArrayList.get(msgRecyclerViewAdapterArrayList.size() - 1));
         }
         //어댑터의 사이즈가 0이 아닐 경우 if문으로 검사.
@@ -65,7 +65,7 @@ public class OneDayMsgRecyclerViewAdapter extends RecyclerView.Adapter<OneDayMsg
             }
 
             if (!hasSame) {
-                msgRecyclerViewAdapterArrayList.add(new MsgRecyclerViewAdapter(arrayList.get(position).getMsgArrayList()));
+                msgRecyclerViewAdapterArrayList.add(new MsgRecyclerViewAdapter(arrayList.get(position).getMsgArrayList(),mainActivity));
                 holder.recyclerView.setAdapter(msgRecyclerViewAdapterArrayList.get(msgRecyclerViewAdapterArrayList.size() - 1));
             }
         }

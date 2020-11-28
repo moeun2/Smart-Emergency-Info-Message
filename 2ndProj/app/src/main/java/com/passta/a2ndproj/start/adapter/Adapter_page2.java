@@ -11,12 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.passta.a2ndproj.R;
-import com.passta.a2ndproj.data.UserListDTO;
-import com.passta.a2ndproj.main.CheckDeleteLocation;
 import com.passta.a2ndproj.start.activity.Page2Activity;
 import com.passta.a2ndproj.start.dialogue.CheckDeleteLocationInPage2;
 
-import java.util.List;
 
 public class Adapter_page2 extends RecyclerView.Adapter<Adapter_page2.ViewHolder>{
 

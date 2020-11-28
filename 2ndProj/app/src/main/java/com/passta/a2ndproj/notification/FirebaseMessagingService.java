@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.PowerManager;
+import android.text.Html;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
@@ -33,10 +34,8 @@ import com.passta.a2ndproj.data.MsgDAO;
 import com.passta.a2ndproj.data.MsgDTO;
 import com.passta.a2ndproj.data.UserListDAO;
 import com.passta.a2ndproj.data.UserListDTO;
-import com.passta.a2ndproj.main.MsgCategoryPoint_VO;
-import com.passta.a2ndproj.main.Msg_VO;
-
-import com.passta.a2ndproj.main.OneDayMsg_VO;
+import com.passta.a2ndproj.main.DataVO.MsgCategoryPoint_VO;
+import com.passta.a2ndproj.main.DataVO.Msg_VO;
 import com.passta.a2ndproj.start.activity.Page2Activity;
 
 import org.json.JSONException;
@@ -153,6 +152,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 chId = "test v1";
 
                 msg = remoteMessage.getData().get("bodyStr");
+                Html.fromHtml(msg);
                 title = remoteMessage.getData().get("title");
                 sido = remoteMessage.getData().get("sido");
                 gusi = remoteMessage.getData().get("gusi");
@@ -219,11 +219,11 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 Log.i("모은",sido);
 
                 Log.i("모은",gusi);
-                    flag = true;
-                    Log.i("모은","flag2 = "+Boolean.toString(flag));
-                    AppDatabase db = AppDatabase.getInstance(this);
-                    new DatabaseMsgInsertAsyncTask(db.MsgDAO(),msgDTO).execute();
-                    break;
+                flag = true;
+                Log.i("모은","flag2 = "+Boolean.toString(flag));
+                AppDatabase db = AppDatabase.getInstance(this);
+                new DatabaseMsgInsertAsyncTask(db.MsgDAO(),msgDTO).execute();
+                break;
 
             }
         }
@@ -635,4 +635,3 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     }
 
 }
-

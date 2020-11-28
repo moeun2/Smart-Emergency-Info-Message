@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -42,6 +43,8 @@ public class AlarmSettingActivity extends AppCompatActivity {
     private boolean isCheckedAudioNotification;
     private boolean isCheckedVibrationNotification;
 
+    private ImageView back;
+
     private LabeledSwitch labeledSwitch;
 
     @Override
@@ -53,6 +56,13 @@ public class AlarmSettingActivity extends AppCompatActivity {
         initializeNotificationSwitch();
         InitializeView();
         initializeSwitch();
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         switch_basic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -179,6 +189,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
         level2 = (SwitchCompat) findViewById(R.id.level2);
         level3 = (SwitchCompat) findViewById(R.id.level3);
         switch_basic = (SwitchCompat) findViewById(R.id.switch1);
+        back = findViewById(R.id.back_setting_activity);
 
         audio_notification = (SwitchCompat) findViewById(R.id.audio_notification);
 

@@ -1,4 +1,4 @@
-package com.passta.a2ndproj.main;
+package com.passta.a2ndproj.main.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,11 +7,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -24,23 +22,10 @@ import com.passta.a2ndproj.R;
 
 import com.passta.a2ndproj.data.UserListDAO;
 import com.passta.a2ndproj.data.UserListDTO;
-import com.passta.a2ndproj.network.RetrofitClient;
-import com.passta.a2ndproj.network.ServiceApi;
+import com.passta.a2ndproj.main.Dialog.CheckDeleteLocationDialog;
 import com.passta.a2ndproj.start.dialogue.Dialogue_add_location;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUpRecyclerViewAdapter.HashtagUpRecyclerViewHolder> {
 
@@ -53,6 +38,7 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
         this.mainActivity = mainActivity;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @NonNull
     @Override
     public HashtagUpRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -155,7 +141,7 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
                 @Override
                 public boolean onLongClick(View view) {
                     if (getAdapterPosition() != 0) {
-                        CheckDeleteLocation checkDeleteLocation = new CheckDeleteLocation(mainActivity, getAdapterPosition());
+                        CheckDeleteLocationDialog checkDeleteLocationDialog = new CheckDeleteLocationDialog(mainActivity, getAdapterPosition());
                     }
 
                     return true;
@@ -192,7 +178,7 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
                 if (mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().get(j).getSenderLocation().equals(location) ||
                         (mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().get(j).getSenderLocation().split(" ")[0].equals(
                                 location.split(" ")[0]) && (mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().
-                                        get(j).getSenderLocation().split(" ")[1].equals("전체"))
+                                get(j).getSenderLocation().split(" ")[1].equals("전체"))
                         )) {
                     mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().remove(j);
                     j--;
@@ -232,5 +218,5 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
             return null;
         }
     }
-
 }
+

@@ -4,25 +4,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.passta.a2ndproj.data.AppDatabase;
-import com.passta.a2ndproj.data.FilterDAO;
-import com.passta.a2ndproj.data.FilterDTO;
-import com.passta.a2ndproj.data.MsgDAO;
-import com.passta.a2ndproj.data.MsgDTO;
 import com.passta.a2ndproj.data.UserListDAO;
 import com.passta.a2ndproj.data.UserListDTO;
-import com.passta.a2ndproj.data.UserSettingDAO;
-import com.passta.a2ndproj.data.UserSettingDTO;
-import com.passta.a2ndproj.main.CheckDeleteLocation;
 import com.passta.a2ndproj.start.activity.Page1Activity;
 
 import java.util.List;

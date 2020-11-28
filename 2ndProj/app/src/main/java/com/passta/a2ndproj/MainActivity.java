@@ -3,22 +3,16 @@ package com.passta.a2ndproj;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import android.app.AppOpsManager;
-import android.content.Context;
+
 import android.annotation.SuppressLint;
-import android.app.NotificationManager;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -35,26 +29,20 @@ import com.passta.a2ndproj.data.UserListDAO;
 import com.passta.a2ndproj.data.UserListDTO;
 import com.passta.a2ndproj.data.UserSettingDAO;
 import com.passta.a2ndproj.data.UserSettingDTO;
-import com.passta.a2ndproj.main.HashtagDownRecyclerViewAdapter;
-import com.passta.a2ndproj.main.HashtagUpRecyclerViewAdapter;
-import com.passta.a2ndproj.main.Hashtag_VO;
-import com.passta.a2ndproj.main.MsgCategoryPoint_VO;
-import com.passta.a2ndproj.main.Msg_VO;
-import com.passta.a2ndproj.main.OneDayMsgRecyclerViewAdapter;
-import com.passta.a2ndproj.main.OneDayMsg_VO;
+import com.passta.a2ndproj.main.Adapter.HashtagDownRecyclerViewAdapter;
+import com.passta.a2ndproj.main.Adapter.HashtagUpRecyclerViewAdapter;
+import com.passta.a2ndproj.main.DataVO.Hashtag_VO;
+import com.passta.a2ndproj.main.DataVO.MsgCategoryPoint_VO;
+import com.passta.a2ndproj.main.DataVO.Msg_VO;
+import com.passta.a2ndproj.main.Adapter.OneDayMsgRecyclerViewAdapter;
+import com.passta.a2ndproj.main.DataVO.OneDayMsg_VO;
 import com.passta.a2ndproj.main.Seekbar;
 import com.passta.a2ndproj.network.RetrofitClient;
 import com.passta.a2ndproj.network.ServiceApi;
-import com.passta.a2ndproj.start.activity.Page1Activity;
 import com.passta.a2ndproj.notification.AlarmSettingActivity;
 
-import com.passta.a2ndproj.start.activity.Page2Activity;
-import com.passta.a2ndproj.start.activity.Page3Activity;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-import com.tistory.freemmer.lib.fmnotification.FMNotification;
 import com.warkiz.widget.IndicatorSeekBar;
-import com.warkiz.widget.OnSeekChangeListener;
-import com.warkiz.widget.SeekParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -100,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
     public String insertedLocation_si;
     public String insertedLocation_gu;
     private ServiceApi serviceApi;
+    private ImageView refreshButton;
+
 
 
 
@@ -115,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         hashtagUpRecyclerView = findViewById(R.id.recyclerview_up_main_hashtag);
         msgRecyclerView = findViewById(R.id.recyclerview_main_msg);
         slidingUpPanelLayout = findViewById(R.id.sliding_panel_main_activity);
+        refreshButton = findViewById(R.id.refresh_main_activity);
         seekbar1 = (IndicatorSeekBar) findViewById(R.id.seekbar1_main_activity);
         seekbar2 = (IndicatorSeekBar) findViewById(R.id.seekbar2_main_activity);
         seekbar3 = (IndicatorSeekBar) findViewById(R.id.seekbar3_main_activity);
@@ -130,6 +121,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), AlarmSettingActivity.class);
                 startActivity(intent);
 
+            }
+        });
+
+        //새로 고침 버튼을 누를 경우 데베에서 다시 문자를 긁어 와서 갱신.
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MsgDataAsyncTask(db.MsgDAO(),true).execute();
             }
         });
 
@@ -160,7 +159,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void start() {
+    public void start(Boolean isRefresh) {
+
+        // 새로고침 버튼으로 들어온 경우 msg만 갱신하고 바로 리턴.
+        if(isRefresh){
+            refreshMsg();
+            return;
+        }
 
         //seekbar 너무 길어져서 클래스로 뺌
         Seekbar seekbar = new Seekbar(this);
@@ -315,6 +320,27 @@ public class MainActivity extends AppCompatActivity {
         //날짜,시간 순으로 배열
         oneDayMsgDataList = sortByDay(oneDayMsgDataList);
         oneDayMsgDataList = sortByTime(oneDayMsgDataList);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void refreshMsg(){
+        msgDataList = new ArrayList<>();
+
+        for (int i = 0; i < msgDTOList.size(); i++) {
+            msgDataList.add(new Msg_VO(msgDTOList.get(i).getId(), msgDTOList.get(i).getDay(), msgDTOList.get(i).getTime(), msgDTOList.get(i).getMsgText(), msgDTOList.get(i).getSenderLocation(),
+                    this, new MsgCategoryPoint_VO(msgDTOList.get(i).getRouteCatePoint(), msgDTOList.get(i).getUpbreakCatePoint(), msgDTOList.get(i).getSafetyCatePoint(),
+                    msgDTOList.get(i).getDisasterCatePoint(), msgDTOList.get(i).getEconomyCatePoint())));
+        }
+
+        sortTotalMsgDataList();
+
+        // 데이터 흐름 1. 위치에 따른 재난문자  2. 해쉬태크,필터에 따른 재난문자
+        oneDayMsgDataList = new ArrayList<>();
+
+        //필터 데이터 분류
+        classifyMsgData();
+        createOneDayMsgDataList();
+        oneDayMsgRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -563,16 +589,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            new MsgDataAsyncTask(db.MsgDAO()).execute();
+            new MsgDataAsyncTask(db.MsgDAO(),false).execute();
         }
     }
 
     public class MsgDataAsyncTask extends AsyncTask<MsgDAO, Void, Void> {
 
         private MsgDAO msgDAO;
+        private Boolean isRefresh;
 
-        public MsgDataAsyncTask(MsgDAO msgDAO) {
+        public MsgDataAsyncTask(MsgDAO msgDAO,Boolean isRefresh) {
             this.msgDAO = msgDAO;
+            this.isRefresh = isRefresh;
         }
 
         @Override
@@ -585,7 +613,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            start();
+            start(isRefresh);
         }
     }
 

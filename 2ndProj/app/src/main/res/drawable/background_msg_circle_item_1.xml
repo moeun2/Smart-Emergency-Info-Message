@@ -4,6 +4,8 @@
     android:shape="oval">
     <corners android:radius="7dp"/>
     <solid android:color="#99bc68"/>
-
+    <size
+        android:width="20dp"
+        android:height="20dp"/>
 
 </shape>

@@ -26,6 +26,9 @@ public interface MsgDAO {
     @Query("DELETE FROM Msg")
     void deleteAll();
 
+    @Query("DELETE FROM Msg WHERE id =:id")
+    void deleteOneMsg(int id);
+
 
 
 }

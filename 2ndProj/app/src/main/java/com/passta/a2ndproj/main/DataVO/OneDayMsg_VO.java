@@ -1,4 +1,6 @@
-package com.passta.a2ndproj.main;
+package com.passta.a2ndproj.main.DataVO;
+
+import com.passta.a2ndproj.main.DataVO.Msg_VO;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.passta.a2ndproj.main;
+package com.passta.a2ndproj.main.DataVO;
 
 public class Hashtag_VO {
     private String hashtagText;

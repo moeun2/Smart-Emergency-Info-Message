@@ -1,4 +1,4 @@
-package com.passta.a2ndproj.main;
+package com.passta.a2ndproj.main.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -26,12 +26,12 @@ import com.passta.a2ndproj.data.UserListDTO;
 
 import java.util.List;
 
-public class CheckDeleteLocation extends Dialog {
+public class CheckDeleteLocationDialog extends Dialog {
     private Button cancelButton, deleteButton;
     private int position;
     private MainActivity mainActivity;
 
-    public CheckDeleteLocation(@NonNull Context context, int position) {
+    public CheckDeleteLocationDialog(@NonNull Context context, int position) {
         super(context);
         this.position = position;
         this.mainActivity = (MainActivity) context;

@@ -1,52 +1,31 @@
 package com.passta.a2ndproj.start.activity;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.passta.a2ndproj.MainActivity;
 import com.passta.a2ndproj.R;
 import com.passta.a2ndproj.data.AppDatabase;
 import com.passta.a2ndproj.data.FilterDAO;
 import com.passta.a2ndproj.data.FilterDTO;
-import com.passta.a2ndproj.data.MsgDAO;
-import com.passta.a2ndproj.data.MsgDTO;
 import com.passta.a2ndproj.data.UserListDAO;
 import com.passta.a2ndproj.data.UserListDTO;
-import com.passta.a2ndproj.main.MsgCategoryPoint_VO;
-import com.passta.a2ndproj.main.Msg_VO;
-import com.passta.a2ndproj.network.RetrofitClient;
-import com.passta.a2ndproj.network.ServiceApi;
 import com.passta.a2ndproj.utility.RecyclerViewDecoration;
 import com.passta.a2ndproj.start.adapter.Adapter_page2;
 import com.passta.a2ndproj.start.dialogue.Dialogue_add_location;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Page2Activity extends AppCompatActivity implements View.OnClickListener {
 

@@ -38,7 +38,7 @@
             android:contentDescription="TODO" />
 
         <ImageView
-            android:id="@+id/re"
+            android:id="@+id/refresh_main_activity"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="right"

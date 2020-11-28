@@ -6,6 +6,9 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical"
+    android:id="@+id/parent_layout_item_msg_list"
+    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
     android:paddingBottom="10dp">
 
     <LinearLayout

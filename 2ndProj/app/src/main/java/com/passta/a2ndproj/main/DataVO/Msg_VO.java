@@ -1,16 +1,8 @@
-package com.passta.a2ndproj.main;
-
-import android.os.AsyncTask;
+package com.passta.a2ndproj.main.DataVO;
 
 import com.passta.a2ndproj.MainActivity;
 import com.passta.a2ndproj.R;
-import com.passta.a2ndproj.data.AppDatabase;
-import com.passta.a2ndproj.data.FilterDAO;
 import com.passta.a2ndproj.data.FilterDTO;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class Msg_VO {
     private int id;
