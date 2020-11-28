@@ -460,7 +460,7 @@ public class MainActivity extends AppCompatActivity {
                         Msg_VO tempMsgVO = msgDataList.get(msgDataList.size() - 1);
 
                         //데베에 저장
-                        new MsgListDatabaseInsertAsyncTask(db.MsgDAO(), new MsgDTO(tempMsgVO.getId(), tempMsgVO.getDay(), tempMsgVO.getTime(), tempMsgVO.getMsgText(), tempMsgVO.getSenderLocation(),
+                        new MsgListDatabaseInsertAsyncTask(db.MsgDAO(), new MsgDTO( tempMsgVO.getDay(), tempMsgVO.getTime(), tempMsgVO.getMsgText(), tempMsgVO.getSenderLocation(),
                                 tempMsgVO.getLevel(), tempMsgVO.getCircleImageViewId(), obj.getDouble("co_route"), obj.getDouble("co_outbreak_quarantine"), obj.getDouble("co_safetyTips"),
                                 obj.getDouble("disaster_weather"), obj.getDouble("economy_finance"), tempMsgVO.getTotalMsgPoint(), tempMsgVO.getCategroyIndex())).execute();
                     }

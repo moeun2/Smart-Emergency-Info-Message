@@ -151,7 +151,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 }
 
                 chId = "test v1";
-                id = -1;
+
                 msg = remoteMessage.getData().get("bodyStr");
                 title = remoteMessage.getData().get("title");
                 sido = remoteMessage.getData().get("sido");
@@ -176,7 +176,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         es.submit(this::calculateTotalMsgPointAndLevel);
 
         es.submit(this::insertDatabase);
-        es.submit(this::setNotification);
+
+//        es.submit(this::setNotification);
         es.shutdown();
 
 //        setCategory();
@@ -198,24 +199,25 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         Log.i("모은","insertDatabaseq");
         flag = false;
 //        Log.i("모은","flag1 = "+Boolean.toString(flag));
-        msgDTO = new MsgDTO(id, dateList.get(0), dateList.get(1), msg, senderLocation, level, circleImageViewId, msgCategoryPoint.getCoronaRoute(),msgCategoryPoint.getCoronaUpbreak(),msgCategoryPoint.getCoronaSafetyRule(), msgCategoryPoint.getDisaster(),msgCategoryPoint.getEconomy(), totalMsgPoint, categroyIndex);
+        msgDTO = new MsgDTO( dateList.get(0), dateList.get(1), msg, senderLocation, level, circleImageViewId, msgCategoryPoint.getCoronaRoute(),msgCategoryPoint.getCoronaUpbreak(),msgCategoryPoint.getCoronaSafetyRule(), msgCategoryPoint.getDisaster(),msgCategoryPoint.getEconomy(), totalMsgPoint, categroyIndex);
+
 
         Log.i("모은","insertDatabase2");
         for (int i = 0 ; i< list.size(); i++)
         {
 
             Log.i("모은","insertDatabase3");
-            Log.i("모은",list.get(i).getLocation_si());
-            Log.i("모은",sido);
-            Log.i("모은",list.get(i).getLocation_gu());
-            Log.i("모은",gusi);
+            Log.i("모은","원db"+list.get(i).getLocation_si());
+            Log.i("모은","받은거"+sido);
+            Log.i("모은","원db"+list.get(i).getLocation_gu());
+            Log.i("모은","받은거"+gusi);
             //전체 예외처리 해야함
             if ((list.get(i).getLocation_si().equals(sido) && list.get(i).getLocation_gu().equals(gusi)) || list.get(i).getLocation_si().equals("중대본") || (list.get(i).getLocation_si().equals(sido) && gusi.equals("전체")) )
             {
                 Log.i("모은","insertDatabase4");
-                Log.i("모은",list.get(i).getLocation_si());
+
                 Log.i("모은",sido);
-                Log.i("모은",list.get(i).getLocation_gu());
+
                 Log.i("모은",gusi);
                     flag = true;
                     Log.i("모은","flag2 = "+Boolean.toString(flag));
@@ -227,6 +229,12 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         }
 
 
+    }
+    public void getMsgData(){
+
+        Log.i("모은","getMsgData");
+        AppDatabase db = AppDatabase.getInstance(this);
+        new DatabaseGetMsgAsyncTask(db.MsgDAO()).execute();
     }
 
     public void getUserInfo()
@@ -260,6 +268,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void setNotification() {
         Log.i("모은","setNotification1");
 
@@ -284,16 +293,55 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, chId)
-                        .setSmallIcon(R.drawable.background_msg_circle_item_1)
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.home))
+                        .setSmallIcon(R.drawable.background_msg_circle_item)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_icon))
                         .setContentTitle(title)
                         .setContentText(msg)
                         .setAutoCancel(true)
-
-
-
                         .setContentIntent(contentIntent)
-                        .setPriority(notificationManager.IMPORTANCE_HIGH);
+                        .setPriority(NotificationManager.IMPORTANCE_HIGH);
+
+
+                if(isCheckedAudioNotification)
+                {
+//                    mBuilder.setDefaults(Notification.DEFAULT_SOUND);
+                    mBuilder.setSound(defaultSoundUri);
+                }
+                else{
+                    mBuilder.setSound(null);
+                }
+                if(isCheckedVibrationNotification)
+                {
+                    mBuilder.setVibrate(new long[]{1, 1000});
+                }
+                else{
+                    mBuilder.setVibrate(null);
+                }
+
+
+                NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle(mBuilder);
+                style.bigText(msg).setBigContentTitle(title);
+
+                //오레오 버전 대응
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    String chName = "test channel";
+                    NotificationChannel channel = new NotificationChannel(chId, chName, NotificationManager.IMPORTANCE_HIGH);
+                    notificationManager.createNotificationChannel(channel);
+                }
+
+                notificationManager.notify(0, mBuilder.build());
+            } else if (level == 2 && isCheckedLevel2) {
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, chId)
+                        .setSmallIcon(R.drawable.background_msg_circle_item_1)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_icon))
+                        .setContentTitle(title)
+                        .setContentText(msg)
+                        .setAutoCancel(true)
+                        .setContentIntent(contentIntent)
+                        .setPriority(NotificationManager.IMPORTANCE_HIGH);
 
 
                 if(isCheckedAudioNotification)
@@ -324,33 +372,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 }
 
                 notificationManager.notify(0, mBuilder.build());
-            } else if (level == 2 && isCheckedLevel2) {
-                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, chId)
-                        .setSmallIcon(R.drawable.background_msg_circle_item_1)
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.home))
-                        .setContentTitle(title)
-                        .setContentText(msg)
-                        .setAutoCancel(true)
-                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                        .setVibrate(new long[]{1, 1000})
-                        .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
-                        .setContentIntent(contentIntent);
-
-
-                NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle(mBuilder);
-                style.bigText(msg).setBigContentTitle(title);
-
-                //오레오 버전 대응
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    String chName = "test channel";
-                    NotificationChannel channel = new NotificationChannel(chId, chName, notificationManager.IMPORTANCE_HIGH);
-                    notificationManager.createNotificationChannel(channel);
-                }
-
-                notificationManager.notify(0, mBuilder.build());
 
             } else if(level == 3 && isCheckedLevel3) {
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -358,14 +379,30 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, chId)
                         .setSmallIcon(R.drawable.background_msg_circle_item_2)
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.home))
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_icon))
                         .setContentTitle(title)
                         .setContentText(msg)
                         .setAutoCancel(true)
-                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                        .setVibrate(new long[]{1, 1000})
-                        .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
-                        .setContentIntent(contentIntent);
+                        .setContentIntent(contentIntent)
+                        .setPriority(Notification.PRIORITY_MAX);
+
+
+                if(isCheckedAudioNotification)
+                {
+//                    mBuilder.setDefaults(Notification.DEFAULT_SOUND);
+                    mBuilder.setSound(defaultSoundUri);
+                }
+                else{
+                    mBuilder.setSound(null);
+                }
+                if(isCheckedVibrationNotification)
+                {
+                    mBuilder.setVibrate(new long[]{1, 1000});
+                }
+                else{
+                    mBuilder.setVibrate(null);
+                }
+
 
 
                 NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle(mBuilder);
@@ -436,17 +473,74 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         @SuppressLint("LongLogTag")
         @Override
         protected Void doInBackground(MsgDTO... msgDTOS) {
+
+            Log.i("모은","DatabaseMsgInsertAsyncTask");
+            Log.i("모은" ,msgDTO.getMsgText());
             msgDAO.insert(msgDTO);
+
+//            msgList = msgDAO.loadMsgList();
+//
+//            for (int i = 0; i < msgList.size(); i++) {
+//
+//                Log.i("모은 DatabaseMsgInsertAsyncTask", msgList.get(i).getMsgText());
+//
+//            }
+
+            return null;
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            setNotification();
+        }
+
+
+
+
+
+    }
+    /**
+     * 받은 재난문자 DB에 insert
+     */
+    public class DatabaseGetMsgAsyncTask extends AsyncTask<MsgDTO, Void, Void> {
+
+
+        private MsgDAO msgDAO;
+
+
+        DatabaseGetMsgAsyncTask(MsgDAO msgDAO) {
+            this.msgDAO = msgDAO;
+
+        }
+
+
+
+
+        @SuppressLint("LongLogTag")
+        @Override
+        protected Void doInBackground(MsgDTO... msgDTOS) {
+
+            Log.i("모은","DatabaseGetMsgAsyncTask");
             msgList = msgDAO.loadMsgList();
+
+
 
             for (int i = 0; i < msgList.size(); i++) {
 
-                Log.i("모은 DatabaseMsgInsertAsyncTask", msgList.get(i).getTime());
+                Log.i("모은 DatabaseGetMsgAsyncTask", msgList.get(i).getMsgText());
 
             }
 
             return null;
         }
+//
+//        @Override
+//        protected void onPostExecute(Void aVoid) {
+//            super.onPostExecute(aVoid);
+//            setNotification();
+//        }
     }
 
     public void setCategory(){
@@ -531,6 +625,12 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
             }
             return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            getMsgData();
         }
     }
 

@@ -8,8 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Msg")
 public class MsgDTO {
 
-    @PrimaryKey
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;
 
@@ -52,10 +51,10 @@ public class MsgDTO {
     @ColumnInfo(name = "category_index")
     private int categroyIndex;
 
-    public MsgDTO(int id, String day, String time, String msgText, String senderLocation, int level, int circleImageViewId,
+    public MsgDTO( String day, String time, String msgText, String senderLocation, int level, int circleImageViewId,
                   double routeCatePoint, double upbreakCatePoint, double safetyCatePoint, double disasterCatePoint, double economyCatePoint,
                   double totalMsgPoint, int categroyIndex) {
-        this.id = id;
+
         this.day = day;
         this.time = time;
         this.msgText = msgText;

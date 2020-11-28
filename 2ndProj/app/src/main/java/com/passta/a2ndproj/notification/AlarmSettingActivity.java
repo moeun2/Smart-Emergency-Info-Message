@@ -1,10 +1,13 @@
 package com.passta.a2ndproj.notification;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -22,13 +25,13 @@ public class AlarmSettingActivity extends AppCompatActivity {
     SharedPreferences pref;
     SharedPreferences.Editor editor;
 
-    private Switch level1;
-    private Switch level2;
-    private Switch level3;
-    private Switch switch_basic;
+    private SwitchCompat level1;
+    private SwitchCompat level2;
+    private SwitchCompat level3;
+    private SwitchCompat switch_basic;
 
-    private Switch audio_notification;
-    private Switch viberation_notification;
+    private SwitchCompat audio_notification;
+    private SwitchCompat viberation_notification;
 
     private boolean allowsReciving;
 
@@ -46,15 +49,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_setting);
 
-//        labeledSwitch = findViewById(R.id.switch4);
-//        labeledSwitch.setOnToggledListener(new OnToggledListener() {
-//            @Override
-//            public void onSwitched(ToggleableView toggleableView, boolean isOn) {
-//                Toast.makeText(getApplicationContext(), "labeledSwitch 체크상태 = " + isOn, Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-
+        setStatusBar();
         initializeNotificationSwitch();
         InitializeView();
         initializeSwitch();
@@ -173,16 +168,21 @@ public class AlarmSettingActivity extends AppCompatActivity {
         });
 
     }
+    private void setStatusBar() {
+        View view = getWindow().getDecorView();
+        view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));//색 지정
 
+    }
     public void InitializeView() {
-        level1 = (Switch) findViewById(R.id.level1);
-        level2 = (Switch) findViewById(R.id.level2);
-        level3 = (Switch) findViewById(R.id.level3);
-        switch_basic = (Switch) findViewById(R.id.switch1);
+        level1 = (SwitchCompat) findViewById(R.id.level1);
+        level2 = (SwitchCompat) findViewById(R.id.level2);
+        level3 = (SwitchCompat) findViewById(R.id.level3);
+        switch_basic = (SwitchCompat) findViewById(R.id.switch1);
 
-        audio_notification = (Switch) findViewById(R.id.audio_notification);
+        audio_notification = (SwitchCompat) findViewById(R.id.audio_notification);
 
-        viberation_notification = (Switch) findViewById(R.id.viberation_notification);
+        viberation_notification = (SwitchCompat) findViewById(R.id.viberation_notification);
     }
 
     public void initializeNotificationSwitch() {

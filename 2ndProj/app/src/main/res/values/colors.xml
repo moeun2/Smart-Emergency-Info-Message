@@ -23,4 +23,6 @@
     <color name="green4">#3b8560</color>
     <color name="green5">#34483d</color>
 
+    <color name="default_gray">#8a000000</color>
+
 </resources>

@@ -72,14 +72,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
+            android:backgroundTint="@color/black"
+            android:fontFamily="@font/nanumsquarer"
+            android:hint="ex ) 우리집, 할머니집"
             android:inputType="text"
             android:maxLines="1"
-            android:hint="ex ) 우리집, 할머니집"
+            android:textColor="@color/default_gray"
             android:textColorHighlight="#DCDADA"
             android:textColorHint="#DCDADA"
             android:textColorLink="#DCDADA"
-            android:textSize="17dp"
-            android:fontFamily="@font/nanumsquarer"/>
+            android:textSize="17dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Space
@@ -125,9 +127,11 @@
             android:id="@+id/current_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumsquarer"
             android:text="현재위치로 설정 "
-            android:textSize="17dp"
-            android:fontFamily="@font/nanumsquarer"/>
+            android:textColor="@color/default_gray"
+
+            android:textSize="17dp" />
 
         <TextView
             android:id="@+id/slash"
@@ -136,6 +140,7 @@
             android:layout_height="wrap_content"
             android:text="/"
             android:gravity="center"
+            android:textColor="@color/default_gray"
             android:fontFamily="@font/nanumsquarer"
             android:textSize="14dp" />
 
@@ -145,6 +150,7 @@
             android:layout_height="wrap_content"
             android:text="지역선택으로 설정"
             android:textSize="17dp"
+            android:textColor="@color/default_gray"
             android:fontFamily="@font/nanumsquarer"/>
         />
     </LinearLayout>

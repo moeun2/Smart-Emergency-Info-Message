@@ -181,7 +181,7 @@ public class Page3Activity extends AppCompatActivity implements View.OnClickList
                                 obj.getDouble("disaster_weather"), obj.getDouble("economy_finance")),seekbar1_progress,seekbar2_progress,seekbar3_progress,seekbar4_progress,seekbar5_progress);
 
                         //데베에 저장
-                        new MsgListDatabaseInsertAsyncTask(db.MsgDAO(), new MsgDTO(tempMsgVO.getId(), tempMsgVO.getDay(), tempMsgVO.getTime(), tempMsgVO.getMsgText(),
+                        new MsgListDatabaseInsertAsyncTask(db.MsgDAO(), new MsgDTO( tempMsgVO.getDay(), tempMsgVO.getTime(), tempMsgVO.getMsgText(),
                                 tempMsgVO.getSenderLocation(), tempMsgVO.getLevel(), tempMsgVO.getCircleImageViewId(), obj.getDouble("co_route"), obj.getDouble("co_outbreak_quarantine"), obj.getDouble("co_safetyTips"),
                                 obj.getDouble("disaster_weather"), obj.getDouble("economy_finance"), tempMsgVO.getTotalMsgPoint(), tempMsgVO.getCategroyIndex())).execute();
                     }

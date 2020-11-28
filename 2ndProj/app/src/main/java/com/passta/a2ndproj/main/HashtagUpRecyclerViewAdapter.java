@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.passta.a2ndproj.MainActivity;
 import com.passta.a2ndproj.R;
+
 import com.passta.a2ndproj.data.UserListDAO;
 import com.passta.a2ndproj.data.UserListDTO;
 import com.passta.a2ndproj.network.RetrofitClient;
@@ -131,7 +132,8 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
                         deleteLocationMsgItem(hashtagText,hashtagLocation,getAdapterPosition());
 
                         //꺼주기(글자색 바꾸기)
-                        Typeface typeface = itemView.getContext().getResources().getFont(R.font.nanumsquarer);
+
+                        Typeface typeface = ResourcesCompat.getFont(context, R.font.nanumsquarer);
                         name.setTextColor(Color.parseColor(itemView.getContext().getString(R.color.black)));
                         name.setTypeface(typeface);
                     }
@@ -141,7 +143,7 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
                     else {
                         addLocationItem(hashtagText,getAdapterPosition());
 
-                        Typeface typeface = itemView.getContext().getResources().getFont(R.font.nanumsquareeb);
+                        Typeface typeface = ResourcesCompat.getFont(context, R.font.nanumsquareeb);
                         name.setTextColor(Color.parseColor(itemView.getContext().getString(R.color.twitterBlue)));
                         name.setTypeface(typeface);
                     }
