@@ -25,10 +25,16 @@ public class Msg_VO {
     private int categroyIndex;
     private double totalMsgPoint;
     private MainActivity mainActivity;
-
+    private int filter1;
+    private int filter2;
+    private int filter3;
+    private int filter4;
+    private int filter5;
+    private boolean isFirstStep;
 
     public Msg_VO(int id, String day, String time, String msgText, String senderLocation, MainActivity mainActivity, MsgCategoryPoint_VO msgCategoryPoint) {
 
+        this.isFirstStep = false;
         this.id = id;
         this.day = day;
         this.time = time;
@@ -41,25 +47,40 @@ public class Msg_VO {
         calculateTotalMsgPointAndLevel();
     }
 
-    public Msg_VO(int id, String day, String time, String msgText, String senderLocation, int level, int circleImageViewId, MsgCategoryPoint_VO msgCategoryPoint, int categroyIndex, double totalMsgPoint) {
+    public Msg_VO(int id, String day, String time, String msgText, String senderLocation, MsgCategoryPoint_VO msgCategoryPoint, int filter1, int filter2 , int filter3 , int filter4 , int filter5) {
+
+        this.isFirstStep = true;
         this.id = id;
         this.day = day;
         this.time = time;
         this.msgText = msgText;
         this.senderLocation = senderLocation;
-        this.level = level;
-        this.circleImageViewId = circleImageViewId;
-        this.msgCategoryPoint = msgCategoryPoint;
-        this.categroyIndex = categroyIndex;
-        this.totalMsgPoint = totalMsgPoint;
+        this.msgCategoryPoint = new MsgCategoryPoint_VO(msgCategoryPoint.getCoronaRoute(),msgCategoryPoint.getCoronaUpbreak(),msgCategoryPoint.getCoronaSafetyRule(),
+                msgCategoryPoint.getDisaster(),msgCategoryPoint.getEconomy());
+
+        this.filter1 = filter1;
+        this.filter2 = filter2;
+        this.filter3 = filter3;
+        this.filter2 = filter4;
+        this.filter3 = filter5;
+
+        setCategroy();
+        calculateTotalMsgPointAndLevel();
     }
 
     public void calculateTotalMsgPointAndLevel(){
+        if(!isFirstStep){
         FilterDTO filterDTO = mainActivity.filterList.get(0);
 
         totalMsgPoint = (returnWeight(filterDTO.filter_1) * msgCategoryPoint.getCoronaRoute()) + (returnWeight(filterDTO.filter_2) * msgCategoryPoint.getCoronaUpbreak()) +
                 (returnWeight(filterDTO.filter_3) * msgCategoryPoint.getCoronaSafetyRule()) + (returnWeight(filterDTO.filter_4) * msgCategoryPoint.getDisaster()) +
                 (returnWeight(filterDTO.filter_5) * msgCategoryPoint.getEconomy());
+        }else{
+            totalMsgPoint = (returnWeight(filter1) * msgCategoryPoint.getCoronaRoute()) + (returnWeight(filter2) * msgCategoryPoint.getCoronaUpbreak()) +
+                    (returnWeight(filter3) * msgCategoryPoint.getCoronaSafetyRule()) + (returnWeight(filter4) * msgCategoryPoint.getDisaster()) +
+                    (returnWeight(filter5) * msgCategoryPoint.getEconomy());
+        }
+
 
         if(totalMsgPoint < 400)
             level = 1;

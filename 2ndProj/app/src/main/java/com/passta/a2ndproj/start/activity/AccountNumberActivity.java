@@ -1,6 +1,8 @@
 package com.passta.a2ndproj.start.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,40 +21,40 @@ import java.util.regex.Pattern;
 
 public class AccountNumberActivity extends AppCompatActivity {
     public int MAX_COUNT; // 계좌 최대 입력 갯수
-    public static int BANK;
-    Button button; // 동의 버튼
-    TextView bankName; // 은행 이름
+    private TextView next; // 동의 버튼
+    private TextView bankNameTextView; // 은행 이름
+    private ImageView back;
     TextView warningText; // 경고 문고
     EditText accountNumberEditText;
     boolean canNextButton;
-    ImageView back_btn;
+    public String bankName;
     int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_number);
+        setStatusBar();
+
+        Intent intent = getIntent();
+        bankName = intent.getStringExtra("cardName");
+
 
         MAX_COUNT = 15;
-        button = findViewById(R.id.btn_next);
-        bankName = findViewById(R.id.bankText);
+        next = findViewById(R.id.next_account_number_activity);
+        bankNameTextView = findViewById(R.id.bank_text_account_number_activity);
         accountNumberEditText = findViewById(R.id.txt_pay);
-        back_btn = findViewById(R.id.agreement_back_btn);
+        back = findViewById(R.id.back_account_number_activity);
         warningText = findViewById(R.id.warningText);
         warningText.setText("");
-        BANK = 0;
 
-        TextView bankText = findViewById(R.id.bankText);
-//        AccountVO accountVO = AppManager.getInstance().getCurrentTransfer();
-//        bankText.setText(accountVO.getBank());
-
+        bankNameTextView.setText(bankName + " 은행의 계좌 번호를");
 
     }
     @Override
     public void onStart() {
 
         super.onStart();
-
 
         accountNumberEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -93,20 +95,31 @@ public class AccountNumberActivity extends AppCompatActivity {
 
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(canNextButton == true){
-
-
                     Intent intent = new Intent(getApplicationContext(), AccountPasswordActivity.class);
-
+                    intent.putExtra("cardName", bankName);
                     startActivity(intent);
                 }
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
     }
 
+    private void setStatusBar() {
+        View view = getWindow().getDecorView();
+        view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(Color.parseColor("#ffffff"));//색 지정
+
+    }
 
 }

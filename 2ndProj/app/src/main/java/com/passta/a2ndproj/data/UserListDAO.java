@@ -20,4 +20,7 @@ public interface UserListDAO {
     @Query("DELETE FROM UserList WHERE tag = :tag")
     void delete(String tag);
 
+    @Query("UPDATE UserList SET is_hastag_ckecked = :isChecked WHERE tag = :tag")
+    void updateHastagChecked(boolean isChecked,String tag);
+
 }

@@ -207,7 +207,7 @@ public class HashtagDownRecyclerViewAdapter extends RecyclerView.Adapter<Hashtag
 
             setUserSettingInterestLevel(level,true);
             updateHashtagSetting();
-            mainActivity.classifyMsgData(true);
+            mainActivity.classifyMsgData();
             mainActivity.createOneDayMsgDataList();
 
             mainActivity.oneDayMsgRecyclerViewAdapter.notifyDataSetChanged();
@@ -219,7 +219,7 @@ public class HashtagDownRecyclerViewAdapter extends RecyclerView.Adapter<Hashtag
 
             setUserSettingCategory(categoryIndex,true);
             updateHashtagSetting();
-            mainActivity.classifyMsgData(true);
+            mainActivity.classifyMsgData();
             mainActivity.createOneDayMsgDataList();
 
             mainActivity.oneDayMsgRecyclerViewAdapter.notifyDataSetChanged();

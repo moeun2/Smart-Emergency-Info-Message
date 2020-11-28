@@ -28,6 +28,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import retrofit2.http.HEAD;
+
 public class Dialogue_select_location_2 extends AppCompatActivity {
 
     private ArrayList<String> mArrayList = new ArrayList<>();;
@@ -36,7 +38,7 @@ public class Dialogue_select_location_2 extends AppCompatActivity {
     private int numberOfColumns;
     private static final String TAG = "Dialogue_select_location_2";
     private String nowType;
-    private int si_position;
+    private int position_si;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +46,11 @@ public class Dialogue_select_location_2 extends AppCompatActivity {
         setContentView(R.layout.dialogue_select_location_2);
 
         Intent intent = getIntent();
-        si_position = intent.getIntExtra("position",0);
+        position_si = intent.getIntExtra("position",0);
         nowType = intent.getStringExtra("type");
 
         InitializeView();
-        initialize_recyclerview(1, si_position);
+        initialize_recyclerview(1, position_si);
 
 
     }
@@ -65,12 +67,14 @@ public class Dialogue_select_location_2 extends AppCompatActivity {
         int y = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setLayout(x, y);
 
+        //뒤에 밝기 조정
         if(nowType.equals("main")){
             getWindow().setDimAmount(0.88f);
         }
 
     }
-    public void initialize_recyclerview(int numberOfColumns, int si_position)
+    public void initialize_recyclerview(int numberOfColumns, int position_si)
+
     {
         numberOfColumns = numberOfColumns;
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(this, numberOfColumns);
@@ -78,8 +82,7 @@ public class Dialogue_select_location_2 extends AppCompatActivity {
 //        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
 //        mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-
-        String filename = "gu_"+Integer.toString(si_position);
+        String filename = "gu_"+Integer.toString(position_si);
         set_list(mArrayList,filename);
 
 
@@ -95,13 +98,13 @@ public class Dialogue_select_location_2 extends AppCompatActivity {
             public void onClick(View view, int position) {
                 String str = mArrayList.get(position).toString();
 
-                Toast.makeText(getApplicationContext(), "position : " + position + "/ String : " + str, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "position : " + position + "/ String : " + str, Toast.LENGTH_LONG).show();
                 Dialogue_select_location dsl = (Dialogue_select_location)Dialogue_select_location.activity;
 
 
                 Log.d("모은", "addOnItemTouchListener");
                 Intent intent = new Intent(getApplicationContext(),Dialogue_select_location.class);
-                intent.putExtra("position", si_position);
+                intent.putExtra("position", position_si);
                 intent.putExtra("location_gu", str);
                 setResult(RESULT_OK, intent);
 

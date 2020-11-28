@@ -10,7 +10,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_test3_foreground"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -45,25 +45,44 @@
         <activity
             android:name=".start.dialogue.Dialogue_select_location_2"
             android:theme="@style/PopUpTheme" />
+
         <activity
             android:name=".start.dialogue.Dialogue_add_location"
             android:theme="@style/PopUpTheme" />
+        <activity android:name=".start.dialogue.Dialog_complete_add_location"
+            android:theme="@style/PopUpTheme"
+            />
         <activity android:name=".network.NetworkActivity" />
         <activity android:name=".start.activity.Page4Activity" />
         <activity android:name=".start.activity.Page2Activity" />
         <activity android:name=".start.activity.Page3Activity" />
-        <activity android:name=".start.activity.AccountPasswordActivity" />
+        <activity android:name=".start.activity.SearchBankActivity"/>
+        <activity android:name=".start.activity.AccountNumberActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".start.activity.AccountPasswordActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".start.activity.AccountGetDataActivity" />
         <activity android:name=".notification.AlarmSettingActivity" />
         <activity android:name=".start.activity.Page1Activity"/>
-<!--        <activity android:name=".MainActivity" />-->
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".MainActivity" />
+
+        <activity android:name=".IntroLoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+<!--        <activity android:name=".MainActivity">-->
+
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
 
         <service android:name=".notification.FirebaseInstanceIDService">
             <intent-filter>

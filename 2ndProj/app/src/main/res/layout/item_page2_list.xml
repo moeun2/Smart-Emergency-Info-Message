@@ -2,40 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginBottom="10dp">
+    android:background="@color/colorGray"
+>
 
     <TextView
         android:id="@+id/tag"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="10dp"
         android:textColor="@color/black"
         android:fontFamily="@font/nanumsquareeb"
         android:text="우리집"
-        android:textSize="18sp" />
+        android:textSize="15dp" />
 
 
     <TextView
         android:id="@+id/location"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="@font/nanumsquarer"
         android:textColor="@color/black"
         android:layout_weight="1"
         android:text="서울특별시 전체"
-        android:textSize="18sp" />
+        android:textSize="15dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/delete_button_page2_item"
         android:layout_width="50dp"
-        android:layout_height="30dp"
+        android:layout_height="25dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+
         android:background="@drawable/button_line_shape"
         android:textColor="@color/black"
         android:fontFamily="@font/nanumsquarer"
+        android:textSize="13dp"
         android:text="삭제" />
 </LinearLayout>

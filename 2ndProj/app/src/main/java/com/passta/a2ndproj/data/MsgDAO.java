@@ -23,6 +23,9 @@ public interface MsgDAO {
     @Query("DELETE FROM Msg WHERE location = :location")
     void delete(String location);
 
+    @Query("DELETE FROM Msg")
+    void deleteAll();
+
 
 
 }

@@ -5,16 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".start.activity.Page3Activity">
+    tools:context=".start.activity.Page3Activity"
+    android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/linear_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_main_button"
-        android:backgroundTint="@color/twitterLowBlue"
+        android:background="@color/white"
         android:orientation="vertical"
-        android:paddingTop="30dp"
         android:paddingBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,16 +21,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
+        <ImageView
+            android:id="@+id/back_page3_activity"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:clickable="true"
+            android:padding="10dp"
+            android:layout_marginTop="7dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorTransparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/back"/>
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumsquareeb"
+            android:layout_marginTop="5dp"
             android:gravity="center_horizontal"
-            android:text="재난문자 카테고리 필터 설정"
-
-            android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:text="카테고리 필터 설정"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/textView10"
@@ -39,11 +50,11 @@
             android:layout_height="wrap_content"
 
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="5dp"
             android:fontFamily="@font/nanumsquarer"
             android:gravity="center_horizontal"
-            android:text="검색어에 따라 더 자세한 알림을 드릴게요!"
-            android:textColor="@color/colorGray" />
+            android:text="자신만의 재난문자 카테고리 필터를 설정해보세요!"
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/textView9"
@@ -52,8 +63,8 @@
             android:layout_marginBottom="3dp"
             android:fontFamily="@font/nanumsquarer"
             android:gravity="center_horizontal"
-            android:text="나에게 더 필요한 정보를 골라보세요!"
-            android:textColor="@color/colorGray" />
+            android:text="나에게 더 중요한 재난문자를 분석할 수 있어요!"
+            android:textColor="@color/black" />
     </LinearLayout>
 
     <LinearLayout
@@ -73,24 +84,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/text1"
-                android:layout_width="wrap_content"
+                android:layout_width="115dp"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="3dp" android:fontFamily="@font/nanumsquareeb"
-                android:text="코로나 동선  ㅤㅤㅤ :" />
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/nanumsquareb"
+                android:text="코로나 동선"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
 
-            <!--base/indicator/track/-->
             <com.warkiz.widget.IndicatorSeekBar
                 android:id="@+id/seekbar1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
 
                 android:rotation="180"
                 app:isb_max="4"
@@ -98,9 +112,7 @@
                 app:isb_only_thumb_draggable="false"
                 app:isb_progress="3"
                 app:isb_seek_smoothly="true"
-
                 app:isb_show_indicator="none"
-
                 app:isb_show_tick_marks_type="oval"
                 app:isb_show_tick_texts="false"
                 app:isb_thumb_color="@color/twitterLowBlue"
@@ -120,25 +132,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/text2"
-                android:layout_width="wrap_content"
+                android:layout_width="115dp"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="3dp"
-                android:fontFamily="@font/nanumsquareeb"
-                android:text="코로나 발생 및 방역 :" />
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/nanumsquareb"
+                android:text="코로나 발생/방역"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
 
-            <!--base/indicator/track/-->
             <com.warkiz.widget.IndicatorSeekBar
                 android:id="@+id/seekbar2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:rotation="180"
                 app:isb_max="4"
                 app:isb_min="1"
@@ -167,25 +181,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/text3"
-                android:layout_width="wrap_content"
+                android:layout_width="115dp"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="3dp"
-                android:fontFamily="@font/nanumsquareeb"
-                android:text="안전수칙ㅤㅤㅤ   ㅤ :" />
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/nanumsquareb"
+                android:text="코로나 안전수칙"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
 
-            <!--base/indicator/track/-->
             <com.warkiz.widget.IndicatorSeekBar
                 android:id="@+id/seekbar3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:rotation="180"
                 app:isb_max="4"
                 app:isb_min="1"
@@ -211,29 +227,31 @@
                 app:isb_track_rounded_corners="true" />
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/text4"
-                android:layout_width="wrap_content"
+                android:layout_width="115dp"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="3dp"
-                android:fontFamily="@font/nanumsquareeb"
-                android:text="재난상황ㅤㅤㅤ   ㅤ :" />
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/nanumsquareb"
+                android:text="재난/날씨"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
 
-            <!--base/indicator/track/-->
             <com.warkiz.widget.IndicatorSeekBar
                 android:id="@+id/seekbar4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:rotation="180"
                 app:isb_max="4"
                 app:isb_min="1"
@@ -263,27 +281,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:ignore="ExtraText">
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/text5"
-                android:layout_width="wrap_content"
+                android:layout_width="115dp"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="3dp"
-                android:fontFamily="@font/nanumsquareeb"
-                android:text="기ㅤㅤ타ㅤㅤㅤ   ㅤ :" />
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/nanumsquareb"
+                android:text="경제/금융"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
 
-            <!--base/indicator/track/-->
             <com.warkiz.widget.IndicatorSeekBar
                 android:id="@+id/seekbar5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:rotation="180"
                 app:isb_max="4"
                 app:isb_min="1"
@@ -307,17 +325,17 @@
                 app:isb_track_progress_color="@color/colorGray"
                 app:isb_track_progress_size="30dp"
                 app:isb_track_rounded_corners="true" />
+            />
         </LinearLayout>
+
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_main_button_rotate180"
+        android:background="@color/twitterBlue"
         android:orientation="horizontal"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -325,36 +343,16 @@
         app:layout_constraintVertical_bias="1.0">
 
         <TextView
-            android:id="@+id/back"
-            android:layout_width="90dp"
-            android:layout_height="30dp"
+            android:id="@+id/next_page3_activity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/buttonshape"
-            android:backgroundTint="@color/white"
             android:gravity="center"
-            android:text="BACK"
-            android:textAlignment="center"
-            android:textColor="@color/black" />
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="10dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/next"
-            android:layout_width="90dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/buttonshape"
-            android:backgroundTint="@color/white"
-            android:gravity="center"
-            android:text="NEXT"
-            android:textAlignment="center"
-            android:textColor="@color/black" />
+            android:padding="15dp"
+            android:textSize="20dp"
+            android:fontFamily="@font/nanumsquareeb"
+            android:text="N E X T"
+            android:textColor="@color/white" />
     </LinearLayout>
->>>>>>> moaupstream/master
+
 </androidx.constraintlayout.widget.ConstraintLayout>

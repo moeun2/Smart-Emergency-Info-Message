@@ -1,6 +1,7 @@
 package com.passta.a2ndproj.main;
 
 import android.content.Context;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +61,7 @@ public class MsgRecyclerViewAdapter extends RecyclerView.Adapter<MsgRecyclerView
         Animation animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_to_left);
         String time = returnTimeWithKorean(arrayList.get(position).getTime());
 
-        holder.msgText.setText(arrayList.get(position).getMsgText());
+        holder.msgText.setText(Html.fromHtml(arrayList.get(position).getMsgText()));
         holder.time.setText(time.substring(0,time.indexOf("분") + 1));
         holder.senderLocation.setText(arrayList.get(position).getSenderLocation());
         holder.circleImageView.setImageResource(arrayList.get(position).getCircleImageViewId());

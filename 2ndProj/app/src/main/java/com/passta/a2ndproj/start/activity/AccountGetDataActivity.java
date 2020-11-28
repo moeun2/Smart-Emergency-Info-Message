@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.passta.a2ndproj.MainActivity;
 import com.passta.a2ndproj.R;
 
 import org.json.JSONException;
@@ -27,43 +28,34 @@ import retrofit2.Response;
 //4
 public class AccountGetDataActivity extends AppCompatActivity {
 
+    private TextView next;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_get_data);
-
         setStatusBar();
 
+        next = findViewById(R.id.next_account_get_data);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                finish();
+                startActivity(intent);
+            }
+        });
 
 
     }
-    @Override
-    public void onBackPressed() {
-        finish();
-//        Intent intent = new Intent(getApplicationContext(), TransferActivity.class);
-//        startActivity(intent);
-    }
+
     private void setStatusBar() {
         View view = getWindow().getDecorView();
         view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        getWindow().setStatusBarColor(Color.parseColor("#FAEBD7"));
+        getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
 
     }
-    class BtnOnClickListener implements Button.OnClickListener {
-
-        @Override
-        public void onClick(View view) {
-            // 일단은 intent로 넘기는 걸로 하고, 서버 되면 바꿔놓기
-
-
-            switch (view.getId()) {
-
-            }
-
-        }
-    }
-
 
 
 }

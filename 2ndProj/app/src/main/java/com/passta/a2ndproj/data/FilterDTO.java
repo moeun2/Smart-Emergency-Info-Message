@@ -1,6 +1,5 @@
 package com.passta.a2ndproj.data;
 
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

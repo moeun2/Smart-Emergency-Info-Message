@@ -20,11 +20,15 @@ public class UserListDTO {
     @ColumnInfo(name = "img_number")
     public Integer img_number;
 
-    public UserListDTO(@NonNull String tag, String location_si, String location_gu,Integer img_number) {
+    @ColumnInfo(name = "is_hastag_ckecked")
+    public boolean isHashtagChecked;
+
+    public UserListDTO(@NonNull String tag, String location_si, String location_gu,Integer img_number,boolean isHashtagChecked) {
         this.tag = tag;
         this.location_si = location_si;
         this.location_gu = location_gu;
         this.img_number = img_number;
+        this.isHashtagChecked = isHashtagChecked;
     }
 
     public Integer getImg_number() {
@@ -42,6 +46,14 @@ public class UserListDTO {
 
     public void setTag(@NonNull String tag) {
         this.tag = tag;
+    }
+
+    public boolean isHashtagChecked() {
+        return isHashtagChecked;
+    }
+
+    public void setHashtagChecked(boolean hashtagChecked) {
+        isHashtagChecked = hashtagChecked;
     }
 
     public String getLocation_si() {

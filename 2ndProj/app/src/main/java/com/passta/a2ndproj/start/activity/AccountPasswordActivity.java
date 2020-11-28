@@ -1,6 +1,7 @@
 package com.passta.a2ndproj.start.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,8 +25,9 @@ public class AccountPasswordActivity extends AppCompatActivity {
     EditText passwordEditText;
     TextView warningText;
     boolean canNextButton;
-    ImageButton back_btn;
-    Button button; // 동의 버튼
+    private ImageView back;
+    private TextView next,bankText;
+    private String bankName;
     int index;
     Intent secondIntent;
 
@@ -33,12 +36,21 @@ public class AccountPasswordActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_password);
+        setStatusBar();
+
+        Intent intent = getIntent();
+        bankName = intent.getStringExtra("cardName");
+
         MAX_COUNT = 4;
         warningText = findViewById(R.id.warningPasswordText);
         passwordEditText = findViewById(R.id.accountPasswordEdit);
-        button = findViewById(R.id.account_data_button);
+        next = findViewById(R.id.next_account_password_activity);
+        back = findViewById(R.id.back_account_password_activity);
+        bankText = findViewById(R.id.bank_name_account_password_activity);
         index = 0;
-        back_btn = findViewById(R.id.account_password_back_btn);
+
+        bankText.setText(bankName + " 은행의 계좌 비밀번호를");
+
 
     }
 
@@ -86,23 +98,29 @@ public class AccountPasswordActivity extends AppCompatActivity {
             }
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(canNextButton == true){
                     Intent intent = new Intent(getApplicationContext(), AccountGetDataActivity.class);
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
             }
         });
 
-        back_btn.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
+    }
+
+    private void setStatusBar() {
+        View view = getWindow().getDecorView();
+        view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(Color.parseColor("#ffffff"));//색 지정
+
     }
 
 }

@@ -1,135 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
-    <FrameLayout
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="100dp"
+
+        android:visibility="visible"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="complete.json"
+        app:lottie_loop="false"
+        app:lottie_speed="1"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/bank_text_account_number_activity"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_weight="6">
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nanumsquareb"
+        android:gravity="center"
+        android:lineSpacingExtra="5dp"
+        android:text="계좌 데이터를 불러올\n모든 준비를 마쳤습니다.\n\n이제 재난문자를 더 똑똑하게 관리하세요!"
+        android:textColor="@color/black"
+        android:textSize="20dp" />
 
-        <ImageButton
-            android:id="@+id/get_data_back_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:adjustViewBounds="true"
-            android:background="@color/colorTransparent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_baseline_arrow_back_24" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="100dp"
-
-            android:visibility="visible"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="complete.json"
-            app:lottie_loop="false"
-            app:lottie_speed="1"
-            tools:visibility="visible" />
-
-    </FrameLayout>
-
-    <LinearLayout
+    <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:layout_weight="5"
+        android:layout_weight="1" />
 
-        android:orientation="vertical">
-
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom|center"
-                android:gravity="top"
-                android:orientation="vertical">
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="계좌 정보를 불러올"
-                            android:textColor="@color/black"
-                            android:textSize="20dp" />
-
-                    </LinearLayout>
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="모든 준비를 마쳤습니다."
-                            android:textColor="@color/black"
-                            android:textSize="20dp" />
-
-                    </LinearLayout>
-
-                </FrameLayout>
-
-            </LinearLayout>
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <Button
-                android:id="@+id/account_data_get_button"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="bottom"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/button_line_shape"
-
-                android:fontFamily="@font/nanumsquareb"
-                android:text="계좌 정보 불러오기"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
-
-        </FrameLayout>
-
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/next_account_get_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/twitterBlue"
+        android:fontFamily="@font/nanumsquareeb"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="N E X T"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
 
 </LinearLayout>
