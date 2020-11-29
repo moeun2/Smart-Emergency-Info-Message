@@ -70,7 +70,10 @@ public class MsgRecyclerViewAdapter extends RecyclerView.Adapter<MsgRecyclerView
 
         holder.msgText.setText(Html.fromHtml(arrayList.get(position).getMsgText()));
         holder.time.setText(time.substring(0,time.indexOf("분") + 1));
-        holder.senderLocation.setText(arrayList.get(position).getSenderLocation());
+        if(arrayList.get(position).getSenderLocation().equals("중대본 전체"))
+            holder.senderLocation.setText("중앙 대책 위원회");
+        else
+            holder.senderLocation.setText(arrayList.get(position).getSenderLocation());
         holder.circleImageView.setImageResource(arrayList.get(position).getCircleImageViewId());
 
         holder.linearLayout.setAnimation(animation);

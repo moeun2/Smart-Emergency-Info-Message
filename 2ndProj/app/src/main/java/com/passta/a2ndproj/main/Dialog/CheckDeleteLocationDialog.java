@@ -79,6 +79,7 @@ public class CheckDeleteLocationDialog extends Dialog {
                 String removedLocation2 = mainActivity.userList.get(position - 2).getLocation_si() + " " + "전체";
 
                 boolean hasSameSi = false;
+                boolean isTotalGu = false;
 
                 //문자를 삭제할때 같은 si 가 없으면 ~~시 전체 문자도 삭제해주고 있다면 ~~시 전체문자는 삭제해 주지않는다.
                 for (int i = 0; i < mainActivity.userList.size(); i++) {
@@ -90,37 +91,125 @@ public class CheckDeleteLocationDialog extends Dialog {
                     }
                 }
 
+                if (mainActivity.userList.get(position - 2).getLocation_gu().equals("전체"))
+                    isTotalGu = true;
+
+                // 삭제된 장소가 ~~시 전체 인 경우
+                if (isTotalGu) {
+
+                    int size = mainActivity.msgDataList.size();
+
+                    //데베에서 삭제하는 작업.
+                    LoopP:
+                    for (int i = 0; i < size; i++) {
+
+                        //문자 메세지가 삭제하려는 시랑 같은 시 일 경우 들어가서
+                        if (mainActivity.msgDataList.get(i).getSenderLocation().split(" ")[0].equals(mainActivity.userList.get(position - 2).getLocation_si())) {
+
+                            for (int j = 0; j < mainActivity.userList.size(); j++) {
+
+                                //같은거 컨티뉴
+                                if (j == position - 2)
+                                    continue;
+
+                                if(mainActivity.msgDataList.get(i).getSenderLocation().split(" ")[1].equals("전체"))
+                                    continue LoopP;
+
+                                // 삭제하려는 ~~시 전체 에서 ~~시와 같은 시가 다른 해쉬태그로 저장돼있는경우
+                                if (mainActivity.msgDataList.get(i).getSenderLocation().split(" ")[1].equals(mainActivity.userList.get(j).getLocation_gu()))
+                                    continue LoopP;
+                            }
+                            new MsgDataDeleteAsyncTaskInTotalGu(mainActivity.db.MsgDAO(),mainActivity.msgDataList.get(i).getSenderLocation().split(" ")[0],
+                                    mainActivity.msgDataList.get(i).getSenderLocation().split(" ")[1]).execute();
+                        }
+                    }
+                    //같은 시가 없는 경우에는 데베에서 ~~시 전체도 삭제
+                    if (!hasSameSi)
+                        new MsgDataDeleteAsyncTask(mainActivity.db.MsgDAO(), removedLocation2).execute();
+
+                    if (hasSameSi) {
+
+                        LoopP2:
+                        for (int i = 0; i < size; i++) {
+
+                            if (mainActivity.msgDataList.get(i).getSenderLocation().split(" ")[0].equals(removedLocation.split(" ")[0])) {
+
+                                for(int j=0;j<mainActivity.userList.size();j++) {
+
+                                    //같은거 컨티뉴
+                                    if (j == position - 2)
+                                        continue;
+
+                                    if(mainActivity.msgDataList.get(i).getSenderLocation().split(" ")[1].equals("전체"))
+                                        continue LoopP2;
+
+                                    //유저리스트에 저장된 장소 중에 같은 시 다른 구 가 있을 경우 그경우는 continue
+                                    if(mainActivity.msgDataList.get(i).getSenderLocation().split(" ")[1].equals(
+                                            mainActivity.userList.get(j).getLocation_gu()))
+                                        continue LoopP2;
+                                }
+                                mainActivity.msgDataList.remove(i);
+                                size--;
+                                i--;
+                            }
+                        }
+                    } else {
+                        LoopP3:
+                        for (int i = 0; i < size; i++) {
+
+                            if (mainActivity.msgDataList.get(i).getSenderLocation().split(" ")[0].equals(removedLocation.split(" ")[0])) {
+
+                                for(int j=0;j<mainActivity.userList.size();j++) {
+
+                                    //같은거 컨티뉴
+                                    if (j == position - 2)
+                                        continue;
+
+                                    //유저리스트에 저장된 장소 중에 같은 시 다른 구 가 있을 경우 그경우는 continue
+                                    if(mainActivity.msgDataList.get(i).getSenderLocation().split(" ")[1].equals(
+                                            mainActivity.userList.get(j).getLocation_gu()) && !mainActivity.msgDataList.get(i).getSenderLocation()
+                                            .split(" ")[1].equals("전체"))
+                                        continue LoopP3;
+                                }
+                                mainActivity.msgDataList.remove(i);
+                                size--;
+                                i--;
+                            }
+                        }
+                    }
+                } else {
+
+                    new MsgDataDeleteAsyncTask(mainActivity.db.MsgDAO(), removedLocation).execute();
+                    //같은 시가 없는 경우에는 데베에서 ~~시 전체도 삭제
+                    if (!hasSameSi)
+                        new MsgDataDeleteAsyncTask(mainActivity.db.MsgDAO(), removedLocation2).execute();
+
+
+                    int size = mainActivity.msgDataList.size();
+                    if (hasSameSi) {
+                        for (int i = 0; i < size; i++) {
+                            if (mainActivity.msgDataList.get(i).getSenderLocation().equals(removedLocation)) {
+                                mainActivity.msgDataList.remove(i);
+                                size--;
+                                i--;
+                            }
+                        }
+                    } else {
+                        for (int i = 0; i < size; i++) {
+                            if (mainActivity.msgDataList.get(i).getSenderLocation().equals(removedLocation) ||
+                                    mainActivity.msgDataList.get(i).getSenderLocation().equals(removedLocation2)) {
+                                mainActivity.msgDataList.remove(i);
+                                size--;
+                                i--;
+
+                            }
+                        }
+                    }
+                }
                 //해쉬태그삭제
                 new UserListDataDeleteAsyncTask(mainActivity.db.userListDAO(), mainActivity.userList.get(position - 2).getTag()).execute();
                 mainActivity.hashtagUpDataList.remove(position);
                 mainActivity.hashtagUpRecyclerViewAdapter.notifyDataSetChanged();
-
-                new MsgDataDeleteAsyncTask(mainActivity.db.MsgDAO(), removedLocation).execute();
-                //같은 시가 없는 경우에는 데베에서 ~~시 전체도 삭제
-                if (!hasSameSi)
-                    new MsgDataDeleteAsyncTask(mainActivity.db.MsgDAO(), removedLocation2).execute();
-
-
-                int size = mainActivity.msgDataList.size();
-                if (hasSameSi) {
-                    for (int i = 0; i < size; i++) {
-                        if (mainActivity.msgDataList.get(i).getSenderLocation().equals(removedLocation)) {
-                            mainActivity.msgDataList.remove(i);
-                            size--;
-                            i--;
-                        }
-                    }
-                } else {
-                    for (int i = 0; i < size; i++) {
-                        if (mainActivity.msgDataList.get(i).getSenderLocation().equals(removedLocation) ||
-                                mainActivity.msgDataList.get(i).getSenderLocation().equals(removedLocation2)) {
-                            mainActivity.msgDataList.remove(i);
-                            size--;
-                            i--;
-
-                        }
-                    }
-                }
 
                 //필터 데이터 분류
                 mainActivity.classifyMsgData();
@@ -169,6 +258,24 @@ public class CheckDeleteLocationDialog extends Dialog {
         @Override
         protected Void doInBackground(MsgDTO... msgDTOS) {
             msgDAO.delete(location);
+            return null;
+        }
+    }
+
+    public class MsgDataDeleteAsyncTaskInTotalGu extends AsyncTask<MsgDTO, Void, Void> {
+
+        private MsgDAO msgDAO;
+        private String locationSi, locationGu;
+
+        public MsgDataDeleteAsyncTaskInTotalGu(MsgDAO msgDAO, String locationSi, String locationGu) {
+            this.msgDAO = msgDAO;
+            this.locationSi = locationSi;
+            this.locationGu = locationGu;
+        }
+
+        @Override
+        protected Void doInBackground(MsgDTO... msgDTOS) {
+            msgDAO.deleteLocationSiGu(locationSi, locationGu);
             return null;
         }
     }

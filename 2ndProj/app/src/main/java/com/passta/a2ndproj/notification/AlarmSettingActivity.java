@@ -71,7 +71,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
 
                 // TODO Auto-generated method stub
 
-                Toast.makeText(getApplicationContext(), "switch_basic 체크상태 = " + isChecked, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "switch_basic 체크상태 = " + isChecked, Toast.LENGTH_SHORT).show();
                 pref = getSharedPreferences("alarm", Activity.MODE_PRIVATE);
                 editor = pref.edit();
                 allowsReciving = isChecked;
@@ -89,7 +89,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
 
                 // TODO Auto-generated method stub
                 if (allowsReciving) {
-                    Toast.makeText(getApplicationContext(), "level1 체크상태 = " + isChecked, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "level1 체크상태 = " + isChecked, Toast.LENGTH_SHORT).show();
                     pref = getSharedPreferences("alarm", Activity.MODE_PRIVATE);
                     editor = pref.edit();
                     isCheckedLevel1 = isChecked;
@@ -106,7 +106,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
 
                 // TODO Auto-generated method stub
                 if (allowsReciving) {
-                    Toast.makeText(getApplicationContext(), "level2 체크상태 = " + isChecked, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "level2 체크상태 = " + isChecked, Toast.LENGTH_SHORT).show();
                     pref = getSharedPreferences("alarm", Activity.MODE_PRIVATE);
                     editor = pref.edit();
                     isCheckedLevel2 = isChecked;
@@ -125,7 +125,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
 
                 // TODO Auto-generated method stub
                 if (allowsReciving) {
-                    Toast.makeText(getApplicationContext(), "level3 체크상태 = " + isChecked, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "level3 체크상태 = " + isChecked, Toast.LENGTH_SHORT).show();
                     pref = getSharedPreferences("alarm", Activity.MODE_PRIVATE);
                     editor = pref.edit();
                     isCheckedLevel3 = isChecked;
@@ -146,7 +146,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
 
                 // TODO Auto-generated method stub
 
-                Toast.makeText(getApplicationContext(), "audio_notification 체크상태 = " + isChecked, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "audio_notification 체크상태 = " + isChecked, Toast.LENGTH_SHORT).show();
                 pref = getSharedPreferences("alarm", Activity.MODE_PRIVATE);
                 editor = pref.edit();
                 isCheckedAudioNotification = isChecked;
@@ -165,7 +165,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
 
                 // TODO Auto-generated method stub
 
-                Toast.makeText(getApplicationContext(), "viberation_notification 체크상태 = " + isChecked, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "viberation_notification 체크상태 = " + isChecked, Toast.LENGTH_SHORT).show();
                 pref = getSharedPreferences("alarm", Activity.MODE_PRIVATE);
                 editor = pref.edit();
                 isCheckedVibrationNotification = isChecked;

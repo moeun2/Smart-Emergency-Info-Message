@@ -72,26 +72,27 @@ public class Page3Activity extends AppCompatActivity implements View.OnClickList
         InitializeView();
         SetListener();
     }
+
     private void setStatusBar() {
         View view = getWindow().getDecorView();
         view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(Color.parseColor("#ffffff"));//색 지정
 
     }
-    public void InitializeView()
-    {
 
-        next = (TextView)findViewById(R.id.next_page3_activity);
+    public void InitializeView() {
+
+        next = (TextView) findViewById(R.id.next_page3_activity);
         back = (ImageView) findViewById(R.id.back_page3_activity);
-        seekbar1 = (IndicatorSeekBar)findViewById(R.id.seekbar1);
-        seekbar2 = (IndicatorSeekBar)findViewById(R.id.seekbar2);
-        seekbar3 = (IndicatorSeekBar)findViewById(R.id.seekbar3);
-        seekbar4 = (IndicatorSeekBar)findViewById(R.id.seekbar4);
-        seekbar5 = (IndicatorSeekBar)findViewById(R.id.seekbar5);
+        seekbar1 = (IndicatorSeekBar) findViewById(R.id.seekbar1);
+        seekbar2 = (IndicatorSeekBar) findViewById(R.id.seekbar2);
+        seekbar3 = (IndicatorSeekBar) findViewById(R.id.seekbar3);
+        seekbar4 = (IndicatorSeekBar) findViewById(R.id.seekbar4);
+        seekbar5 = (IndicatorSeekBar) findViewById(R.id.seekbar5);
 
     }
 
-    public void SetListener(){
+    public void SetListener() {
         next.setOnClickListener(this);
         back.setOnClickListener(this);
 
@@ -99,8 +100,8 @@ public class Page3Activity extends AppCompatActivity implements View.OnClickList
 
 
     //4,3,2,1
-    public void onClick(View v){
-        switch (v.getId()){
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.next_page3_activity:
                 getSeekbarProgress();
                 goToNextActivity(new Page4Activity());
@@ -110,32 +111,38 @@ public class Page3Activity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
+
     private void goToNextActivity(Activity activity) {
         finish();
         Intent intent = new Intent(getApplicationContext(), activity.getClass());
         startActivity(intent);
     }
-    private void getSeekbarProgress(){
 
-         seekbar1_progress = Math.abs(seekbar1.getProgress() - 5);
-         seekbar2_progress = Math.abs(seekbar2.getProgress() - 5);
-         seekbar3_progress = Math.abs(seekbar3.getProgress() - 5);
-         seekbar4_progress = Math.abs(seekbar4.getProgress() - 5);
-         seekbar5_progress = Math.abs(seekbar5.getProgress() - 5);
+    private void getSeekbarProgress() {
+
+        seekbar1_progress = Math.abs(seekbar1.getProgress() - 5);
+        seekbar2_progress = Math.abs(seekbar2.getProgress() - 5);
+        seekbar3_progress = Math.abs(seekbar3.getProgress() - 5);
+        seekbar4_progress = Math.abs(seekbar4.getProgress() - 5);
+        seekbar5_progress = Math.abs(seekbar5.getProgress() - 5);
 
         new DatabaseAsyncTask(db.filterDAO()).execute();
-
-        for(int i=0;i<userList.size();i++){
-            insertMsgData(userList.get(i).getLocation_si(),userList.get(i).getLocation_gu());
+        insertMsgData("중대본", "전체",0);
+        for (int i = 0; i < userList.size(); i++) {
+            insertMsgData(userList.get(i).getLocation_si(), userList.get(i).getLocation_gu(),i);
         }
 
     }
 
-    public void insertMsgData(String location_si, String location_gu) {
-
+    public void insertMsgData(String location_si, String location_gu, int position) {
+        int limit = 0;
+        if (location_gu.equals("전체")) {
+            limit = 30;
+        } else
+            limit = 15;
         serviceApi = RetrofitClient.getClient().create(ServiceApi.class);//내 서버 연결
 
-        Call<ResponseBody> selectMsg = serviceApi.selectMsg(location_si, location_gu, 10);
+        Call<ResponseBody> selectMsg = serviceApi.selectMsg(location_si, location_gu, limit);
         selectMsg.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -143,13 +150,19 @@ public class Page3Activity extends AppCompatActivity implements View.OnClickList
 
                 String result = null;
                 JSONArray jsonArray = null;
+                boolean isTotalGu = false;
+
+                if (location_gu.equals("전체"))
+                    isTotalGu = true;
+
                 try {
                     result = response.body().string();
+
                     int temp = 0;
                     boolean hasSameLocation_si = false;
 
                     // 이미 똑같은 시 의 문자 정보가 저장돼 있는 경우에는 ~~시 전체 의 문자를 한번더 넣어주지 않기 위해 검사
-                    for (int i = 0; i < userList.size(); i++) {
+                    for (int i = 0; i < position + 1; i++) {
                         if (location_si.equals(userList.get(i).getLocation_si())) {
                             temp++;
                             if (temp > 1) {
@@ -162,6 +175,7 @@ public class Page3Activity extends AppCompatActivity implements View.OnClickList
                     JSONObject jObject = new JSONObject(result);
                     jsonArray = (JSONArray) jObject.get("msg");
 
+                    LoopP:
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject obj = jsonArray.getJSONObject(i);
 
@@ -170,17 +184,35 @@ public class Page3Activity extends AppCompatActivity implements View.OnClickList
 
                         // 이미 똑같은 ~~시 문자가 저장돼있는경우 ~~시 전체의 문자의 경우는 continue 시켜서 add안함.
                         if (hasSameLocation_si) {
-                            if (obj.getString("msg_sendingArea").split(" ")[1].equals("전체"))
+                            if (obj.getString("msg_gusi").equals("전체"))
                                 continue;
+                        }
+
+                        //구가 전체 일 경우, 같은 시 의 문자가 이미 저장돼어있다면 전체 반목문 컨티뉴
+                        if (isTotalGu) {
+                            LoopC:
+                            for (int j = 0; j < position; j++) {
+                                if (obj.getString("msg_gusi").equals(userList.get(j).getLocation_gu())) {
+                                    continue LoopP;
+                                }
+                            }
+                        }
+
+                        //같은 시의 전체 가 이미 저장돼있고, 같은 시가 들어올 경우 continue * -1 인 이유는 가장 최근에 등록된게 ~~시 전체인 경우를 제외하기 위함.
+                        for (int j = 0; j < position; j++) {
+                            if (obj.getString("msg_sido").equals(userList.get(j).getLocation_si())&&
+                                    userList.get(j).getLocation_gu().equals("전체")) {
+                                continue LoopP;
+                            }
                         }
 
                         //msgVo 하나만들고
                         Msg_VO tempMsgVO = new Msg_VO(obj.getInt("msg_id"), tempDay.get(0), tempDay.get(1), obj.getString("msg_content").trim(),
-                                obj.getString("msg_sendingArea"),new MsgCategoryPoint_VO(obj.getDouble("co_route"), obj.getDouble("co_outbreak_quarantine"), obj.getDouble("co_safetyTips"),
-                                obj.getDouble("disaster_weather"), obj.getDouble("economy_finance")),seekbar1_progress,seekbar2_progress,seekbar3_progress,seekbar4_progress,seekbar5_progress);
+                                obj.getString("msg_sido") + " " + obj.getString("msg_gusi"), new MsgCategoryPoint_VO(obj.getDouble("co_route"), obj.getDouble("co_outbreak_quarantine"), obj.getDouble("co_safetyTips"),
+                                obj.getDouble("disaster_weather"), obj.getDouble("economy_finance")), seekbar1_progress, seekbar2_progress, seekbar3_progress, seekbar4_progress, seekbar5_progress);
 
                         //데베에 저장
-                        new MsgListDatabaseInsertAsyncTask(db.MsgDAO(), new MsgDTO( tempMsgVO.getDay(), tempMsgVO.getTime(), tempMsgVO.getMsgText(),
+                        new MsgListDatabaseInsertAsyncTask(db.MsgDAO(), new MsgDTO(tempMsgVO.getDay(), tempMsgVO.getTime(), tempMsgVO.getMsgText(),
                                 tempMsgVO.getSenderLocation(), tempMsgVO.getLevel(), tempMsgVO.getCircleImageViewId(), obj.getDouble("co_route"), obj.getDouble("co_outbreak_quarantine"), obj.getDouble("co_safetyTips"),
                                 obj.getDouble("disaster_weather"), obj.getDouble("economy_finance"), tempMsgVO.getTotalMsgPoint(), tempMsgVO.getCategroyIndex())).execute();
                     }
@@ -210,26 +242,23 @@ public class Page3Activity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    public class DatabaseAsyncTask extends AsyncTask<FilterDTO,Void,Void> {
+    public class DatabaseAsyncTask extends AsyncTask<FilterDTO, Void, Void> {
 
         private FilterDAO filterDAO;
 
-        DatabaseAsyncTask(FilterDAO filterDAO)
-        {
+        DatabaseAsyncTask(FilterDAO filterDAO) {
             this.filterDAO = filterDAO;
         }
+
         @Override
         protected Void doInBackground(FilterDTO... filterDTOS) {
             list = filterDAO.loadFilterList();
-            if(list.size() == 0)
-            {
-                filterDAO.insert(new FilterDTO(0,seekbar1_progress,seekbar2_progress,seekbar3_progress,seekbar4_progress,seekbar5_progress));
+            if (list.size() == 0) {
+                filterDAO.insert(new FilterDTO(0, seekbar1_progress, seekbar2_progress, seekbar3_progress, seekbar4_progress, seekbar5_progress));
                 list = filterDAO.loadFilterList();
-            }
-            else{
-                filterDAO.update(new FilterDTO(0,seekbar1_progress,seekbar2_progress,seekbar3_progress,seekbar4_progress,seekbar5_progress));
-                for(int i=0;i<list.size();i++)
-                {
+            } else {
+                filterDAO.update(new FilterDTO(0, seekbar1_progress, seekbar2_progress, seekbar3_progress, seekbar4_progress, seekbar5_progress));
+                for (int i = 0; i < list.size(); i++) {
                     Log.i("모은 filter db 확인", String.valueOf(list.get(i).getFilter_1()));
                 }
             }
@@ -270,7 +299,6 @@ public class Page3Activity extends AppCompatActivity implements View.OnClickList
             return null;
         }
     }
-
 
 
 }

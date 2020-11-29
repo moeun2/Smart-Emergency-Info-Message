@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
@@ -100,12 +101,12 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
                         return;
                     }
 
-                    if(getAdapterPosition() == 1){
+                    if (getAdapterPosition() == 1) {
                         return;
                     }
 
                     String hashtagText = mainActivity.hashtagUpDataList.get(getAdapterPosition()).getHashtagText().replaceAll("\n", "");
-                    String hashtagLocation = mainActivity.userList.get(getAdapterPosition()-2).getLocation_si() + " " +  mainActivity.userList.get(getAdapterPosition()-2).getLocation_gu();
+                    String hashtagLocation = mainActivity.userList.get(getAdapterPosition() - 2).getLocation_si() + " " + mainActivity.userList.get(getAdapterPosition() - 2).getLocation_gu();
 
                     // 클릭 돼 있는 경우
                     if (mainActivity.hashtagUpDataList.get(getAdapterPosition()).isClicked()) {
@@ -115,7 +116,7 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
                             return;
                         }
 
-                        deleteLocationMsgItem(hashtagText,hashtagLocation,getAdapterPosition());
+                        deleteLocationMsgItem(hashtagText, hashtagLocation, getAdapterPosition());
 
                         //꺼주기(글자색 바꾸기)
 
@@ -127,7 +128,7 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
 
                     // 클릭 안돼져있는 경우우
                     else {
-                        addLocationItem(hashtagText,getAdapterPosition());
+                        addLocationItem(hashtagText, getAdapterPosition());
 
                         Typeface typeface = ResourcesCompat.getFont(context, R.font.nanumsquareeb);
                         name.setTextColor(Color.parseColor(itemView.getContext().getString(R.color.twitterBlue)));
@@ -140,7 +141,7 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    if (getAdapterPosition() != 0) {
+                    if (getAdapterPosition() != 0 && getAdapterPosition() != 1) {
                         CheckDeleteLocationDialog checkDeleteLocationDialog = new CheckDeleteLocationDialog(mainActivity, getAdapterPosition());
                     }
 
@@ -152,10 +153,10 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
 
     // 장소에 따른 추가 , 추가할때는 전체 데이터에서 다시 가지고오면서 해야한다.
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void addLocationItem(String hashtagText,int position) {
+    public void addLocationItem(String hashtagText, int position) {
 
         mainActivity.hashtagUpDataList.get(position).setClicked(true);
-        new UpdateUserListDatabaseAsyncTask(mainActivity.db.userListDAO(),hashtagText,true).execute();
+        new UpdateUserListDatabaseAsyncTask(mainActivity.db.userListDAO(), hashtagText, true).execute();
         mainActivity.classifyMsgData();
         mainActivity.createOneDayMsgDataList();
 
@@ -163,26 +164,64 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
     }
 
     //장소에 따른 삭제 메소드
-    public void deleteLocationMsgItem(String hashtagText,String location,int position) {
+    public void deleteLocationMsgItem(String hashtagText, String location, int position) {
 
+        boolean hasSameSi = false;
         mainActivity.hashtagUpDataList.get(position).setClicked(false);
-        new UpdateUserListDatabaseAsyncTask(mainActivity.db.userListDAO(),hashtagText,false).execute();
+        new UpdateUserListDatabaseAsyncTask(mainActivity.db.userListDAO(), hashtagText, false).execute();
+
+        //같은 시가 있는지 검사. 같은 시가 있고 그게 클릭돼있는경우만 true
+        for (int i = 2; i < mainActivity.hashtagUpDataList.size(); i++) {
+            if (i != (position - 2) && mainActivity.hashtagUpDataList.get(i).getLocation().split(" ")[0].equals(location.split(" ")[0]) &&
+                    mainActivity.hashtagUpDataList.get(i).isClicked()) {
+                hasSameSi = true;
+                break;
+            }
+        }
 
         //장소에 따른 삭제
         for (int i = 0; i < mainActivity.oneDayMsgDataList.size(); i++) {
 
             int size = mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().size();
 
+            LoopP:
             for (int j = 0; j < size; j++) {
 
-                if (mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().get(j).getSenderLocation().equals(location) ||
-                        (mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().get(j).getSenderLocation().split(" ")[0].equals(
-                                location.split(" ")[0]) && (mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().
-                                get(j).getSenderLocation().split(" ")[1].equals("전체"))
-                        )) {
-                    mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().remove(j);
-                    j--;
-                    size--;
+                // 처리하려는 장소가 ~~시 전체 인 경우 같은 시는 전부 없애주기~!
+                if (location.split(" ")[1].equals("전체")) {
+                    //전체 인데 같은 시의 문자가 클릭on 일 경우를 띵킹
+                    for (int k = 2; k < mainActivity.hashtagUpDataList.size(); k++) {
+                        if (mainActivity.hashtagUpDataList.get(k).getLocation().equals(mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().get(j).getSenderLocation())
+                                && mainActivity.hashtagUpDataList.get(k).isClicked()) {
+                            continue LoopP;
+                        }
+                    }
+
+                    if (mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().get(j).getSenderLocation().split(" ")[0].equals(location.split(" ")[0])) {
+                        mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().remove(j);
+                        j--;
+                        size--;
+                        continue;
+                    }
+                }
+
+                if (hasSameSi) {
+                    //같은 시가 있을 경우 전체는 지우기 x
+                    if (mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().get(j).getSenderLocation().equals(location)){
+                        mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().remove(j);
+                        j--;
+                        size--;
+                    }
+                }else{
+                    if (mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().get(j).getSenderLocation().equals(location) ||
+                            (mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().get(j).getSenderLocation().split(" ")[0].equals(
+                                    location.split(" ")[0]) && (mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().
+                                    get(j).getSenderLocation().split(" ")[1].equals("전체"))
+                            )) {
+                        mainActivity.oneDayMsgDataList.get(i).getMsgArrayList().remove(j);
+                        j--;
+                        size--;
+                    }
                 }
             }
         }
@@ -200,7 +239,7 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
         mainActivity.oneDayMsgRecyclerViewAdapter.notifyDataSetChanged();
     }
 
-    public class UpdateUserListDatabaseAsyncTask extends AsyncTask<UserListDTO, Void , Void>{
+    public class UpdateUserListDatabaseAsyncTask extends AsyncTask<UserListDTO, Void, Void> {
 
         private UserListDAO userListDAO;
         private String tag;
@@ -214,7 +253,7 @@ public class HashtagUpRecyclerViewAdapter extends RecyclerView.Adapter<HashtagUp
 
         @Override
         protected Void doInBackground(UserListDTO... userListDTOS) {
-            userListDAO.updateHastagChecked(isChecked,tag);
+            userListDAO.updateHastagChecked(isChecked, tag);
             return null;
         }
     }

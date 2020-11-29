@@ -25,6 +25,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.passta.a2ndproj.IntroLoadingActivity;
 import com.passta.a2ndproj.MainActivity;
 import com.passta.a2ndproj.R;
 import com.passta.a2ndproj.data.AppDatabase;
@@ -212,7 +213,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             Log.i("모은","원db"+list.get(i).getLocation_gu());
             Log.i("모은","받은거"+gusi);
             //전체 예외처리 해야함
-            if ((list.get(i).getLocation_si().equals(sido) && list.get(i).getLocation_gu().equals(gusi)) || list.get(i).getLocation_si().equals("중대본") || (list.get(i).getLocation_si().equals(sido) && gusi.equals("전체")) )
+
+            if ((list.get(i).getLocation_si().equals(sido) && list.get(i).getLocation_gu().equals(gusi)) || list.get(i).getLocation_si().equals("중대본") || (list.get(i).getLocation_si().equals(sido) && gusi.equals("전체")) ||(list.get(i).getLocation_si().equals(sido) && list.get(i).getLocation_gu().equals("전체")) )
             {
                 Log.i("모은","insertDatabase4");
 
@@ -283,8 +285,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //TOP 에서 push 알림 등장
-
-            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_ONE_SHOT);
+            intent.putExtra("noti",true);
+            PendingIntent contentIntent = PendingIntent.getActivity(this, (int)(System.currentTimeMillis()/1000), new Intent(this, MainActivity.class), PendingIntent.FLAG_ONE_SHOT);
 
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -299,6 +301,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                         .setContentText(msg)
                         .setAutoCancel(true)
                         .setContentIntent(contentIntent)
+                        .setNumber(999)
                         .setPriority(NotificationManager.IMPORTANCE_HIGH);
 
 
@@ -329,7 +332,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     notificationManager.createNotificationChannel(channel);
                 }
 
-                notificationManager.notify(0, mBuilder.build());
+                notificationManager.notify((int)(System.currentTimeMillis()/1000), mBuilder.build());
             } else if (level == 2 && isCheckedLevel2) {
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -341,6 +344,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                         .setContentText(msg)
                         .setAutoCancel(true)
                         .setContentIntent(contentIntent)
+                        .setNumber(999)
                         .setPriority(NotificationManager.IMPORTANCE_HIGH);
 
 
@@ -371,7 +375,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     notificationManager.createNotificationChannel(channel);
                 }
 
-                notificationManager.notify(0, mBuilder.build());
+                notificationManager.notify((int)(System.currentTimeMillis()/1000), mBuilder.build());
 
             } else if(level == 3 && isCheckedLevel3) {
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -384,6 +388,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                         .setContentText(msg)
                         .setAutoCancel(true)
                         .setContentIntent(contentIntent)
+                        .setNumber(999)
                         .setPriority(Notification.PRIORITY_MAX);
 
 
@@ -415,7 +420,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     notificationManager.createNotificationChannel(channel);
                 }
 
-                notificationManager.notify(0, mBuilder.build());
+                notificationManager.notify((int)(System.currentTimeMillis()/1000), mBuilder.build());
 
             }
         }

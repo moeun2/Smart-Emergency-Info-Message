@@ -51,6 +51,13 @@ public class MsgDTO {
     @ColumnInfo(name = "category_index")
     private int categroyIndex;
 
+    @ColumnInfo(name = "location_si")
+    private String senderLocation_si;
+
+
+    @ColumnInfo(name = "location_gu")
+    private String senderLocation_gu;
+
     public MsgDTO( String day, String time, String msgText, String senderLocation, int level, int circleImageViewId,
                   double routeCatePoint, double upbreakCatePoint, double safetyCatePoint, double disasterCatePoint, double economyCatePoint,
                   double totalMsgPoint, int categroyIndex) {
@@ -68,6 +75,24 @@ public class MsgDTO {
         this.economyCatePoint = economyCatePoint;
         this.totalMsgPoint = totalMsgPoint;
         this.categroyIndex = categroyIndex;
+        this.senderLocation_si = senderLocation.split(" ")[0];
+        this.senderLocation_gu = senderLocation.split(" ")[1];
+    }
+
+    public String getSenderLocation_si() {
+        return senderLocation_si;
+    }
+
+    public void setSenderLocation_si(String senderLocation_si) {
+        this.senderLocation_si = senderLocation_si;
+    }
+
+    public String getSenderLocation_gu() {
+        return senderLocation_gu;
+    }
+
+    public void setSenderLocation_gu(String senderLocation_gu) {
+        this.senderLocation_gu = senderLocation_gu;
     }
 
     public int getId() {

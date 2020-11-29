@@ -75,7 +75,10 @@ public class MsgInfoDialog extends Dialog {
         getWindow().setDimAmount(0.81f);
 
         tag.setText("#" + tagString);
-        location.setText(msgVo.getSenderLocation());
+        if(msgVo.getSenderLocation().equals("중대본 전체"))
+            location.setText("중앙 대책 본부");
+        else
+            location.setText(msgVo.getSenderLocation());
         time.setText(timeString);
         categoty.setText(categoryArray.get(msgVo.getCategroyIndex()));
         img.setImageResource(imgNumber);
@@ -117,6 +120,11 @@ public class MsgInfoDialog extends Dialog {
 
     public void setHashtag() {
 
+        if(msgVo.getSenderLocation().equals("중대본 전체")){
+            tagString = "중앙 대책 본부";
+            return;
+        }
+
         for (int i = 0; i < mainActivity.userList.size(); i++) {
             String userLocation = mainActivity.userList.get(i).getLocation_si() + " " + mainActivity.userList.get(i).getLocation_gu();
             if (userLocation.equals(msgVo.getSenderLocation()) || (
@@ -127,6 +135,18 @@ public class MsgInfoDialog extends Dialog {
                 break;
             }
         }
+
+        //널로 반환되면 같은시의 전체 문자를 찾는다.
+        if(tagString == null){
+            for (int i = 0; i < mainActivity.userList.size(); i++) {
+                if(mainActivity.userList.get(i).getLocation_si().equals(msgVo.getSenderLocation().split(" ")[0]) &&
+                        mainActivity.userList.get(i).getLocation_gu().equals("전체")){
+                    tagString = mainActivity.userList.get(i).getTag();
+                    break;
+                }
+            }
+        }
+
     }
 
     public void setHttpString() {
