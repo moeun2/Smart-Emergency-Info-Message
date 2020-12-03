@@ -13,9 +13,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.github.angads25.toggle.interfaces.OnToggledListener;
-import com.github.angads25.toggle.model.ToggleableView;
-import com.github.angads25.toggle.widget.LabeledSwitch;
+
 import com.passta.a2ndproj.R;
 
 import java.util.concurrent.ExecutorService;
@@ -45,7 +43,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
 
     private ImageView back;
 
-    private LabeledSwitch labeledSwitch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

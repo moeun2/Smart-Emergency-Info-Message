@@ -40,6 +40,8 @@ import com.passta.a2ndproj.R;
 import com.passta.a2ndproj.data.AppDatabase;
 import com.passta.a2ndproj.data.UserListDAO;
 import com.passta.a2ndproj.data.UserListDTO;
+import com.passta.a2ndproj.network.NetworkActivity;
+import com.passta.a2ndproj.network.NetworkStatus;
 import com.passta.a2ndproj.start.activity.Page2Activity;
 import com.passta.a2ndproj.start.adapter.AdapterImageLocation;
 import com.passta.a2ndproj.start.adapter.Adapter_location;
@@ -65,6 +67,7 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
     private LocationManager locationManager;
     private static final String TAG = "dialogue_add_location";
     private String nowType;
+    NetworkStatus networkStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -274,8 +277,19 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
             double lng = 0;
             double lat = 0;
 
+            Location lastKnownLocation;
 
-            Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            int networkSatusNum = networkStatus.getConnectivityStatus(getApplicationContext());
+            if (networkSatusNum == networkStatus.TYPE_NOT_CONNECTED)
+                lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            else if(networkSatusNum == networkStatus.TYPE_WIFI)
+                lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            else{ //TYPE_MOBILE
+                lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+            }
+
+
+            //Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
             if (lastKnownLocation != null) {
                 lng = lastKnownLocation.getLongitude();
@@ -307,6 +321,9 @@ public class Dialogue_add_location extends AppCompatActivity implements View.OnC
                 Toast.makeText(getApplicationContext(), "주소 찾기 오류(Geocoder)", Toast.LENGTH_SHORT);
             } else {
 
+
+                //집 가서 바꾸기! 서울특별시 군자동
+                Log.d("모은","주소 :"+address);
                 Log.d("모은", "찾은 주소 : " + address.get(0).getAdminArea());
                 Log.d("모은", "찾은 주소 : " + address.get(0).getAddressLine(0));
 

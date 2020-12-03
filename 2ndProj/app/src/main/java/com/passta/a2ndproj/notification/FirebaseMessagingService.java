@@ -214,7 +214,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             Log.i("모은","받은거"+gusi);
             //전체 예외처리 해야함
 
-            if ((list.get(i).getLocation_si().equals(sido) && list.get(i).getLocation_gu().equals(gusi)) || list.get(i).getLocation_si().equals("중대본") || (list.get(i).getLocation_si().equals(sido) && gusi.equals("전체")) ||(list.get(i).getLocation_si().equals(sido) && list.get(i).getLocation_gu().equals("전체")) )
+            if ((list.get(i).getLocation_si().equals(sido) && list.get(i).getLocation_gu().equals(gusi)) || list.get(i).getLocation_si().equals("중대본") || sido.equals("중대본") || (list.get(i).getLocation_si().equals(sido) && gusi.equals("전체")) ||(list.get(i).getLocation_si().equals(sido) && list.get(i).getLocation_gu().equals("전체")) )
             {
                 Log.i("모은","insertDatabase4");
 

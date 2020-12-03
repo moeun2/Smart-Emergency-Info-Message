@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/background_item_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/slide_image1" />
+
+    <TextView
+        android:id="@+id/text_item_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/nanumsquareeb"
+
+        android:gravity="left|center_vertical"
+        android:text="코로나 19 정부 사이트\n바로가기"
+        android:textColor="#ffffff"
+        android:textSize="23dp"/>
+
+
+</FrameLayout>

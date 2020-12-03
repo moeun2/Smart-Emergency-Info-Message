@@ -66,6 +66,7 @@
         <activity android:name=".start.activity.AccountGetDataActivity" />
         <activity android:name=".notification.AlarmSettingActivity" />
         <activity android:name=".start.activity.Page1Activity"/>
+        <activity android:name=".CoronaInformationActivity"/>
 
         <activity android:name=".MainActivity" />
 

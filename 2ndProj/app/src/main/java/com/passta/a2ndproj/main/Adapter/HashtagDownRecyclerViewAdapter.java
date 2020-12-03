@@ -96,7 +96,8 @@ public class HashtagDownRecyclerViewAdapter extends RecyclerView.Adapter<Hashtag
                     if (mainActivity.hashtagDownDataList.get(getAdapterPosition()).isClicked()) {
 
                         //꺼주기(글자색 바꾸기)
-                        Typeface typeface = itemView.getContext().getResources().getFont(R.font.nanumsquarer);
+                        //Typeface typeface = itemView.getContext().getResources().getFont(R.font.nanumsquarer);
+                        Typeface typeface = ResourcesCompat.getFont(context, R.font.nanumsquarer);
                         name.setTextColor(Color.parseColor(itemView.getContext().getString(R.color.black)));
                         name.setTypeface(typeface);
 
@@ -110,7 +111,8 @@ public class HashtagDownRecyclerViewAdapter extends RecyclerView.Adapter<Hashtag
 
                     // 클릭 안돼져있는 경우우김김진진우우
                     else {
-                        Typeface typeface = itemView.getContext().getResources().getFont(R.font.nanumsquareeb);
+                        //Typeface typeface = itemView.getContext().getResources().getFont(R.font.nanumsquareeb);
+                        Typeface typeface = ResourcesCompat.getFont(context, R.font.nanumsquareeb);
                         name.setTextColor(Color.parseColor(itemView.getContext().getString(R.color.twitterBlue)));
                         name.setTypeface(typeface);
 
