@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
         //db생성
         db = AppDatabase.getInstance(this);
 
+
         //Firebase에 토큰 등록시
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this,
                 new OnSuccessListener<InstanceIdResult>() {

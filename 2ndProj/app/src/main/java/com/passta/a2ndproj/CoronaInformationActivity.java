@@ -134,8 +134,21 @@ public class CoronaInformationActivity extends AppCompatActivity {
 
         //set datetime
         Date currentTime = Calendar.getInstance().getTime();
-        today = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(currentTime);
-        Log.i("모은", "날짜 : " + today);
+
+        String check_day = new SimpleDateFormat("HH", Locale.getDefault()).format(currentTime);
+        Log.i("모은","check_day : "+check_day);
+        if( Integer.parseInt(check_day) < 10){
+            Calendar yesterday = Calendar.getInstance();
+            yesterday.add(Calendar.DATE, -1);
+            today = new SimpleDateFormat("yyyyMMdd").format(yesterday.getTime());
+            Log.i("모은", "날짜 : " + today);
+
+        }
+        else{
+            today = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(currentTime);
+            Log.i("모은", "날짜 : " + today);
+        }
+
 
         Calendar week = Calendar.getInstance();
         week.add(Calendar.DATE, -7);

@@ -295,8 +295,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, chId)
-                        .setSmallIcon(R.drawable.background_msg_circle_item)
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_icon))
+                        .setSmallIcon(R.drawable.app_icon)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.level1))
                         .setContentTitle(title)
                         .setContentText(msg)
                         .setAutoCancel(true)
@@ -338,8 +338,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, chId)
-                        .setSmallIcon(R.drawable.background_msg_circle_item_1)
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_icon))
+                        .setSmallIcon(R.drawable.app_icon)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.level2))
                         .setContentTitle(title)
                         .setContentText(msg)
                         .setAutoCancel(true)
@@ -382,8 +382,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, chId)
-                        .setSmallIcon(R.drawable.background_msg_circle_item_2)
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_icon))
+                        .setSmallIcon(R.drawable.app_icon)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.level3))
                         .setContentTitle(title)
                         .setContentText(msg)
                         .setAutoCancel(true)
