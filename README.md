@@ -36,8 +36,8 @@ Date: December 6, 2020
 
 <p></p>
 
-## 💙 소개동영상 (Click Image -> youtube)
-[![Video Label](/Image/youtubethumbnail.png)](https://www.youtube.com/watch?v=tpk337-h3ZE)
+## 💙 소개동영상 
 
+<iframe width="640" height="360" src="https://www.youtube.com/watch?v=tpk337-h3ZE" frameborder="0" gesture="media" allowfullscreen=""></iframe>
 
 
